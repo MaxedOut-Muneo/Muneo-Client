@@ -5,3 +5,5 @@ build
 .turbo
 .yarn
 yarn.lock
+.pnp.cjs
+.pnp.loader.mjs
