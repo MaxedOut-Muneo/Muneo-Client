@@ -1,0 +1,172 @@
+name: Auto Create Branch
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  create-branch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Extract branch name from issue form
+        id: extract
+        run: |
+          # Issue body를 파일로 저장 (특수문자 처리)
+          cat << 'EOF' > issue_body.txt
+          ${{ github.event.issue.body }}
+          EOF
+
+          # 이슈 제목 저장
+          ISSUE_TITLE="${{ github.event.issue.title }}"
+          echo "현재 이슈 제목: $ISSUE_TITLE"
+
+          # 브랜치명 추출 ("브랜치명" 또는 "Branch" 섹션)
+          BRANCH_NAME=$(grep -A 2 "브랜치명\|Branch" issue_body.txt | tail -1 | xargs)
+
+          # 브랜치명 재추출 (빈 줄이나 헤더가 추출된 경우)
+          if [ -z "$BRANCH_NAME" ] || [[ "$BRANCH_NAME" == "###"* ]] || [[ "$BRANCH_NAME" == "🌳"* ]]; then
+            BRANCH_NAME=$(sed -n '/Branch/,/###/{/Branch/n; /###/!p;}' issue_body.txt | grep -v "^$" | head -1 | xargs)
+          fi
+
+          # 브랜치 타입 추출 ("브랜치 타입" 또는 "branchType" 섹션)
+          BRANCH_TYPE=$(grep -A 2 "브랜치 타입\|branchType" issue_body.txt | tail -1 | xargs)
+
+          # 브랜치 타입 재추출 (빈 줄이나 헤더가 추출된 경우)
+          if [ -z "$BRANCH_TYPE" ] || [[ "$BRANCH_TYPE" == "###"* ]] || [[ "$BRANCH_TYPE" == "📂"* ]]; then
+            BRANCH_TYPE=$(sed -n '/브랜치 타입/,/###/{/브랜치 타입/n; /###/!p;}' issue_body.txt | grep -v "^$" | head -1 | xargs)
+          fi
+
+          echo "추출된 브랜치 타입: $BRANCH_TYPE"
+
+          # 이슈 제목 생성 ([Type] #번호 - 제목 형식)
+          if [ -n "$BRANCH_TYPE" ] && [ -n "$ISSUE_TITLE" ]; then
+            if [[ ! "$ISSUE_TITLE" =~ ^\[.*\] ]]; then
+              # 파스칼케이스 변환
+              BRANCH_TYPE_PASCAL=$(echo "$BRANCH_TYPE" | sed 's/\b\(.\)/\u\1/')
+              NEW_ISSUE_TITLE="[${BRANCH_TYPE_PASCAL}] #${{ github.event.issue.number }} - ${ISSUE_TITLE}"
+              echo "새로운 이슈 제목: $NEW_ISSUE_TITLE"
+            else
+              NEW_ISSUE_TITLE="$ISSUE_TITLE"
+              echo "이슈 제목에 이미 타입이 포함되어 있습니다."
+            fi
+          else
+            NEW_ISSUE_TITLE="$ISSUE_TITLE"
+          fi
+
+          # 브랜치명 생성
+          if [ -z "$BRANCH_NAME" ]; then
+            echo "브랜치명을 찾을 수 없습니다. 기본값 사용."
+            BRANCH_NAME="issue-${{ github.event.issue.number }}"
+          else
+            # Git 브랜치명 규칙에 맞게 정제 (한글 허용)
+            # 1. 공백을 하이픈으로 변경
+            BRANCH_NAME=$(echo "$BRANCH_NAME" | sed 's/ /-/g')
+
+            # 2. Git 비허용 특수문자 제거 (:, ^, ~, ?, *, [, \, .., @{)
+            BRANCH_NAME=$(echo "$BRANCH_NAME" | sed 's/[:^~?*\[\\]//g; s/\.\.//g; s/@{//g')
+
+            # 3. 연속된 하이픈/슬래시 제거
+            BRANCH_NAME=$(echo "$BRANCH_NAME" | sed 's/--*/-/g; s/\/\/*\//\//g')
+
+            # 4. 앞뒤 하이픈/슬래시/점 제거
+            BRANCH_NAME=$(echo "$BRANCH_NAME" | sed 's/^[-\/\.]*//; s/[-\/\.]*$//')
+
+            # 5. 빈 문자열 검증
+            if [ -z "$BRANCH_NAME" ]; then
+              echo "정제 후 브랜치명이 비어있습니다. 기본값 사용."
+              BRANCH_NAME="issue-${{ github.event.issue.number }}"
+            else
+              # 브랜치 타입 prefix 추가 (type/)
+              if [ -n "$BRANCH_TYPE" ]; then
+                if [[ ! "$BRANCH_NAME" =~ ^$BRANCH_TYPE/ ]]; then
+                  BRANCH_NAME="${BRANCH_TYPE}/${BRANCH_NAME}"
+                fi
+              fi
+
+              # 이슈번호 prefix 추가 (번호-)
+              BRANCH_NAME="${{ github.event.issue.number }}-$BRANCH_NAME"
+            fi
+          fi
+
+          echo "최종 브랜치명: $BRANCH_NAME"
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          echo "new_issue_title=$NEW_ISSUE_TITLE" >> $GITHUB_OUTPUT
+          echo "branch_type=$BRANCH_TYPE" >> $GITHUB_OUTPUT
+
+          # 임시 파일 정리
+          rm -f issue_body.txt
+
+      - name: Update issue title and labels
+        run: |
+          NEW_TITLE="${{ steps.extract.outputs.new_issue_title }}"
+          BRANCH_TYPE="${{ steps.extract.outputs.branch_type }}"
+
+          # 브랜치 타입별 이모지 라벨 매핑
+          case "$BRANCH_TYPE" in
+            "feat")     LABEL="✨Feature" ;;
+            "fix")      LABEL="🐛BugFix" ;;
+            "hotfix")   LABEL="🚨Hotfix" ;;
+            "refactor") LABEL="♻️Refactor" ;;
+            "test")     LABEL="✅Test" ;;
+            "docs")     LABEL="📝Docs" ;;
+            "chore")    LABEL="🛠️ Chore" ;;
+            *)          LABEL="$BRANCH_TYPE" ;;
+          esac
+
+          # 이슈 메타데이터 업데이트 (제목, 라벨, 담당자)
+          if [ -n "$NEW_TITLE" ] && [ -n "$LABEL" ]; then
+            curl -X PATCH \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }} \
+              -d "{\"title\":\"$NEW_TITLE\",\"labels\":[\"$LABEL\"],\"assignees\":[\"${{ github.event.issue.user.login }}\"]}"
+
+            echo "이슈 제목 업데이트: $NEW_TITLE"
+            echo "라벨 설정: $LABEL"
+            echo "담당자 할당: ${{ github.event.issue.user.login }}"
+          fi
+
+      - name: Create branch
+        run: |
+          BRANCH_NAME="${{ steps.extract.outputs.branch_name }}"
+
+          # Git 설정
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Main 브랜치 기반으로 새 브랜치 생성
+          git checkout main
+          git pull origin main
+
+          git checkout -b "$BRANCH_NAME"
+          git push origin "$BRANCH_NAME"
+
+          echo "브랜치 '$BRANCH_NAME' 생성 완료"
+
+      - name: Add comment to issue
+        env:
+          BRANCH_NAME: ${{ steps.extract.outputs.branch_name }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 이슈에 브랜치 생성 알림 댓글 추가
+          COMMENT=$(cat <<EOF
+          🌿 브랜치가 생성되었습니다!
+
+          \`\`\`
+          $BRANCH_NAME
+          \`\`\`
+          EOF
+          )
+
+          gh issue comment ${{ github.event.issue.number }} --body "$COMMENT"
+
+          echo "이슈에 댓글 추가 완료"

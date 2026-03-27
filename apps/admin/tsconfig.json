@@ -1,0 +1,9 @@
+{
+  "extends": "@muneo/typescript-config/vite.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src", "vite-env.d.ts", "vite.config.ts"]
+}

@@ -1,0 +1,119 @@
+name: Frontend CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Set Yarn version
+        run: corepack prepare yarn@4.13.0 --activate
+
+      - name: Cache Yarn (PnP)
+        uses: actions/cache@v4
+        with:
+          path: |
+            .yarn/cache
+            .yarn/unplugged
+          key: ${{ runner.os }}-yarn-pnp-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-pnp-
+
+      - name: Cache Turbo
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Type check
+        id: type-check
+        continue-on-error: true
+        run: yarn tsc --noEmit
+
+      - name: Lint check
+        id: lint
+        continue-on-error: true
+        run: yarn lint
+
+      - name: Format check
+        id: format
+        continue-on-error: true
+        run: yarn format:check
+
+      - name: Run tests
+        id: test
+        continue-on-error: true
+        run: yarn test --run
+
+      - name: Build
+        id: build
+        continue-on-error: true
+        run: yarn build
+
+      - name: Check results
+        if: always()
+        run: |
+          if [[ "${{ steps.type-check.outcome }}" == "failure" ]] || \
+             [[ "${{ steps.lint.outcome }}" == "failure" ]] || \
+             [[ "${{ steps.format.outcome }}" == "failure" ]] || \
+             [[ "${{ steps.test.outcome }}" == "failure" ]] || \
+             [[ "${{ steps.build.outcome }}" == "failure" ]]; then
+            echo "CI failed"
+            exit 1
+          fi
+
+      - name: Comment results on PR
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const steps = {
+              'TypeScript': '${{ steps.type-check.outcome }}',
+              'ESLint': '${{ steps.lint.outcome }}',
+              'Prettier': '${{ steps.format.outcome }}',
+              'Test': '${{ steps.test.outcome }}',
+              'Build': '${{ steps.build.outcome }}'
+            };
+
+            let comment = '## 🔍 CI 검증 결과\n\n';
+
+            for (const [name, status] of Object.entries(steps)) {
+              const icon = status === 'success' ? '✅' : status === 'skipped' ? '⏭️' : '❌';
+              comment += `${icon} **${name}**: ${status === 'success' ? '통과' : status === 'skipped' ? '스킵' : '실패'}\n`;
+            }
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });

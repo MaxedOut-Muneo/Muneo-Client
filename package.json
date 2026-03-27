@@ -1,0 +1,45 @@
+{
+  "name": "muneo",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "dev:web": "turbo dev --filter=web",
+    "dev:admin": "turbo dev --filter=admin",
+    "build:web": "turbo build --filter=web",
+    "build:admin": "turbo build --filter=admin",
+    "test": "turbo test",
+    "test:e2e": "playwright test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "storybook": "yarn workspace @muneo/design-system storybook",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@muneo/eslint-config": "workspace:*",
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.5.0",
+    "eslint": "^9.39.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-tailwindcss": "^0.6.14",
+    "turbo": "^2.8.20",
+    "typescript": "^5.9.3"
+  },
+  "packageManager": "yarn@4.13.0",
+  "dependenciesMeta": {
+    "prettier@3.8.1": {
+      "unplugged": true
+    },
+    "prettier-plugin-tailwindcss@0.6.14": {
+      "unplugged": true
+    }
+  }
+}
