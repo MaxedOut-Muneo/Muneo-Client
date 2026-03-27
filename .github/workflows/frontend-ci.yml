@@ -14,10 +14,9 @@ permissions:
   pull-requests: write
 
 jobs:
-  ci:
+  setup:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-
+    timeout-minutes: 5
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -30,8 +29,42 @@ jobs:
         with:
           node-version: 22
 
-      - name: Set Yarn version
-        run: corepack prepare yarn@4.13.0 --activate
+      - name: Cache Yarn (PnP)
+        uses: actions/cache@v4
+        with:
+          path: |
+            .yarn/cache
+            .yarn/unplugged
+          key: ${{ runner.os }}-yarn-pnp-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-pnp-
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Format check
+        run: yarn format:check
+
+  ci:
+    needs: setup
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [web, admin]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
       - name: Cache Yarn (PnP)
         uses: actions/cache@v4
@@ -47,9 +80,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .turbo
-          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          key: ${{ runner.os }}-turbo-${{ matrix.app }}-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-turbo-
+            ${{ runner.os }}-turbo-${{ matrix.app }}-
 
       - name: Install dependencies
         run: yarn install --immutable
@@ -57,63 +90,80 @@ jobs:
       - name: Type check
         id: type-check
         continue-on-error: true
-        run: yarn tsc --noEmit
+        run: yarn turbo tsc --noEmit --filter=${{ matrix.app }}
 
       - name: Lint check
         id: lint
         continue-on-error: true
-        run: yarn lint
-
-      - name: Format check
-        id: format
-        continue-on-error: true
-        run: yarn format:check
+        run: yarn turbo lint --filter=${{ matrix.app }}
 
       - name: Run tests
         id: test
         continue-on-error: true
-        run: yarn test
+        run: yarn turbo test --filter=${{ matrix.app }}
 
       - name: Build
         id: build
         continue-on-error: true
-        run: yarn build
+        run: yarn turbo build --filter=${{ matrix.app }}
 
       - name: Check results
         if: always()
         run: |
           if [[ "${{ steps.type-check.outcome }}" == "failure" ]] || \
              [[ "${{ steps.lint.outcome }}" == "failure" ]] || \
-             [[ "${{ steps.format.outcome }}" == "failure" ]] || \
              [[ "${{ steps.test.outcome }}" == "failure" ]] || \
              [[ "${{ steps.build.outcome }}" == "failure" ]]; then
             echo "CI failed"
             exit 1
           fi
 
+  comment:
+    needs: [setup, ci]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
       - name: Comment results on PR
-        if: always()
         uses: actions/github-script@v7
         with:
           script: |
-            const steps = {
-              'TypeScript': '${{ steps.type-check.outcome }}',
-              'ESLint': '${{ steps.lint.outcome }}',
-              'Prettier': '${{ steps.format.outcome }}',
-              'Test': '${{ steps.test.outcome }}',
-              'Build': '${{ steps.build.outcome }}'
+            const { data: jobs } = await github.rest.actions.listJobsForWorkflowRun({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: context.runId,
+            });
+
+            const setupJob = jobs.jobs.find(j => j.name === 'setup');
+            const webJob = jobs.jobs.find(j => j.name === 'ci (web)');
+            const adminJob = jobs.jobs.find(j => j.name === 'ci (admin)');
+
+            const getStepResult = (job, stepName) => {
+              if (!job) return 'skipped';
+              const step = job.steps?.find(s => s.name === stepName);
+              return step?.conclusion || 'skipped';
             };
 
-            let comment = '## 🔍 CI 검증 결과\n\n';
+            const icon = (status) => status === 'success' ? '✅' : status === 'skipped' ? '⏭️' : '❌';
+            const label = (status) => status === 'success' ? '통과' : status === 'skipped' ? '스킵' : '실패';
 
-            for (const [name, status] of Object.entries(steps)) {
-              const icon = status === 'success' ? '✅' : status === 'skipped' ? '⏭️' : '❌';
-              comment += `${icon} **${name}**: ${status === 'success' ? '통과' : status === 'skipped' ? '스킵' : '실패'}\n`;
+            const formatResult = getStepResult(setupJob, 'Format check');
+
+            let comment = '## 🔍 CI 검증 결과\n\n';
+            comment += `${icon(formatResult)} **Prettier**: ${label(formatResult)}\n\n`;
+            comment += '| 검증 항목 | web | admin |\n';
+            comment += '|-----------|-----|-------|\n';
+
+            for (const step of ['Type check', 'Lint check', 'Run tests', 'Build']) {
+              const webResult = getStepResult(webJob, step);
+              const adminResult = getStepResult(adminJob, step);
+              const name = step.replace(' check', '').replace('Run ', '');
+              comment += `| **${name}** | ${icon(webResult)} ${label(webResult)} | ${icon(adminResult)} ${label(adminResult)} |\n`;
             }
 
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: comment
+              body: comment,
             });
