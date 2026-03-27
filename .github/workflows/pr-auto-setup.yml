@@ -50,6 +50,22 @@ jobs:
               }
             }
 
+            // PR 제목 자동 설정 (브랜치명 기반)
+            // 예: 1-chore/프로젝트-초기-세팅 → [Chore] 프로젝트 초기 세팅
+            const titleMatch = branchName.match(/(?:\d+-)?(\w+)\/(.+)/);
+            if (titleMatch) {
+              const prefix = titleMatch[1].charAt(0).toUpperCase() + titleMatch[1].slice(1);
+              const title = decodeURIComponent(titleMatch[2]).replace(/-/g, ' ');
+              const newTitle = `[${prefix}] ${title}`;
+
+              await github.rest.pulls.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber,
+                title: newTitle,
+              });
+            }
+
             // 브랜치명에서 라벨 추출 및 추가
             const labelMatch = branchName.match(/(?:^\d+-)?(\w+)\//);
             if (labelMatch) {
