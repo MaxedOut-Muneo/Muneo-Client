@@ -8,12 +8,16 @@ const svgDir = join(iconsRoot, 'svg');
 
 const tag = '// @generated';
 
-const toIconName = (filename: string): string =>
-  filename
-    .replace(extname(filename), '')
-    .split('-')
-    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
-    .join('') + 'Icon';
+const toIconName = (filename: string): string => {
+  const name =
+    filename
+      .replace(extname(filename), '')
+      .split('-')
+      .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+      .join('') + 'Icon';
+
+  return /^\d/.test(name) ? `Svg${name}` : name;
+};
 
 const replaceFill = (svg: string): string => svg.replace(/fill="(?!none\b)[^"]*"/gi, 'fill="currentColor"');
 
@@ -43,7 +47,14 @@ const convertSvg = async (file: string): Promise<string> => {
 
 const removeOldFiles = async () => {
   const files = await readdir(iconsRoot);
-  await Promise.all(files.filter((f) => f.endsWith('.tsx')).map((f) => unlink(join(iconsRoot, f))));
+  const tsxFiles = files.filter((f) => f.endsWith('.tsx'));
+  const generated = await Promise.all(
+    tsxFiles.map(async (f) => {
+      const content = await readFile(join(iconsRoot, f), 'utf-8');
+      return content.startsWith(tag) ? f : null;
+    })
+  );
+  await Promise.all(generated.filter(Boolean).map((f) => unlink(join(iconsRoot, f!))));
 };
 
 const createIndex = async (names: string[]) => {
@@ -57,11 +68,12 @@ const createIndex = async (names: string[]) => {
 
 const run = async () => {
   const svgFiles = (await readdir(svgDir)).filter((f) => f.endsWith('.svg')).sort();
+
+  await removeOldFiles();
+
   if (!svgFiles.length) {
     return;
   }
-
-  await removeOldFiles();
 
   const names: string[] = [];
   for (const file of svgFiles) {
