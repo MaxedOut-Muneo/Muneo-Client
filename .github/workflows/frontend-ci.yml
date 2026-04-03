@@ -118,6 +118,20 @@ jobs:
             exit 1
           fi
 
+  result:
+    name: ci
+    needs: [setup, ci]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: Check all jobs
+        run: |
+          if [[ "${{ needs.setup.result }}" != "success" ]] || \
+             [[ "${{ needs.ci.result }}" != "success" ]]; then
+            exit 1
+          fi
+
   comment:
     needs: [setup, ci]
     if: always()
