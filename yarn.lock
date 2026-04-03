@@ -3239,7 +3239,7 @@ __metadata:
     "@types/react-dom": "npm:^19.2.3"
     "@vitejs/plugin-react": "npm:^4.7.0"
     "@vitest/coverage-v8": "npm:^4.1.0"
-    axios: "npm:^1.13.6"
+    axios: "npm:1.13.6"
     clsx: "npm:^2.1.1"
     eslint: "npm:^9.39.4"
     jsdom: "npm:^29.0.1"
@@ -3524,7 +3524,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.13.6":
+"axios@npm:1.13.6":
   version: 1.13.6
   resolution: "axios@npm:1.13.6"
   dependencies:
