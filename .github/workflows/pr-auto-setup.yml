@@ -50,20 +50,39 @@ jobs:
               }
             }
 
-            // PR 제목 자동 설정 (브랜치명 기반)
-            // 예: 1-chore/프로젝트-초기-세팅 → [Chore] 프로젝트 초기 세팅
-            const titleMatch = branchName.match(/(?:\d+-)?(\w+)\/(.+)/);
+            // PR 제목 자동 설정 (이슈 제목 기반)
+            // 예: 3-chore/project-setting → 이슈 #3 제목 → [Chore] 프로젝트 세팅 수정
+            const titleMatch = branchName.match(/^(\d+)-(\w+)\//);
             if (titleMatch) {
-              const prefix = titleMatch[1].charAt(0).toUpperCase() + titleMatch[1].slice(1);
-              const title = decodeURIComponent(titleMatch[2]).replace(/-/g, ' ');
-              const newTitle = `[${prefix}] ${title}`;
+              const issueNumber = parseInt(titleMatch[1], 10);
+              const prefix = titleMatch[2].charAt(0).toUpperCase() + titleMatch[2].slice(1);
 
-              await github.rest.pulls.update({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: prNumber,
-                title: newTitle,
-              });
+              try {
+                const { data: issue } = await github.rest.issues.get({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issueNumber,
+                });
+                // 이슈 제목에서 prefix 태그 제거 (예: "[Chore] 세팅" → "세팅")
+                const issueTitle = issue.title.replace(/^\[.*?\]\s*/, '');
+                const newTitle = `[${prefix}] ${issueTitle}`;
+
+                await github.rest.pulls.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: prNumber,
+                  title: newTitle,
+                });
+              } catch (error) {
+                console.log('Failed to fetch issue title, falling back to branch name:', error.message);
+                const fallbackTitle = decodeURIComponent(branchName.split('/')[1] || '').replace(/-/g, ' ');
+                await github.rest.pulls.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: prNumber,
+                  title: `[${prefix}] ${fallbackTitle}`,
+                });
+              }
             }
 
             // 브랜치명에서 라벨 추출 및 추가

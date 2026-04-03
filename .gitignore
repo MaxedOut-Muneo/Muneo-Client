@@ -30,9 +30,10 @@ build
 !.vscode/settings.json
 .idea
 
-# claude
+# AI
 .claude
 CLAUDE.md
+.omc
 
 # playwright
 playwright-report/
