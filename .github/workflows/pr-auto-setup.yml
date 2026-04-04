@@ -63,8 +63,8 @@ jobs:
                   repo: context.repo.repo,
                   issue_number: issueNumber,
                 });
-                // 이슈 제목에서 prefix 태그 제거 (예: "[Chore] 세팅" → "세팅")
-                const issueTitle = issue.title.replace(/^\[.*?\]\s*/, '');
+                // 이슈 제목에서 prefix 태그 및 이슈 번호 제거 (예: "[Chore] #5 세팅" → "세팅")
+                const issueTitle = issue.title.replace(/^\[.*?\]\s*/, '').replace(/^#\d+\s*/, '');
                 const newTitle = `[${prefix}] ${issueTitle}`;
 
                 await github.rest.pulls.update({

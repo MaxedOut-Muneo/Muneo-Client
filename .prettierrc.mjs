@@ -1,5 +1,3 @@
-import * as prettierPluginTailwindcss from 'prettier-plugin-tailwindcss';
-
 /** @type {import("prettier").Config} */
 const config = {
   printWidth: 120,
@@ -10,7 +8,6 @@ const config = {
   useTabs: false,
   arrowParens: 'always',
   endOfLine: 'lf',
-  plugins: [prettierPluginTailwindcss],
 };
 
 export default config;

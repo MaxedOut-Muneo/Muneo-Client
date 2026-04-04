@@ -1,16 +1,21 @@
 'use client';
 
+import { type RecipeVariants } from '@vanilla-extract/recipes';
 import { type ButtonHTMLAttributes, type ReactNode } from 'react';
+import { buttonRecipe } from './Button.css';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary';
+type ButtonVariants = NonNullable<RecipeVariants<typeof buttonRecipe>>;
+
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: ButtonVariants['variant'];
+  size?: ButtonVariants['size'];
   children: ReactNode;
 }
 
-export function Button({ variant = 'primary', children, ...props }: ButtonProps) {
+export const Button = ({ variant, size, children, className, type = 'button', ...props }: ButtonProps) => {
   return (
-    <button data-variant={variant} {...props}>
+    <button type={type} className={`${buttonRecipe({ variant, size })}${className ? ` ${className}` : ''}`} {...props}>
       {children}
     </button>
   );
-}
+};
