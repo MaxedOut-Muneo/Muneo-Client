@@ -1,6 +1,7 @@
 # dependencies
 node_modules
 vite.config.ts.timestamp-*
+*.tsbuildinfo
 .yarn/*
 !.yarn/cache
 !.yarn/patches
