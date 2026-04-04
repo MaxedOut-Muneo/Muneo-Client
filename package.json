@@ -29,16 +29,21 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "prettier": "^3.8.1",
-    "prettier-plugin-tailwindcss": "^0.6.14",
     "turbo": "^2.8.20",
     "typescript": "^5.9.3"
   },
   "packageManager": "yarn@4.13.0",
   "dependenciesMeta": {
-    "prettier@3.8.1": {
+    "@vanilla-extract/css@1.20.1": {
       "unplugged": true
     },
-    "prettier-plugin-tailwindcss@0.6.14": {
+    "@vanilla-extract/next-plugin@2.5.1": {
+      "unplugged": true
+    },
+    "next@15.5.14": {
+      "unplugged": true
+    },
+    "prettier@3.8.1": {
       "unplugged": true
     }
   }

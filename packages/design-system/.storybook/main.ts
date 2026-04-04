@@ -1,5 +1,6 @@
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 import type { StorybookConfig } from '@storybook/react-vite';
 
 const getAbsolutePath = (value: string) => dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)));
@@ -12,6 +13,11 @@ const config: StorybookConfig = {
     getAbsolutePath('@chromatic-com/storybook'),
   ],
   framework: getAbsolutePath('@storybook/react-vite'),
+  viteFinal: (config) => {
+    config.plugins = config.plugins || [];
+    config.plugins.push(vanillaExtractPlugin());
+    return config;
+  },
 };
 
 export default config;
