@@ -1,5 +1,7 @@
+import { lightTheme } from '@muneo/design-system';
+import '@muneo/design-system/styles/global.css';
+import { type Metadata } from 'next';
 import { QueryProvider } from './providers/QueryProvider';
-import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -9,7 +11,7 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="ko">
+    <html lang="ko" className={lightTheme}>
       <body>
         <QueryProvider>{children}</QueryProvider>
       </body>
