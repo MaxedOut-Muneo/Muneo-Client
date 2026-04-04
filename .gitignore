@@ -1,5 +1,6 @@
 # dependencies
 node_modules
+vite.config.ts.timestamp-*
 .yarn/*
 !.yarn/cache
 !.yarn/patches
