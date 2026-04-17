@@ -11,7 +11,7 @@ export const buttonRecipe = recipe({
     borderRadius: vars.radius.sm,
     border: 'none',
     cursor: 'pointer',
-    transition: 'background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease',
+    transition: 'background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, filter 0.15s ease',
     selectors: {
       '&:disabled': {
         opacity: 0.5,
