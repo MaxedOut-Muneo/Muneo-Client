@@ -1,5 +1,6 @@
 import { lightTheme } from '@muneo/design-system';
 import '@muneo/design-system/styles/global.css';
+import 'pretendard/dist/web/variable/pretendardvariable.min.css';
 import { type Metadata } from 'next';
 import { QueryProvider } from './providers/QueryProvider';
 import './globals.css';

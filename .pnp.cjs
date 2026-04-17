@@ -5445,6 +5445,7 @@ const RAW_RUNTIME_STATE =
           ["eslint", "virtual:65bafdd842b8abc611e650935334f0c70360ee7e50bedb961987dd9ca9dcff51dafa6a933d8203d01ec1c0eeff8a9f96330135bdbd2b7f4a52c1d0753f17bc97#npm:9.39.4"],\
           ["jsdom", "virtual:9845906954fdbefbb879db24fa8772d77a945dca59f459806df47a5b67245d4bc6502880b373cca7201062c81bea9f13f699f52de2004c037e79dbdbd5d97fb3#npm:29.0.1"],\
           ["msw", "virtual:9845906954fdbefbb879db24fa8772d77a945dca59f459806df47a5b67245d4bc6502880b373cca7201062c81bea9f13f699f52de2004c037e79dbdbd5d97fb3#npm:2.12.14"],\
+          ["pretendard", "npm:1.3.9"],\
           ["react", "npm:19.2.4"],\
           ["react-dom", "virtual:9845906954fdbefbb879db24fa8772d77a945dca59f459806df47a5b67245d4bc6502880b373cca7201062c81bea9f13f699f52de2004c037e79dbdbd5d97fb3#npm:19.2.4"],\
           ["react-router", "virtual:9845906954fdbefbb879db24fa8772d77a945dca59f459806df47a5b67245d4bc6502880b373cca7201062c81bea9f13f699f52de2004c037e79dbdbd5d97fb3#npm:7.13.1"],\
@@ -10632,6 +10633,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["pretendard", [\
+      ["npm:1.3.9", {\
+        "packageLocation": "../../C:/Users/rudwn/AppData/Local/Yarn/Berry/cache/pretendard-npm-1.3.9-760c0fa60e-10c0.zip/node_modules/pretendard/",\
+        "packageDependencies": [\
+          ["pretendard", "npm:1.3.9"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["prettier", [\
       ["npm:3.8.1", {\
         "packageLocation": "./.yarn/unplugged/prettier-npm-3.8.1-04022a855f/node_modules/prettier/",\
@@ -12953,6 +12963,7 @@ const RAW_RUNTIME_STATE =
           ["ky", "npm:1.14.3"],\
           ["msw", "virtual:9845906954fdbefbb879db24fa8772d77a945dca59f459806df47a5b67245d4bc6502880b373cca7201062c81bea9f13f699f52de2004c037e79dbdbd5d97fb3#npm:2.12.14"],\
           ["next", "virtual:e293270790bda2411a3626e57e15862403457209cbe755a222c752c37c8f53870ac5708914fca9c46ad11f81505a4af613c8b5e4bba765909191bb5f14d3b656#npm:15.5.14"],\
+          ["pretendard", "npm:1.3.9"],\
           ["react", "npm:19.2.4"],\
           ["react-dom", "virtual:9845906954fdbefbb879db24fa8772d77a945dca59f459806df47a5b67245d4bc6502880b373cca7201062c81bea9f13f699f52de2004c037e79dbdbd5d97fb3#npm:19.2.4"],\
           ["typescript", "patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"],\
