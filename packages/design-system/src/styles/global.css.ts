@@ -8,13 +8,13 @@ globalStyle('*, *::before, *::after', {
 });
 
 globalStyle('html', {
-  fontFamily: vars.typography.fontFamily.sans,
-  lineHeight: vars.typography.lineHeight.normal,
+  fontFamily: vars.typography.fontFamily,
+  lineHeight: vars.typography.lineHeight.lg,
   WebkitFontSmoothing: 'antialiased',
   MozOsxFontSmoothing: 'grayscale',
 });
 
 globalStyle('body', {
-  color: vars.color.text,
-  backgroundColor: vars.color.background,
+  color: vars.color.neutral.n900,
+  backgroundColor: vars.color.white,
 });

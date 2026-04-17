@@ -1,11 +1,19 @@
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles';
 import { vars } from './tokens.css';
 
+const colorTokens = Object.assign(
+  {},
+  { white: vars.color.white, black: vars.color.black },
+  vars.color.brand,
+  vars.color.semantic,
+  vars.color.neutral
+) as Record<string, string>;
+
 const colorProperties = defineProperties({
   properties: {
-    color: vars.color,
-    backgroundColor: vars.color,
-    borderColor: vars.color,
+    color: colorTokens,
+    backgroundColor: colorTokens,
+    borderColor: colorTokens,
   },
 });
 
@@ -30,7 +38,6 @@ const typographyProperties = defineProperties({
     fontSize: vars.typography.fontSize,
     fontWeight: vars.typography.fontWeight,
     lineHeight: vars.typography.lineHeight,
-    fontFamily: vars.typography.fontFamily,
   },
 });
 
