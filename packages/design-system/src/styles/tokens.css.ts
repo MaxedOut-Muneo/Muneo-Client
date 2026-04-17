@@ -54,7 +54,11 @@ export const vars = createThemeContract({
       lg: null,
       xl: null,
     },
-    letterSpacing: null,
+    letterSpacing: {
+      sm: null,
+      md: null,
+      lg: null,
+    },
   },
   space: {
     xs: null,
