@@ -1,11 +1,35 @@
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles';
 import { vars } from './tokens.css';
 
+const colorTokens = {
+  white: vars.color.white,
+  black: vars.color.black,
+  brandPrimary: vars.color.brand.primary,
+  brandPrimaryLight: vars.color.brand.primaryLight,
+  brandPrimaryBg: vars.color.brand.primaryBg,
+  success: vars.color.semantic.success,
+  successBg: vars.color.semantic.successBg,
+  danger: vars.color.semantic.danger,
+  dangerBg: vars.color.semantic.dangerBg,
+  warning: vars.color.semantic.warning,
+  warningBg: vars.color.semantic.warningBg,
+  info: vars.color.semantic.info,
+  infoBg: vars.color.semantic.infoBg,
+  n900: vars.color.neutral.n900,
+  n700: vars.color.neutral.n700,
+  n500: vars.color.neutral.n500,
+  n400: vars.color.neutral.n400,
+  n300: vars.color.neutral.n300,
+  n200: vars.color.neutral.n200,
+  n100: vars.color.neutral.n100,
+  nSurface: vars.color.neutral.nSurface,
+};
+
 const colorProperties = defineProperties({
   properties: {
-    color: vars.color,
-    backgroundColor: vars.color,
-    borderColor: vars.color,
+    color: colorTokens,
+    backgroundColor: colorTokens,
+    borderColor: colorTokens,
   },
 });
 
@@ -30,7 +54,6 @@ const typographyProperties = defineProperties({
     fontSize: vars.typography.fontSize,
     fontWeight: vars.typography.fontWeight,
     lineHeight: vars.typography.lineHeight,
-    fontFamily: vars.typography.fontFamily,
   },
 });
 

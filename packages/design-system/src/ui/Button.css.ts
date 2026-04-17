@@ -6,9 +6,9 @@ export const buttonRecipe = recipe({
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontFamily: vars.typography.fontFamily.sans,
-    fontWeight: vars.typography.fontWeight.semibold,
-    borderRadius: vars.radius.md,
+    fontFamily: vars.typography.fontFamily,
+    fontWeight: vars.typography.fontWeight.semiBold,
+    borderRadius: vars.radius.sm,
     border: 'none',
     cursor: 'pointer',
     transition: 'background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease',
@@ -22,43 +22,43 @@ export const buttonRecipe = recipe({
   variants: {
     variant: {
       primary: {
-        backgroundColor: vars.color.primary,
-        color: vars.color.textInverse,
+        backgroundColor: vars.color.brand.primary,
+        color: vars.color.white,
         selectors: {
           '&:hover:not(:disabled)': {
-            backgroundColor: vars.color.primaryHover,
+            filter: 'brightness(0.9)',
           },
           '&:active:not(:disabled)': {
-            backgroundColor: vars.color.primaryActive,
+            filter: 'brightness(0.8)',
           },
         },
       },
       secondary: {
-        backgroundColor: vars.color.surface,
-        color: vars.color.text,
+        backgroundColor: vars.color.neutral.nSurface,
+        color: vars.color.neutral.n900,
         selectors: {
           '&:hover:not(:disabled)': {
-            backgroundColor: vars.color.surfaceHover,
+            backgroundColor: vars.color.neutral.n100,
           },
         },
       },
       outline: {
         backgroundColor: 'transparent',
-        color: vars.color.primary,
-        border: `1px solid ${vars.color.border}`,
+        color: vars.color.brand.primary,
+        border: `1px solid ${vars.color.neutral.n200}`,
         selectors: {
           '&:hover:not(:disabled)': {
-            borderColor: vars.color.primary,
-            backgroundColor: vars.color.surface,
+            borderColor: vars.color.brand.primary,
+            backgroundColor: vars.color.brand.primaryBg,
           },
         },
       },
       ghost: {
         backgroundColor: 'transparent',
-        color: vars.color.text,
+        color: vars.color.neutral.n900,
         selectors: {
           '&:hover:not(:disabled)': {
-            backgroundColor: vars.color.surfaceHover,
+            backgroundColor: vars.color.neutral.n100,
           },
         },
       },
@@ -71,12 +71,12 @@ export const buttonRecipe = recipe({
       },
       md: {
         fontSize: vars.typography.fontSize.md,
-        padding: `${vars.space.sm} ${vars.space.md}`,
+        padding: `${vars.space.sm} ${vars.space.lg}`,
         gap: vars.space.sm,
       },
       lg: {
         fontSize: vars.typography.fontSize.lg,
-        padding: `${vars.space.sm} ${vars.space.lg}`,
+        padding: `${vars.space.sm} ${vars.space['2xl']}`,
         gap: vars.space.sm,
       },
     },
