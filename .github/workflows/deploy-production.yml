@@ -69,5 +69,5 @@ jobs:
       - name: Summary
         run: |
           echo "### 배포 완료 🚀" >> $GITHUB_STEP_SUMMARY
-          echo "- **URL**: ${{ steps.deploy.outputs.deploy_url }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **URL**: https://muneo-client-web.vercel.app" >> $GITHUB_STEP_SUMMARY
           echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
