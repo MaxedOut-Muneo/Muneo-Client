@@ -1,5 +1,3 @@
-'use client';
-
 import { Logo } from '@muneo/design-system';
 import { COPYRIGHT, TAGLINE } from '../../_constants';
 import * as styles from './Footer.css';
@@ -23,13 +21,6 @@ const LINK_GROUPS = [
 ];
 
 export const Footer = () => {
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (href.startsWith('#') && href.length > 1) {
-      e.preventDefault();
-      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
@@ -52,7 +43,7 @@ export const Footer = () => {
                 <ul className={styles.linkGroupItems}>
                   {items.map(({ label, href }) => (
                     <li key={label}>
-                      <a href={href} className={styles.linkItem} onClick={(e) => handleLinkClick(e, href)}>
+                      <a href={href} className={styles.linkItem}>
                         {label}
                       </a>
                     </li>

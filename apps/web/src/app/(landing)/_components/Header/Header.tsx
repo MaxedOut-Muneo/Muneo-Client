@@ -36,14 +36,7 @@ export const Header = () => {
           <ul className={styles.navList}>
             {NAV_ITEMS.map(({ label, href }) => (
               <li key={href}>
-                <a
-                  href={href}
-                  className={styles.navLink}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                >
+                <a href={href} className={styles.navLink}>
                   {label}
                 </a>
               </li>
