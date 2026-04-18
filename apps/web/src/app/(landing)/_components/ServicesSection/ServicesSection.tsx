@@ -46,7 +46,10 @@ export const ServicesSection = () => {
             {SERVICES.map(({ number, title, description }, index) => (
               <li key={number} className={clsx(styles.card, DELAYS[index], inView && styles.cardVisible)}>
                 <div className={styles.cardContent}>
-                  <h3 className={styles.cardTitle}>{`${number}\n${title}`}</h3>
+                  <p className={styles.cardNumber} aria-hidden="true">
+                    {number}
+                  </p>
+                  <h3 className={styles.cardTitle}>{title}</h3>
                   <p className={styles.cardDescription}>
                     {description.map((line, i) => (
                       <Fragment key={line}>

@@ -82,6 +82,15 @@ export const cardContent = style({
   gap: '22px',
 });
 
+export const cardNumber = style({
+  fontFamily: vars.typography.fontFamily,
+  fontWeight: vars.typography.fontWeight.extraBold,
+  fontSize: vars.typography.fontSize.xl,
+  lineHeight: 'normal',
+  color: '#4b386f',
+  margin: 0,
+});
+
 export const cardTitle = style({
   fontFamily: vars.typography.fontFamily,
   fontWeight: vars.typography.fontWeight.extraBold,
@@ -89,7 +98,6 @@ export const cardTitle = style({
   lineHeight: 'normal',
   color: '#4b386f',
   alignSelf: 'stretch',
-  whiteSpace: 'pre-line',
   margin: 0,
 });
 
