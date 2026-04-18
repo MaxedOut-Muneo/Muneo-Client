@@ -235,6 +235,6 @@ export const scrollIndicator = style({
   left: '50%',
   opacity: 0,
   animation: `${fadeUpCenter} 0.6s ease forwards, ${bounce} 1.8s ease-in-out infinite`,
-  animationDelay: '0.8s, 1.2s',
+  animationDelay: '0.8s, 1.4s',
   color: 'rgba(109, 64, 197, 0.4)',
 });

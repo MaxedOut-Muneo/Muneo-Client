@@ -58,6 +58,13 @@ export const faqItem = style({
   transition: 'border-color 0.2s ease',
 });
 
+export const questionHeading = style({
+  margin: 0,
+  padding: 0,
+  fontSize: 'inherit',
+  fontWeight: 'inherit',
+});
+
 export const faqQuestion = style({
   display: 'flex',
   alignItems: 'center',

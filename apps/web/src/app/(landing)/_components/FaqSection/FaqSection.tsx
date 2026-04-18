@@ -61,26 +61,28 @@ export const FaqSection = () => {
               const answerId = `faq-answer-${id}`;
               return (
                 <li key={id} className={styles.faqItem}>
-                  <button
-                    type="button"
-                    className={clsx(styles.faqQuestion, isOpen && styles.faqQuestionActive)}
-                    onClick={() => toggle(id)}
-                    aria-expanded={isOpen}
-                    aria-controls={answerId}
-                  >
-                    <span className={clsx(styles.questionText, isOpen && styles.questionTextActive)}>{question}</span>
-                    <span className={clsx(styles.chevron, isOpen && styles.chevronActive)} aria-hidden="true">
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M4 6L8 10L12 6"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </span>
-                  </button>
+                  <h3 className={styles.questionHeading}>
+                    <button
+                      type="button"
+                      className={clsx(styles.faqQuestion, isOpen && styles.faqQuestionActive)}
+                      onClick={() => toggle(id)}
+                      aria-expanded={isOpen}
+                      aria-controls={answerId}
+                    >
+                      <span className={clsx(styles.questionText, isOpen && styles.questionTextActive)}>{question}</span>
+                      <span className={clsx(styles.chevron, isOpen && styles.chevronActive)} aria-hidden="true">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M4 6L8 10L12 6"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                    </button>
+                  </h3>
                   <div
                     id={answerId}
                     aria-hidden={!isOpen}
