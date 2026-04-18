@@ -5,6 +5,10 @@ const withVanillaExtract = createVanillaExtractPlugin();
 
 const nextConfig: NextConfig = {
   transpilePackages: ['@muneo/design-system'],
+  experimental: {
+    reactCompiler: true,
+    viewTransition: true,
+  },
 };
 
 export default withVanillaExtract(nextConfig);
