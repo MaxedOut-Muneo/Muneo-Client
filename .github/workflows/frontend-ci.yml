@@ -6,7 +6,7 @@ on:
       - main
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 permissions:
@@ -21,29 +21,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Enable Corepack
-        run: corepack enable
+      - uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-
-      - name: Cache Yarn (PnP)
-        uses: actions/cache@v4
-        with:
-          path: |
-            .yarn/cache
-            .yarn/unplugged
-          key: ${{ runner.os }}-yarn-pnp-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-pnp-
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: pnpm install --frozen-lockfile
 
       - name: Format check
-        run: yarn format:check
+        run: pnpm format:check
 
   ci:
     needs: setup
@@ -58,23 +48,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Enable Corepack
-        run: corepack enable
+      - uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-
-      - name: Cache Yarn (PnP)
-        uses: actions/cache@v4
-        with:
-          path: |
-            .yarn/cache
-            .yarn/unplugged
-          key: ${{ runner.os }}-yarn-pnp-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-pnp-
+          cache: 'pnpm'
 
       - name: Cache Turbo
         uses: actions/cache@v4
@@ -85,27 +65,27 @@ jobs:
             ${{ runner.os }}-turbo-${{ matrix.app }}-
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: pnpm install --frozen-lockfile
 
       - name: Type check
         id: type-check
         continue-on-error: true
-        run: yarn turbo type-check --filter=${{ matrix.app }}
+        run: pnpm turbo type-check --filter=${{ matrix.app }}
 
       - name: Lint check
         id: lint
         continue-on-error: true
-        run: yarn turbo lint --filter=${{ matrix.app }}
+        run: pnpm turbo lint --filter=${{ matrix.app }}
 
       - name: Run tests
         id: test
         continue-on-error: true
-        run: yarn turbo test --filter=${{ matrix.app }}
+        run: pnpm turbo test --filter=${{ matrix.app }}
 
       - name: Build
         id: build
         continue-on-error: true
-        run: yarn turbo build --filter=${{ matrix.app }}
+        run: pnpm turbo build --filter=${{ matrix.app }}
 
       - name: Check results
         if: always()
