@@ -1913,6 +1913,7 @@ const RAW_RUNTIME_STATE =
           ["@vanilla-extract/recipes", "virtual:5d96e0b7d8c846ca4c96dcbecbc4960fdd59bfc9ff8bd0f2c0918e8c01b4050e30b2641505d9a415600e99d73abcb0b8a2dce2799a71cf416a00c15214a0bece#npm:0.5.7"],\
           ["@vanilla-extract/sprinkles", "virtual:5d96e0b7d8c846ca4c96dcbecbc4960fdd59bfc9ff8bd0f2c0918e8c01b4050e30b2641505d9a415600e99d73abcb0b8a2dce2799a71cf416a00c15214a0bece#npm:1.6.5"],\
           ["@vanilla-extract/vite-plugin", "virtual:5d96e0b7d8c846ca4c96dcbecbc4960fdd59bfc9ff8bd0f2c0918e8c01b4050e30b2641505d9a415600e99d73abcb0b8a2dce2799a71cf416a00c15214a0bece#npm:4.0.20"],\
+          ["clsx", "npm:2.1.1"],\
           ["eslint", "virtual:65bafdd842b8abc611e650935334f0c70360ee7e50bedb961987dd9ca9dcff51dafa6a933d8203d01ec1c0eeff8a9f96330135bdbd2b7f4a52c1d0753f17bc97#npm:9.39.4"],\
           ["prettier", "npm:3.8.1"],\
           ["react", "npm:19.2.4"],\
@@ -1947,6 +1948,7 @@ const RAW_RUNTIME_STATE =
           ["@vanilla-extract/recipes", "virtual:5d96e0b7d8c846ca4c96dcbecbc4960fdd59bfc9ff8bd0f2c0918e8c01b4050e30b2641505d9a415600e99d73abcb0b8a2dce2799a71cf416a00c15214a0bece#npm:0.5.7"],\
           ["@vanilla-extract/sprinkles", "virtual:5d96e0b7d8c846ca4c96dcbecbc4960fdd59bfc9ff8bd0f2c0918e8c01b4050e30b2641505d9a415600e99d73abcb0b8a2dce2799a71cf416a00c15214a0bece#npm:1.6.5"],\
           ["@vanilla-extract/vite-plugin", "virtual:5d96e0b7d8c846ca4c96dcbecbc4960fdd59bfc9ff8bd0f2c0918e8c01b4050e30b2641505d9a415600e99d73abcb0b8a2dce2799a71cf416a00c15214a0bece#npm:4.0.20"],\
+          ["clsx", "npm:2.1.1"],\
           ["eslint", "virtual:65bafdd842b8abc611e650935334f0c70360ee7e50bedb961987dd9ca9dcff51dafa6a933d8203d01ec1c0eeff8a9f96330135bdbd2b7f4a52c1d0753f17bc97#npm:9.39.4"],\
           ["prettier", "npm:3.8.1"],\
           ["react", "npm:19.2.4"],\

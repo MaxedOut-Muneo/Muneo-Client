@@ -1,4 +1,5 @@
 import { type RecipeVariants } from '@vanilla-extract/recipes';
+import { clsx } from 'clsx';
 import { type ReactNode } from 'react';
 import * as styles from './StatusCard.css';
 
@@ -14,7 +15,7 @@ export interface StatusCardProps {
 
 export const StatusCard = ({ variant, icon, label, value, className }: StatusCardProps) => {
   return (
-    <div className={[styles.cardRecipe({ variant }), className].filter(Boolean).join(' ')}>
+    <div className={clsx(styles.cardRecipe({ variant }), className)}>
       <div className={styles.inner}>
         <div className={styles.iconWrapper}>{icon}</div>
         <div className={styles.content}>

@@ -27,7 +27,6 @@
   },
   "devDependencies": {
     "@muneo/eslint-config": "workspace:*",
-    "babel-plugin-react-compiler": "^1.0.0",
     "@muneo/typescript-config": "workspace:*",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
@@ -39,6 +38,7 @@
     "@vanilla-extract/next-plugin": "^2.4.13",
     "@vitejs/plugin-react": "^4.7.0",
     "@vitest/coverage-v8": "^4.1.0",
+    "babel-plugin-react-compiler": "^1.0.0",
     "eslint": "^9.39.4",
     "eslint-config-next": "^15.5.15",
     "jsdom": "^29.0.1",

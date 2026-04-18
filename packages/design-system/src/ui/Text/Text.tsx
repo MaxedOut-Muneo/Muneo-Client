@@ -1,6 +1,7 @@
 'use client';
 
 import { type RecipeVariants } from '@vanilla-extract/recipes';
+import { clsx } from 'clsx';
 import { type ComponentPropsWithoutRef, type ElementType } from 'react';
 import { textRecipe } from './Text.css';
 
@@ -14,5 +15,5 @@ type TextProps<T extends ElementType = 'p'> = {
 
 export const Text = <T extends ElementType = 'p'>({ as, variant, className, ...props }: TextProps<T>) => {
   const Component = (as ?? 'p') as ElementType;
-  return <Component className={[textRecipe({ variant }), className].filter(Boolean).join(' ')} {...props} />;
+  return <Component className={clsx(textRecipe({ variant }), className)} {...props} />;
 };

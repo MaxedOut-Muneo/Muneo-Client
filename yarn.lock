@@ -1527,6 +1527,7 @@ __metadata:
     "@vanilla-extract/recipes": "npm:^0.5.5"
     "@vanilla-extract/sprinkles": "npm:^1.6.3"
     "@vanilla-extract/vite-plugin": "npm:^4.0.20"
+    clsx: "npm:^2.1.1"
     eslint: "npm:^9.39.4"
     prettier: "npm:^3.8.1"
     react: "npm:^19.2.4"
