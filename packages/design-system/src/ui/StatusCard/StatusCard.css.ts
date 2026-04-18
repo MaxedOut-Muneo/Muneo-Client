@@ -15,11 +15,11 @@ export const cardRecipe = recipe({
   },
   variants: {
     variant: {
-      primary: { backgroundColor: vars.color.brand.primaryBg },
-      success: { backgroundColor: vars.color.semantic.successBg },
-      danger: { backgroundColor: vars.color.semantic.dangerBg },
-      warning: { backgroundColor: vars.color.semantic.warningBg },
-      info: { backgroundColor: vars.color.semantic.infoBg },
+      primary: { backgroundColor: vars.color.brand.primaryBg, color: vars.color.brand.primary },
+      success: { backgroundColor: vars.color.semantic.successBg, color: vars.color.semantic.success },
+      danger: { backgroundColor: vars.color.semantic.dangerBg, color: vars.color.semantic.danger },
+      warning: { backgroundColor: vars.color.semantic.warningBg, color: vars.color.semantic.warning },
+      info: { backgroundColor: vars.color.semantic.infoBg, color: vars.color.semantic.info },
     },
   },
   defaultVariants: {

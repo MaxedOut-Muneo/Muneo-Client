@@ -21,6 +21,24 @@ export const buttonRecipe = recipe({
     },
   },
   variants: {
+    size: {
+      sm: {
+        ...typographyStyles.label,
+        fontWeight: vars.typography.fontWeight.semiBold,
+        padding: `${vars.space.xs} ${vars.space.sm}`,
+        gap: vars.space.xs,
+      },
+      md: {
+        ...typographyStyles.h4,
+        padding: `${vars.space.sm} ${vars.space.lg}`,
+        gap: vars.space.sm,
+      },
+      lg: {
+        ...typographyStyles.h3,
+        padding: `${vars.space.sm} ${vars.space['2xl']}`,
+        gap: vars.space.sm,
+      },
+    },
     variant: {
       primary: {
         backgroundColor: vars.color.brand.primary,
@@ -81,24 +99,6 @@ export const buttonRecipe = recipe({
             filter: 'brightness(0.8)',
           },
         },
-      },
-    },
-    size: {
-      sm: {
-        ...typographyStyles.label,
-        fontWeight: vars.typography.fontWeight.semiBold,
-        padding: `${vars.space.xs} ${vars.space.sm}`,
-        gap: vars.space.xs,
-      },
-      md: {
-        ...typographyStyles.h4,
-        padding: `${vars.space.sm} ${vars.space.lg}`,
-        gap: vars.space.sm,
-      },
-      lg: {
-        ...typographyStyles.h3,
-        padding: `${vars.space.sm} ${vars.space['2xl']}`,
-        gap: vars.space.sm,
       },
     },
   },

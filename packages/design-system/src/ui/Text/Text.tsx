@@ -14,5 +14,5 @@ type TextProps<T extends ElementType = 'p'> = {
 
 export const Text = <T extends ElementType = 'p'>({ as, variant, className, ...props }: TextProps<T>) => {
   const Component = (as ?? 'p') as ElementType;
-  return <Component className={`${textRecipe({ variant })}${className ? ` ${className}` : ''}`} {...props} />;
+  return <Component className={[textRecipe({ variant }), className].filter(Boolean).join(' ')} {...props} />;
 };

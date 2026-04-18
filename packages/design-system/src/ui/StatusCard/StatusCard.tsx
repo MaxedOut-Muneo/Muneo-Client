@@ -14,7 +14,7 @@ export interface StatusCardProps {
 
 export const StatusCard = ({ variant, icon, label, value, className }: StatusCardProps) => {
   return (
-    <div className={`${styles.cardRecipe({ variant })}${className ? ` ${className}` : ''}`}>
+    <div className={[styles.cardRecipe({ variant }), className].filter(Boolean).join(' ')}>
       <div className={styles.inner}>
         <div className={styles.iconWrapper}>{icon}</div>
         <div className={styles.content}>
