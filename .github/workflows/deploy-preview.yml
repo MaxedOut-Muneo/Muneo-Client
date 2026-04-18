@@ -44,16 +44,10 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Pull Vercel environment
-        run: yarn vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Build
-        run: TURBO_TELEMETRY_DISABLED=1 yarn vercel build --token=${{ secrets.VERCEL_TOKEN }}
-
       - name: Deploy
         id: deploy
         run: |
-          url=$(yarn vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
+          url=$(yarn vercel deploy --yes --token=${{ secrets.VERCEL_TOKEN }})
           echo "preview_url=$url" >> $GITHUB_OUTPUT
 
       - name: Comment PR with Preview URL
