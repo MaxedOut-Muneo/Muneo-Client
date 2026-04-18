@@ -8,6 +8,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
@@ -41,15 +44,15 @@ jobs:
         run: yarn install --immutable
 
       - name: Pull Vercel environment
-        run: npx vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        run: yarn vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Build
-        run: TURBO_TELEMETRY_DISABLED=1 npx vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: TURBO_TELEMETRY_DISABLED=1 yarn vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy
         id: deploy
         run: |
-          url=$(npx vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+          url=$(yarn vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
           echo "deploy_url=$url" >> $GITHUB_OUTPUT
 
       - name: Health Check
