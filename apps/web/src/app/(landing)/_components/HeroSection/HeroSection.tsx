@@ -34,10 +34,10 @@ export const HeroSection = () => {
           </div>
 
           <div className={styles.right}>
-            <figure className={styles.previewCard} aria-label="AI 진단 미리보기 카드">
+            <figure className={styles.previewCard}>
               <div className={styles.previewInner}>
                 <div className={styles.previewTop}>
-                  <span className={styles.previewLabel}>AI 진단 미리보기</span>
+                  <figcaption className={styles.previewLabel}>AI 진단 미리보기</figcaption>
                   <div className={styles.statusCardsRow}>
                     <StatusCard variant="primary" icon={<FileUploadIcon />} label="생성한 가견적서" value="3건" />
                     <StatusCard variant="success" icon={<OctagonCheckIcon />} label="진단 완료한 견적" value="5건" />

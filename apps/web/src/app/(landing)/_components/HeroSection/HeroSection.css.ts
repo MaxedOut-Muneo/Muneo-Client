@@ -59,7 +59,7 @@ export const headline = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '7px',
-  fontFamily: "'Paperlogy', sans-serif",
+  fontFamily: vars.typography.fontFamilyDisplay,
   fontSize: '42px',
   fontWeight: 700,
   fontStyle: 'normal',
@@ -216,7 +216,7 @@ export const recentItem = style({
 });
 
 export const subHeadline = style({
-  fontFamily: "'Paperlogy', sans-serif",
+  fontFamily: vars.typography.fontFamilyDisplay,
   fontWeight: vars.typography.fontWeight.medium,
   fontSize: vars.typography.fontSize.lg,
   lineHeight: 'normal',
@@ -234,7 +234,7 @@ export const scrollIndicator = style({
   bottom: '36px',
   left: '50%',
   opacity: 0,
-  animation: `${fadeUpCenter} 0.6s ease forwards, ${bounce} 1.8s ease-in-out 1.2s infinite`,
+  animation: `${fadeUpCenter} 0.6s ease forwards, ${bounce} 1.8s ease-in-out infinite`,
   animationDelay: '0.8s, 1.2s',
   color: 'rgba(109, 64, 197, 0.4)',
 });
