@@ -14,6 +14,9 @@ export const nextJsConfig = [
       react,
       'react-hooks': reactHooks,
     },
+    settings: {
+      react: { version: 'detect' },
+    },
     rules: {
       // Next.js
       ...nextPlugin.configs.recommended.rules,
