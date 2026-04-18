@@ -44,7 +44,7 @@ export const UsageGuideSection = () => {
           <ol className={styles.stepsRow}>
             {STEPS.map(({ number, title, description }, index) => (
               <li key={number} className={clsx(styles.stepItem, DELAYS[index], inView && styles.stepItemVisible)}>
-                <span className={styles.stepNumber} aria-label={`${index + 1}단계`}>
+                <span className={styles.stepNumber} aria-hidden="true">
                   {number}
                 </span>
                 <div className={styles.stepLine} aria-hidden="true" />
