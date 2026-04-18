@@ -32,6 +32,7 @@ export const vars = createThemeContract({
   },
   typography: {
     fontFamily: null,
+    fontFamilyDisplay: null,
     fontSize: {
       xxs: null,
       xs: null,
