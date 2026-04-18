@@ -2,10 +2,6 @@
   "name": "muneo",
   "private": true,
   "type": "module",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
@@ -18,7 +14,7 @@
     "test:e2e": "playwright test",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "storybook": "yarn workspace @muneo/design-system storybook",
+    "storybook": "pnpm --filter @muneo/design-system storybook",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -33,19 +29,26 @@
     "typescript": "^5.9.3",
     "vercel": "^51.7.0"
   },
-  "packageManager": "yarn@4.13.0",
-  "dependenciesMeta": {
-    "@vanilla-extract/css@1.20.1": {
-      "unplugged": true
-    },
-    "@vanilla-extract/next-plugin@2.5.1": {
-      "unplugged": true
-    },
-    "next@15.5.14": {
-      "unplugged": true
-    },
-    "prettier@3.8.1": {
-      "unplugged": true
+  "packageManager": "pnpm@10.33.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@swc/core",
+      "esbuild",
+      "msw",
+      "sharp",
+      "unrs-resolver"
+    ],
+    "packageExtensions": {
+      "eslint-config-next@*": {
+        "dependencies": {
+          "next": "*"
+        }
+      },
+      "next@*": {
+        "dependencies": {
+          "@vanilla-extract/next-plugin": "*"
+        }
+      }
     }
   }
 }

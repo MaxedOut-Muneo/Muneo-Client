@@ -1,6 +1,6 @@
 {
-  "apps/web/**/*.{js,jsx,ts,tsx}": ["yarn eslint --fix --config apps/web/eslint.config.js"],
-  "apps/admin/**/*.{js,jsx,ts,tsx}": ["yarn eslint --fix --config apps/admin/eslint.config.js"],
-  "packages/design-system/**/*.{js,jsx,ts,tsx}": ["yarn eslint --fix --config packages/design-system/eslint.config.js"],
-  "*.{js,jsx,ts,tsx,json,css,md}": ["yarn prettier --write"]
+  "apps/web/**/*.{js,jsx,ts,tsx}": ["pnpm eslint --fix --config apps/web/eslint.config.js"],
+  "apps/admin/**/*.{js,jsx,ts,tsx}": ["pnpm eslint --fix --config apps/admin/eslint.config.js"],
+  "packages/design-system/**/*.{js,jsx,ts,tsx}": ["pnpm eslint --fix --config packages/design-system/eslint.config.js"],
+  "*.{js,jsx,ts,tsx,json,css,md}": ["pnpm prettier --write"]
 }
