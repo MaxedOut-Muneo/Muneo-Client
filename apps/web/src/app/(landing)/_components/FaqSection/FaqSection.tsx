@@ -84,6 +84,7 @@ export const FaqSection = () => {
                   <div
                     id={answerId}
                     aria-hidden={!isOpen}
+                    inert={!isOpen}
                     className={clsx(styles.faqAnswer, isOpen && styles.faqAnswerOpen)}
                   >
                     <div className={styles.faqAnswerInner}>
