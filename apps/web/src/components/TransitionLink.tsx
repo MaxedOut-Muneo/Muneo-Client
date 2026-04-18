@@ -12,7 +12,9 @@ export const TransitionLink = forwardRef<HTMLAnchorElement, TransitionLinkProps>
 
     const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
       onClick?.(e);
-      if (!viewTransition || e.defaultPrevented || !('startViewTransition' in document)) {return;}
+      if (!viewTransition || e.defaultPrevented || !('startViewTransition' in document)) {
+        return;
+      }
       e.preventDefault();
       document.startViewTransition(() => {
         router.push(href as string);
