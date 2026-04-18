@@ -34,27 +34,33 @@ export const lightTheme = createTheme(vars, {
   typography: {
     fontFamily:
       "'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif",
+    fontFamilyDisplay: "'Paperlogy', sans-serif",
     fontSize: {
       xxs: '10px',
       xs: '12px',
       sm: '14px',
+      base: '15px',
       md: '16px',
       lg: '20px',
       xl: '24px',
       '2xl': '28px',
-      '3xl': '40px',
+      '3xl': '32px',
+      '4xl': '40px',
     },
     fontWeight: {
       regular: '400',
       medium: '500',
       semiBold: '600',
       bold: '700',
+      extraBold: '800',
     },
     lineHeight: {
       sm: '16px',
       md: '20px',
       lg: '24px',
       xl: '28px',
+      '2xl': '36px',
+      '3xl': '48px',
     },
     letterSpacing: {
       sm: '-0.16px',

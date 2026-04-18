@@ -32,27 +32,33 @@ export const vars = createThemeContract({
   },
   typography: {
     fontFamily: null,
+    fontFamilyDisplay: null,
     fontSize: {
       xxs: null,
       xs: null,
       sm: null,
+      base: null,
       md: null,
       lg: null,
       xl: null,
       '2xl': null,
       '3xl': null,
+      '4xl': null,
     },
     fontWeight: {
       regular: null,
       medium: null,
       semiBold: null,
       bold: null,
+      extraBold: null,
     },
     lineHeight: {
       sm: null,
       md: null,
       lg: null,
       xl: null,
+      '2xl': null,
+      '3xl': null,
     },
     letterSpacing: {
       sm: null,

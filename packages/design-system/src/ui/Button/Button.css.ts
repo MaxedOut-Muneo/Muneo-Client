@@ -1,5 +1,6 @@
 import { recipe } from '@vanilla-extract/recipes';
-import { vars } from '../styles/tokens.css';
+import { vars } from '../../styles/tokens.css';
+import { typographyStyles } from '../../styles/typography';
 
 export const buttonRecipe = recipe({
   base: {
@@ -20,6 +21,24 @@ export const buttonRecipe = recipe({
     },
   },
   variants: {
+    size: {
+      sm: {
+        ...typographyStyles.label,
+        fontWeight: vars.typography.fontWeight.semiBold,
+        padding: `${vars.space.xs} ${vars.space.sm}`,
+        gap: vars.space.xs,
+      },
+      md: {
+        ...typographyStyles.h4,
+        padding: `${vars.space.sm} ${vars.space.lg}`,
+        gap: vars.space.sm,
+      },
+      lg: {
+        ...typographyStyles.h3,
+        padding: `${vars.space.sm} ${vars.space['2xl']}`,
+        gap: vars.space.sm,
+      },
+    },
     variant: {
       primary: {
         backgroundColor: vars.color.brand.primary,
@@ -62,22 +81,24 @@ export const buttonRecipe = recipe({
           },
         },
       },
-    },
-    size: {
-      sm: {
-        fontSize: vars.typography.fontSize.sm,
-        padding: `${vars.space.xs} ${vars.space.sm}`,
-        gap: vars.space.xs,
-      },
-      md: {
-        fontSize: vars.typography.fontSize.md,
-        padding: `${vars.space.sm} ${vars.space.lg}`,
-        gap: vars.space.sm,
-      },
-      lg: {
-        fontSize: vars.typography.fontSize.lg,
-        padding: `${vars.space.sm} ${vars.space['2xl']}`,
-        gap: vars.space.sm,
+      gradient: {
+        ...typographyStyles.label,
+        fontWeight: vars.typography.fontWeight.bold,
+        lineHeight: 'normal',
+        gap: '10px',
+        background: `linear-gradient(to right, ${vars.color.brand.primary}, ${vars.color.brand.primaryLight})`,
+        border: `1px solid ${vars.color.neutral.n200}`,
+        borderRadius: '12px',
+        color: vars.color.white,
+        padding: `${vars.space.md} ${vars.space.lg}`,
+        selectors: {
+          '&:hover:not(:disabled)': {
+            filter: 'brightness(0.9)',
+          },
+          '&:active:not(:disabled)': {
+            filter: 'brightness(0.8)',
+          },
+        },
       },
     },
   },

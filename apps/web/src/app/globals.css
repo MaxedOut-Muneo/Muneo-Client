@@ -1,1 +1,12 @@
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+html {
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: 80px;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
