@@ -9,6 +9,7 @@ export const lightTheme = createTheme(vars, {
       primary: '#453EEF',
       primaryLight: '#9B86FF',
       primaryBg: '#EEF0FF',
+      secondary: '#8455DF',
     },
     semantic: {
       success: '#10B981',
@@ -23,6 +24,7 @@ export const lightTheme = createTheme(vars, {
     neutral: {
       n900: '#111827',
       n700: '#374151',
+      n600: '#4B5563',
       n500: '#6B7280',
       n400: '#9CA3AF',
       n300: '#D1D5DB',
@@ -79,6 +81,7 @@ export const lightTheme = createTheme(vars, {
   },
   radius: {
     sm: '8px',
+    base: '10px',
     md: '16px',
     lg: '24px',
     xl: '40px',
