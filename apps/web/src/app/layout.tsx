@@ -1,8 +1,32 @@
 import { lightTheme } from '@muneo/design-system';
 import '@muneo/design-system/styles/global.css';
 import { type Metadata } from 'next';
+import localFont from 'next/font/local';
 import { QueryProvider } from './providers/QueryProvider';
 import './globals.css';
+
+const pretendard = localFont({
+  src: './fonts/PretendardVariable.woff2',
+  variable: '--font-pretendard',
+  display: 'swap',
+  weight: '45 920',
+});
+
+const paperlogy = localFont({
+  src: [
+    { path: './fonts/Paperlogy-1Thin.ttf', weight: '100' },
+    { path: './fonts/Paperlogy-2ExtraLight.ttf', weight: '200' },
+    { path: './fonts/Paperlogy-3Light.ttf', weight: '300' },
+    { path: './fonts/Paperlogy-4Regular.ttf', weight: '400' },
+    { path: './fonts/Paperlogy-5Medium.ttf', weight: '500' },
+    { path: './fonts/Paperlogy-6SemiBold.ttf', weight: '600' },
+    { path: './fonts/Paperlogy-7Bold.ttf', weight: '700' },
+    { path: './fonts/Paperlogy-8ExtraBold.ttf', weight: '800' },
+    { path: './fonts/Paperlogy-9Black.ttf', weight: '900' },
+  ],
+  variable: '--font-paperlogy',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: '문어 - 문제 없는 시공을 위한 어시스턴트',
@@ -19,24 +43,7 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="ko" className={lightTheme}>
-      <head>
-        <link
-          rel="preload"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/woff2/PretendardVariable.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/subsets/Paperlogy-dynamic-subset.css"
-        />
-      </head>
+    <html lang="ko" className={`${lightTheme} ${pretendard.variable} ${paperlogy.variable}`}>
       <body>
         <QueryProvider>{children}</QueryProvider>
       </body>
