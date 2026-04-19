@@ -1,7 +1,4 @@
 {
   "extends": "@muneo/typescript-config/base.json",
-  "compilerOptions": {
-    "outDir": "./dist"
-  },
   "include": ["src", ".storybook"]
 }
