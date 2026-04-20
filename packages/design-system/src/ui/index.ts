@@ -1,6 +1,7 @@
 export * from './Button';
 export * from './ChatBubble';
 export * from './ChatInput';
+export * from './Sidebar';
 export * from './DatePicker';
 export * from './Dropdown';
 export * from './SelectButton';
