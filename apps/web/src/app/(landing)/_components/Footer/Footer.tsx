@@ -1,5 +1,5 @@
 import { Logo } from '@muneo/design-system';
-import { COPYRIGHT, TAGLINE } from '../../_constants';
+import { COPYRIGHT, TAGLINE } from '@/constants/app';
 import * as styles from './Footer.css';
 
 const LINK_GROUPS = [

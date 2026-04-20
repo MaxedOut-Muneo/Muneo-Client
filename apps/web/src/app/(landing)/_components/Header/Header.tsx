@@ -4,7 +4,7 @@ import { Button, Logo } from '@muneo/design-system';
 import { clsx } from 'clsx';
 import { useEffect, useState } from 'react';
 import { TransitionLink } from '@/components/TransitionLink';
-import { TAGLINE } from '../../_constants';
+import { TAGLINE } from '@/constants/app';
 import * as styles from './Header.css';
 
 const NAV_ITEMS = [
@@ -45,7 +45,7 @@ export const Header = () => {
           </ul>
         </nav>
 
-        <Button variant="gradient" className={styles.ctaButton}>
+        <Button as={TransitionLink} href="/login" viewTransition variant="gradient" className={styles.ctaButton}>
           시작하기
         </Button>
       </div>

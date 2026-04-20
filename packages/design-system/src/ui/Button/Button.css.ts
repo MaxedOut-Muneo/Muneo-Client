@@ -12,6 +12,7 @@ export const buttonRecipe = recipe({
     borderRadius: vars.radius.sm,
     border: 'none',
     cursor: 'pointer',
+    textDecoration: 'none',
     transition: 'background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, filter 0.15s ease',
     selectors: {
       '&:disabled': {
@@ -41,8 +42,10 @@ export const buttonRecipe = recipe({
     },
     variant: {
       primary: {
-        backgroundColor: vars.color.brand.primary,
+        backgroundColor: vars.color.brand.secondary,
         color: vars.color.white,
+        border: `1px solid ${vars.color.neutral.n200}`,
+        borderRadius: '12px',
         selectors: {
           '&:hover:not(:disabled)': {
             filter: 'brightness(0.9)',
@@ -78,6 +81,34 @@ export const buttonRecipe = recipe({
         selectors: {
           '&:hover:not(:disabled)': {
             backgroundColor: vars.color.neutral.n100,
+          },
+        },
+      },
+      outlineSecondary: {
+        backgroundColor: vars.color.white,
+        color: vars.color.brand.secondary,
+        border: `1px solid ${vars.color.neutral.n200}`,
+        borderRadius: '12px',
+        selectors: {
+          '&:hover:not(:disabled)': {
+            borderColor: vars.color.brand.secondary,
+          },
+          '&:active:not(:disabled)': {
+            filter: 'brightness(0.95)',
+          },
+        },
+      },
+      outlineSecondaryStrong: {
+        backgroundColor: vars.color.white,
+        color: vars.color.brand.secondary,
+        border: `1.5px solid ${vars.color.brand.secondary}`,
+        borderRadius: '12px',
+        selectors: {
+          '&:hover:not(:disabled)': {
+            filter: 'brightness(0.9)',
+          },
+          '&:active:not(:disabled)': {
+            filter: 'brightness(0.8)',
           },
         },
       },
