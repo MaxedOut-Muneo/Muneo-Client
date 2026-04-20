@@ -31,10 +31,12 @@ export default function LoginModalPage() {
     <div
       className={styles.backdrop}
       onMouseDown={(e) => {
-        mouseDownTarget.current = e.target;
+        if (e.target === e.currentTarget) {
+          mouseDownTarget.current = e.target;
+        }
       }}
       onClick={(e) => {
-        if (mouseDownTarget.current === e.currentTarget) {
+        if (mouseDownTarget.current === e.currentTarget && e.target === e.currentTarget) {
           handleClose();
         }
       }}

@@ -10,6 +10,10 @@ html {
   scrollbar-width: none;
 }
 
+html[data-scroll-behavior='smooth'] {
+  scroll-behavior: smooth;
+}
+
 section[id] {
   scroll-margin-top: 80px;
 }
