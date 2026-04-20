@@ -17,10 +17,12 @@ export const useBodyScrollLock = (isLocked: boolean) => {
       document.documentElement.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
     }
 
+    const previousScrollbarWidth = document.documentElement.style.getPropertyValue('--scrollbar-width');
+
     return () => {
       document.body.style.overflow = previousOverflow;
       document.body.style.paddingRight = previousPaddingRight;
-      document.documentElement.style.setProperty('--scrollbar-width', '0px');
+      document.documentElement.style.setProperty('--scrollbar-width', previousScrollbarWidth || '0px');
     };
   }, [isLocked]);
 };
