@@ -33,11 +33,23 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         )}
         <div className={containerClass}>
           {startIcon && <span className={styles.iconWrapper}>{startIcon}</span>}
-          <input ref={ref} id={id} disabled={disabled} className={inputClass} {...props} />
+          <input
+            ref={ref}
+            id={id}
+            disabled={disabled}
+            className={inputClass}
+            aria-invalid={Boolean(error)}
+            aria-describedby={error && id ? `${id}-error` : undefined}
+            {...props}
+          />
           {suffix && <span className={styles.suffixText}>{suffix}</span>}
           {endIcon && <span className={styles.iconWrapper}>{endIcon}</span>}
         </div>
-        {error && <span className={styles.errorText}>{error}</span>}
+        {error && (
+          <span id={id ? `${id}-error` : undefined} className={styles.errorText} role="alert">
+            {error}
+          </span>
+        )}
       </div>
     );
   }

@@ -31,9 +31,9 @@ export const Button = <E extends ElementType = 'button'>({
 
   return (
     <Component
+      {...props}
       type={type}
       className={[buttonRecipe({ variant, size }), className].filter(Boolean).join(' ')}
-      {...props}
     >
       {children}
     </Component>
