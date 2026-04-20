@@ -78,7 +78,9 @@ export const DatePicker = ({
   }, []);
 
   const handleOpen = () => {
-    if (disabled) {return;}
+    if (disabled) {
+      return;
+    }
     setOpen((prev) => !prev);
     setSelectingEnd(false);
     setHoverDate(undefined);
@@ -116,7 +118,9 @@ export const DatePicker = ({
   };
   const isInRange = (date: Date) => {
     const end = getEffectiveEnd();
-    if (!startDate || !end) {return false;}
+    if (!startDate || !end) {
+      return false;
+    }
     const [from, to] = startDate <= end ? [startDate, end] : [end, startDate];
     return date > from && date < to;
   };
