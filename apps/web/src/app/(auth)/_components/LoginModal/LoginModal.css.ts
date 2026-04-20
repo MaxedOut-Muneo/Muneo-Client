@@ -19,6 +19,7 @@ export const closeButton = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  color: vars.color.neutral.n400,
 });
 
 export const inner = style({
@@ -26,6 +27,7 @@ export const inner = style({
   flexDirection: 'column',
   gap: '6px',
   width: '340px',
+  maxWidth: '100%',
 });
 
 export const upper = style({
@@ -141,7 +143,7 @@ export const kakaoIcon = style({
 
 export const kakaoText = style({
   fontFamily: vars.typography.fontFamily,
-  fontSize: vars.typography.fontSize.sm,
+  fontSize: vars.typography.fontSize.base,
   fontWeight: vars.typography.fontWeight.bold,
   color: '#000',
 });

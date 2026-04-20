@@ -16,11 +16,7 @@ export default function LoginPage() {
         backgroundColor: '#f3f4f6',
       }}
     >
-      <LoginSection
-        onLogoClick={() => router.push('/')}
-        onForgotPassword={() => {}}
-        onSignUp={() => router.push('/signup')}
-      />
+      <LoginSection onLogoClick={() => router.push('/')} onSignUp={() => router.push('/signup')} />
     </div>
   );
 }

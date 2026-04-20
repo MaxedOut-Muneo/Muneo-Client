@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, CloseRoundFill, KakaoIcon, Logo, TextField } from '@muneo/design-system';
+import { useId } from 'react';
 import { TAGLINE } from '@/constants/app';
 import * as styles from './LoginModal.css';
 
@@ -37,8 +38,14 @@ export const LoginModal = ({
   onLogoClick,
   onClose,
 }: LoginModalProps) => {
+  const emailId = useId();
+  const passwordId = useId();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (isLoading) {
+      return;
+    }
     onLogin();
   };
 
@@ -53,13 +60,18 @@ export const LoginModal = ({
         <div className={styles.upper}>
           <div className={styles.logoSection}>
             <span className={styles.tagline}>{TAGLINE}</span>
-            <button type="button" className={styles.logoButton} onClick={onLogoClick} aria-label="홈으로 이동">
+            {onLogoClick ? (
+              <button type="button" className={styles.logoButton} onClick={onLogoClick} aria-label="홈으로 이동">
+                <Logo width={118} height={38} />
+              </button>
+            ) : (
               <Logo width={118} height={38} />
-            </button>
+            )}
           </div>
 
           <div className={styles.formSection}>
             <TextField
+              id={emailId}
               label="이메일"
               type="email"
               placeholder="name@example.com"
@@ -69,6 +81,7 @@ export const LoginModal = ({
               autoComplete="email"
             />
             <TextField
+              id={passwordId}
               label="비밀번호"
               type="password"
               placeholder="비밀번호를 입력하세요"
