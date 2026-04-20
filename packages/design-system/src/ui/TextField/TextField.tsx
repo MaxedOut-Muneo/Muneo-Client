@@ -12,7 +12,21 @@ export interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
-  ({ label, error, startIcon, endIcon, suffix, className, id, disabled, ...props }, ref) => {
+  (
+    {
+      label,
+      error,
+      startIcon,
+      endIcon,
+      suffix,
+      className,
+      id,
+      disabled,
+      'aria-describedby': externalDescribedBy,
+      ...props
+    },
+    ref
+  ) => {
     const containerClass = [
       styles.inputContainer,
       error ? styles.inputContainerError : '',
@@ -23,6 +37,8 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       .join(' ');
 
     const inputClass = [styles.input, suffix ? styles.inputRight : ''].filter(Boolean).join(' ');
+    const describedBy =
+      [error && id ? `${id}-error` : '', externalDescribedBy ?? ''].filter(Boolean).join(' ') || undefined;
 
     return (
       <div className={styles.wrapper}>
@@ -34,13 +50,13 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         <div className={containerClass}>
           {startIcon && <span className={styles.iconWrapper}>{startIcon}</span>}
           <input
+            {...props}
             ref={ref}
             id={id}
             disabled={disabled}
             className={inputClass}
             aria-invalid={Boolean(error)}
-            aria-describedby={error && id ? `${id}-error` : undefined}
-            {...props}
+            aria-describedby={describedBy}
           />
           {suffix && <span className={styles.suffixText}>{suffix}</span>}
           {endIcon && <span className={styles.iconWrapper}>{endIcon}</span>}
