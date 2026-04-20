@@ -10,11 +10,11 @@ export const modal = style({
 
 export const closeButton = style({
   position: 'absolute',
-  top: '12px',
-  right: '12px',
+  top: '4px',
+  right: '4px',
   background: 'none',
   border: 'none',
-  padding: 0,
+  padding: vars.space.sm,
   cursor: 'pointer',
   display: 'flex',
   alignItems: 'center',
