@@ -10,6 +10,7 @@ import * as styles from './page.css';
 export default function LoginModalPage() {
   const router = useRouter();
   const dialogRef = useRef<HTMLDivElement>(null);
+  const mouseDownTarget = useRef<EventTarget | null>(null);
 
   useBodyScrollLock(true);
   useFocusTrap(dialogRef, true);
@@ -27,7 +28,17 @@ export default function LoginModalPage() {
   }, [handleClose]);
 
   return (
-    <div className={styles.backdrop} onClick={handleClose}>
+    <div
+      className={styles.backdrop}
+      onMouseDown={(e) => {
+        mouseDownTarget.current = e.target;
+      }}
+      onClick={(e) => {
+        if (mouseDownTarget.current === e.currentTarget) {
+          handleClose();
+        }
+      }}
+    >
       <div
         ref={dialogRef}
         role="dialog"
@@ -36,7 +47,7 @@ export default function LoginModalPage() {
         className={styles.modalWrapper}
         onClick={(e) => e.stopPropagation()}
       >
-        <LoginSection onLogoClick={handleClose} onClose={handleClose} onForgotPassword={() => {}} onSignUp={() => {}} />
+        <LoginSection onLogoClick={handleClose} onClose={handleClose} />
       </div>
     </div>
   );

@@ -19,8 +19,18 @@ export const backdrop = style({
   justifyContent: 'center',
   zIndex: 200,
   animation: `${fadeIn} 0.2s ease`,
+  '@media': {
+    '(prefers-reduced-motion: reduce)': {
+      animation: 'none',
+    },
+  },
 });
 
 export const modalWrapper = style({
   animation: `${slideUp} 0.25s ease`,
+  '@media': {
+    '(prefers-reduced-motion: reduce)': {
+      animation: 'none',
+    },
+  },
 });
