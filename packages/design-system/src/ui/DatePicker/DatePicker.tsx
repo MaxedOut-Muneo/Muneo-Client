@@ -111,10 +111,10 @@ export const DatePicker = ({
 
   const getEffectiveEnd = () => (selectingEnd && hoverDate ? hoverDate : endDate);
 
-  const isStart = (date: Date) => Boolean(startDate) && isSameDay(date, startDate);
+  const isStart = (date: Date) => startDate !== undefined && isSameDay(date, startDate);
   const isEnd = (date: Date) => {
     const end = getEffectiveEnd();
-    return Boolean(end) && isSameDay(date, end);
+    return end !== undefined && isSameDay(date, end);
   };
   const isInRange = (date: Date) => {
     const end = getEffectiveEnd();
