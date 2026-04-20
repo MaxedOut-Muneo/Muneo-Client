@@ -8,6 +8,7 @@ export const vars = createThemeContract({
       primary: null,
       primaryLight: null,
       primaryBg: null,
+      secondary: null,
     },
     semantic: {
       success: null,
@@ -22,6 +23,7 @@ export const vars = createThemeContract({
     neutral: {
       n900: null,
       n700: null,
+      n600: null,
       n500: null,
       n400: null,
       n300: null,
@@ -77,6 +79,7 @@ export const vars = createThemeContract({
   },
   radius: {
     sm: null,
+    base: null,
     md: null,
     lg: null,
     xl: null,
