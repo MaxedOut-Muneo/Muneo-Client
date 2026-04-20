@@ -23,7 +23,9 @@ export const ChatInput = ({
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
       e.preventDefault();
-      if (value.trim()) {onSubmit();}
+      if (value.trim()) {
+        onSubmit();
+      }
     }
   };
 
