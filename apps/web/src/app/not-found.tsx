@@ -13,7 +13,7 @@ export default function NotFoundPage() {
         padding: '24px',
       }}
     >
-      <p style={{ fontSize: '120px', fontWeight: 900, lineHeight: 1, color: '#7C3AED', margin: 0 }}>404</p>
+      <p style={{ fontSize: '120px', fontWeight: 900, lineHeight: 1, color: '#453EEF', margin: 0 }}>404</p>
       <h1 style={{ fontSize: '22px', fontWeight: 700, margin: '20px 0 10px', color: '#111827' }}>
         페이지를 찾을 수 없습니다
       </h1>
