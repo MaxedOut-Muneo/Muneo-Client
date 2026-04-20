@@ -43,7 +43,11 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="ko" className={`${lightTheme} ${pretendard.variable} ${paperlogy.variable}`}>
+    <html
+      lang="ko"
+      className={`${lightTheme} ${pretendard.variable} ${paperlogy.variable}`}
+      data-scroll-behavior="smooth"
+    >
       <body>
         <QueryProvider>{children}</QueryProvider>
       </body>
