@@ -20,6 +20,7 @@ export const header = style({
   justifyContent: 'center',
   width: '100%',
   transition: 'background-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease',
+  paddingRight: 'var(--scrollbar-width, 0px)',
 });
 
 export const headerScrolled = style({

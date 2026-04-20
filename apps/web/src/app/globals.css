@@ -8,15 +8,10 @@
 
 html {
   scrollbar-width: none;
-  scroll-behavior: smooth;
 }
 
 section[id] {
   scroll-margin-top: 80px;
-}
-
-header {
-  padding-right: var(--scrollbar-width, 0px);
 }
 
 html::-webkit-scrollbar {

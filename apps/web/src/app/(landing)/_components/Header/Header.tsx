@@ -45,11 +45,9 @@ export const Header = () => {
           </ul>
         </nav>
 
-        <TransitionLink href="/login" viewTransition>
-          <Button variant="gradient" className={styles.ctaButton}>
-            시작하기
-          </Button>
-        </TransitionLink>
+        <Button as={TransitionLink} href="/login" viewTransition variant="gradient" className={styles.ctaButton}>
+          시작하기
+        </Button>
       </div>
     </header>
   );
