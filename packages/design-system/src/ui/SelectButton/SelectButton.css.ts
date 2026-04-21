@@ -31,7 +31,7 @@ export const selectButtonRecipe = recipe({
       true: {
         backgroundColor: '#8F49E9',
         color: vars.color.white,
-        border: 'none',
+        border: '1.5px solid transparent',
       },
       false: {
         backgroundColor: vars.color.white,
