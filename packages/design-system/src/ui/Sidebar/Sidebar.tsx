@@ -85,7 +85,7 @@ export const Sidebar = ({ activeItem, onItemClick, user, className }: SidebarPro
 
       {user && (
         <div className={userCard}>
-          <div className={avatar}>{user.name[0]}</div>
+          <div className={avatar}>{user.name.trim()[0] ?? user.email[0] ?? '?'}</div>
           <div className={userInfo}>
             <p className={userNameStyle}>{user.name}</p>
             <p className={userEmailStyle}>{user.email}</p>
