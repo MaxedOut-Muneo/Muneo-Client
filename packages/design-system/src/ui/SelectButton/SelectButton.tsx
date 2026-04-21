@@ -16,7 +16,12 @@ export const SelectButton = ({
   ...props
 }: SelectButtonProps) => {
   return (
-    <button type={type} className={`${selectButtonRecipe({ selected })}${className ? ` ${className}` : ''}`} {...props}>
+    <button
+      type={type}
+      className={`${selectButtonRecipe({ selected })}${className ? ` ${className}` : ''}`}
+      aria-pressed={selected}
+      {...props}
+    >
       {children}
     </button>
   );
