@@ -53,9 +53,13 @@ export const DatePicker = ({
 
   const handleChange = (dates: [Date | null, Date | null]) => {
     const [start, end] = dates;
-    if (!start) {return;}
+    if (!start) {
+      return;
+    }
     onChange?.(start, end ?? undefined);
-    if (end) {setOpen(false);}
+    if (end) {
+      setOpen(false);
+    }
   };
 
   return (
