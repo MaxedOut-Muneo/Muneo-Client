@@ -51,6 +51,10 @@ export const DatePicker = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (disabled) {setOpen(false);}
+  }, [disabled]);
+
   const handleChange = (dates: [Date | null, Date | null]) => {
     const [start, end] = dates;
     if (!start) {
