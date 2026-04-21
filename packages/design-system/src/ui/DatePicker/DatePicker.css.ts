@@ -120,10 +120,13 @@ globalStyle(`${panel} .react-datepicker__day--in-selecting-range`, {
   borderRadius: 0,
 });
 
-globalStyle(`${panel} .react-datepicker__day--keyboard-selected`, {
-  backgroundColor: 'transparent',
-  color: vars.color.neutral.n900,
-});
+globalStyle(
+  `${panel} .react-datepicker__day--keyboard-selected:not(.react-datepicker__day--selected):not(.react-datepicker__day--range-start):not(.react-datepicker__day--range-end)`,
+  {
+    backgroundColor: 'transparent',
+    color: vars.color.neutral.n900,
+  }
+);
 
 globalStyle(`${panel} .react-datepicker__navigation-icon::before`, {
   borderColor: vars.color.neutral.n500,
