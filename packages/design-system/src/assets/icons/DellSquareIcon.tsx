@@ -1,0 +1,12 @@
+// @generated
+
+import type { SVGProps } from 'react';
+const DellSquareIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg" width={22} height={22} fill="none" {...props}>
+    <path
+      d="M15.25 2.75C17.4591 2.75 19.25 4.54086 19.25 6.75V15.25C19.25 17.4591 17.4591 19.25 15.25 19.25H6.75C4.54086 19.25 2.75 17.4591 2.75 15.25V6.75C2.75 4.54086 4.54086 2.75 6.75 2.75H15.25ZM9.75 6.41699V9.75H6.41699V12.25H9.75V15.584H12.25V12.25H15.584V9.75H12.25V6.41699H9.75Z"
+      fill="currentColor"
+    />
+  </svg>
+);
+export default DellSquareIcon;

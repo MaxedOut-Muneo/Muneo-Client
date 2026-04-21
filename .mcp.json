@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "figma": {
+      "command": "sh",
+      "args": ["-c", "set -a && . ./.env && set +a && npx -y @figma/mcp-server"]
+    }
+  }
+}
