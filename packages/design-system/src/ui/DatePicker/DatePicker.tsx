@@ -52,7 +52,9 @@ export const DatePicker = ({
   }, []);
 
   useEffect(() => {
-    if (disabled) {setOpen(false);}
+    if (disabled) {
+      setOpen(false);
+    }
   }, [disabled]);
 
   const handleChange = (dates: [Date | null, Date | null]) => {
