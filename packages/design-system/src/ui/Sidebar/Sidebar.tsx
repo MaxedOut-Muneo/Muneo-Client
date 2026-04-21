@@ -1,7 +1,7 @@
 'use client';
 
 import { type ReactNode } from 'react';
-import ColumUpFillIcon from '../../assets/icons/ColumUpFillIcon';
+import ColumnUpFillIcon from '../../assets/icons/ColumnUpFillIcon';
 import DellSquareIcon from '../../assets/icons/DellSquareIcon';
 import HomeFillIcon from '../../assets/icons/HomeFillIcon';
 import Logo from '../../assets/icons/Logo';
@@ -49,7 +49,7 @@ const NAV_ITEMS: NavItemDef[] = [
   { id: 'home', label: '홈', icon: <HomeFillIcon /> },
   { id: 'estimate', label: '가견적서 생성', icon: <DellSquareIcon /> },
   { id: 'risk', label: '리스크 진단', icon: <SearchIcon /> },
-  { id: 'history', label: '분석 이력', icon: <ColumUpFillIcon /> },
+  { id: 'history', label: '분석 이력', icon: <ColumnUpFillIcon /> },
   { id: 'settings', label: '내 정보', icon: <SettingFillIcon /> },
 ];
 
