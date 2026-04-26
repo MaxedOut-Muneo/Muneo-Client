@@ -37,6 +37,7 @@ export interface SidebarProps {
   onItemClick?: (id: SidebarNavId) => void;
   user?: SidebarUser;
   className?: string;
+  visibleItems?: SidebarNavId[];
 }
 
 interface NavItemDef {
@@ -53,7 +54,8 @@ const NAV_ITEMS: NavItemDef[] = [
   { id: 'settings', label: '내 정보', icon: <SettingFillIcon /> },
 ];
 
-export const Sidebar = ({ activeItem, onItemClick, user, className }: SidebarProps) => {
+export const Sidebar = ({ activeItem, onItemClick, user, className, visibleItems }: SidebarProps) => {
+  const items = visibleItems ? NAV_ITEMS.filter((item) => visibleItems.includes(item.id)) : NAV_ITEMS;
   return (
     <aside className={`${sidebar}${className ? ` ${className}` : ''}`}>
       <div className={topSection}>
@@ -63,7 +65,7 @@ export const Sidebar = ({ activeItem, onItemClick, user, className }: SidebarPro
         </div>
 
         <nav className={navList}>
-          {NAV_ITEMS.map((item) => {
+          {items.map((item) => {
             const isActive = activeItem === item.id;
             return (
               <div key={item.id} className={navItemWrapper}>
