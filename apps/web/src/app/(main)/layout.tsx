@@ -24,12 +24,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className={styles.wrapper}>
-      <Sidebar
-        activeItem={activeItem}
-        onItemClick={(id) => router.push(NAV_TO_PATH[id])}
-        user={MOCK_USER}
-        visibleItems={['home']}
-      />
+      <Sidebar activeItem={activeItem} onItemClick={(id) => router.push(NAV_TO_PATH[id])} user={MOCK_USER} />
       <main className={styles.main}>{children}</main>
     </div>
   );
