@@ -9,6 +9,7 @@ export const vars = createThemeContract({
       primaryLight: null,
       primaryBg: null,
       secondary: null,
+      secondaryBg: null,
     },
     semantic: {
       success: null,

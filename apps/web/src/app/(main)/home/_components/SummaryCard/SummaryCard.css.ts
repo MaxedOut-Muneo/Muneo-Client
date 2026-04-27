@@ -50,7 +50,7 @@ export const countDanger = style({
   fontWeight: vars.typography.fontWeight.extraBold,
   letterSpacing: '-0.24px',
   whiteSpace: 'nowrap',
-  color: '#ea5353',
+  color: vars.color.semantic.danger,
 });
 
 export const arrow = style({

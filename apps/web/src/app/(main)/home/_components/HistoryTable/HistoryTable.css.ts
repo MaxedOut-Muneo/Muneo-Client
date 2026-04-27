@@ -108,12 +108,24 @@ const badge = style({
   whiteSpace: 'nowrap',
 });
 
-export const riskDanger = style([badge, { backgroundColor: '#fff0f0', color: '#ea5353' }]);
+export const riskDanger = style([
+  badge,
+  { backgroundColor: vars.color.semantic.dangerBg, color: vars.color.semantic.danger },
+]);
 
-export const riskSafe = style([badge, { backgroundColor: '#edfaf4', color: '#10b981' }]);
+export const riskSafe = style([
+  badge,
+  { backgroundColor: vars.color.semantic.successBg, color: vars.color.semantic.success },
+]);
 
 export const riskNone = style({ color: vars.color.neutral.n400 });
 
-export const analysisRisk = style([badge, { backgroundColor: '#f0ebfd', color: '#8455df' }]);
+export const analysisRisk = style([
+  badge,
+  { backgroundColor: vars.color.brand.secondaryBg, color: vars.color.brand.secondary },
+]);
 
-export const analysisEstimate = style([badge, { backgroundColor: '#f0f4ff', color: '#4a72e8' }]);
+export const analysisEstimate = style([
+  badge,
+  { backgroundColor: vars.color.semantic.infoBg, color: vars.color.semantic.info },
+]);
