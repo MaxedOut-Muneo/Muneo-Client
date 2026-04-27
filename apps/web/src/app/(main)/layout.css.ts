@@ -1,3 +1,4 @@
+import { vars } from '@muneo/design-system';
 import { style } from '@vanilla-extract/css';
 
 export const wrapper = style({
@@ -6,7 +7,7 @@ export const wrapper = style({
 });
 
 export const main = style({
-  marginLeft: '224px',
+  marginLeft: vars.layout.sidebarWidth,
   flex: 1,
   minWidth: 0,
   overflowX: 'hidden',

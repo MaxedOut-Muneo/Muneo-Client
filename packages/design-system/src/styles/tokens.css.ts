@@ -84,4 +84,7 @@ export const vars = createThemeContract({
     lg: null,
     xl: null,
   },
+  layout: {
+    sidebarWidth: null,
+  },
 });

@@ -86,4 +86,7 @@ export const lightTheme = createTheme(vars, {
     lg: '24px',
     xl: '40px',
   },
+  layout: {
+    sidebarWidth: '224px',
+  },
 });
