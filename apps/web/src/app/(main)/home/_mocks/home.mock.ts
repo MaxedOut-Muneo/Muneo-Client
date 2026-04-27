@@ -1,4 +1,4 @@
-import { type HistoryRow, type SummaryStats } from './home.types';
+import { type HistoryRow, type SummaryStats } from '../_types/home.types';
 
 export const MOCK_GREETING_NAME = '김민수';
 

@@ -1,5 +1,5 @@
 import { CaretDownIcon, Text } from '@muneo/design-system';
-import { type HistoryRow, type RiskStatus } from '../../home.types';
+import { type HistoryRow, type RiskStatus } from '../../_types/home.types';
 import * as styles from './HistoryTable.css';
 
 interface HistoryTableProps {

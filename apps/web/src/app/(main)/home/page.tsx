@@ -1,8 +1,28 @@
 import { DellSquareIcon, DoneRingRoundFillIcon, TriangleWarningIcon } from '@muneo/design-system';
+import { type ComponentProps } from 'react';
 import { HistoryTable } from './_components/HistoryTable/HistoryTable';
 import { SummaryCard } from './_components/SummaryCard/SummaryCard';
-import { MOCK_GREETING_NAME, MOCK_HISTORY_ROWS, MOCK_SUMMARY_STATS } from './home.mock';
+import { MOCK_GREETING_NAME, MOCK_HISTORY_ROWS, MOCK_SUMMARY_STATS } from './_mocks/home.mock';
 import * as styles from './page.css';
+
+const SUMMARY_CARDS: Array<ComponentProps<typeof SummaryCard>> = [
+  {
+    icon: <DellSquareIcon width={22} height={22} />,
+    label: '그동안 생성한 가견적서',
+    count: MOCK_SUMMARY_STATS.estimateCount,
+  },
+  {
+    icon: <DoneRingRoundFillIcon width={22} height={22} />,
+    label: '진단 완료한 견적',
+    count: MOCK_SUMMARY_STATS.diagnosedCount,
+  },
+  {
+    icon: <TriangleWarningIcon width={22} height={22} />,
+    label: '리스크 발생 견적',
+    count: MOCK_SUMMARY_STATS.riskCount,
+    danger: true,
+  },
+];
 
 export default function HomePage() {
   return (
@@ -16,22 +36,9 @@ export default function HomePage() {
         </div>
 
         <div className={styles.summaryRow}>
-          <SummaryCard
-            icon={<DellSquareIcon width={22} height={22} />}
-            label="그동안 생성한 가견적서"
-            count={MOCK_SUMMARY_STATS.estimateCount}
-          />
-          <SummaryCard
-            icon={<DoneRingRoundFillIcon width={22} height={22} />}
-            label="진단 완료한 견적"
-            count={MOCK_SUMMARY_STATS.diagnosedCount}
-          />
-          <SummaryCard
-            icon={<TriangleWarningIcon width={22} height={22} />}
-            label="리스크 발생 견적"
-            count={MOCK_SUMMARY_STATS.riskCount}
-            danger
-          />
+          {SUMMARY_CARDS.map((props, i) => (
+            <SummaryCard key={i} {...props} />
+          ))}
         </div>
 
         <HistoryTable rows={MOCK_HISTORY_ROWS} />
