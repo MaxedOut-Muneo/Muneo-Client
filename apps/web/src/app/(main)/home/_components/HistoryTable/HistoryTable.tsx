@@ -9,8 +9,12 @@ interface HistoryTableProps {
 const COLUMNS = ['날짜', '분석 유형', '공사 유형', '리스크'] as const;
 
 function RiskBadge({ risk }: { risk: RiskStatus }) {
-  if (risk.type === 'danger') {return <span className={styles.riskDanger}>{risk.label}</span>;}
-  if (risk.type === 'safe') {return <span className={styles.riskSafe}>{risk.label}</span>;}
+  if (risk.type === 'danger') {
+    return <span className={styles.riskDanger}>{risk.label}</span>;
+  }
+  if (risk.type === 'safe') {
+    return <span className={styles.riskSafe}>{risk.label}</span>;
+  }
   return <span className={styles.riskNone}>—</span>;
 }
 
