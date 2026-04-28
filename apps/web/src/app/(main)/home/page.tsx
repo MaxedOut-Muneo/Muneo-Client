@@ -36,8 +36,8 @@ export default function HomePage() {
         </div>
 
         <div className={styles.summaryRow}>
-          {SUMMARY_CARDS.map((props, i) => (
-            <SummaryCard key={i} {...props} />
+          {SUMMARY_CARDS.map((props) => (
+            <SummaryCard key={props.label} {...props} />
           ))}
         </div>
 

@@ -16,12 +16,6 @@ export const cardTitle = style({
   marginBottom: '20px',
 });
 
-export const divider = style({
-  height: '1px',
-  backgroundColor: vars.color.neutral.n200,
-  margin: '0 0 0 0',
-});
-
 export const table = style({
   width: '100%',
   borderCollapse: 'collapse',

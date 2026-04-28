@@ -10,7 +10,7 @@ export const lightTheme = createTheme(vars, {
       primaryLight: '#9B86FF',
       primaryBg: '#EEF0FF',
       secondary: '#8455DF',
-      secondaryBg: '#f0ebfd',
+      secondaryBg: '#F0EBFD',
     },
     semantic: {
       success: '#10B981',
