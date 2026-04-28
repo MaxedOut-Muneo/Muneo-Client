@@ -1,0 +1,10 @@
+import type { SVGProps } from 'react';
+const DoneRingRoundFillIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg" width={22} height={22} fill="none" {...props}>
+    <path
+      d="M11 2.75C13.0888 2.75 14.9948 3.52786 16.4482 4.80762L9.91895 12.0635L7.16602 10C6.61377 9.58617 5.83013 9.6979 5.41602 10.25C5.00223 10.8021 5.11421 11.5858 5.66602 12L8.60156 14.2012C9.53345 14.9 10.8448 14.772 11.624 13.9062L18.0684 6.74414C18.8182 7.98676 19.25 9.44287 19.25 11C19.25 15.5563 15.5563 19.25 11 19.25C6.44365 19.25 2.75 15.5563 2.75 11C2.75 6.44365 6.44365 2.75 11 2.75Z"
+      fill="#8455DF"
+    />
+  </svg>
+);
+export default DoneRingRoundFillIcon;

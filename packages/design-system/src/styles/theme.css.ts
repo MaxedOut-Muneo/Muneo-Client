@@ -10,6 +10,7 @@ export const lightTheme = createTheme(vars, {
       primaryLight: '#9B86FF',
       primaryBg: '#EEF0FF',
       secondary: '#8455DF',
+      secondaryBg: '#F0EBFD',
     },
     semantic: {
       success: '#10B981',
@@ -85,5 +86,8 @@ export const lightTheme = createTheme(vars, {
     md: '16px',
     lg: '24px',
     xl: '40px',
+  },
+  layout: {
+    sidebarWidth: '224px',
   },
 });
