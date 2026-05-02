@@ -38,6 +38,7 @@ interface EstimateStore {
   setStep1: (data: Partial<Step1Data>) => void;
   setStep2: (data: Partial<Step2Data>) => void;
   setStep3: (data: Partial<Step3Data>) => void;
+  setStep4: <K extends keyof Step4Data>(processId: K, data: Partial<NonNullable<Step4Data[K]>>) => void;
   toggleProcess: (processId: string) => void;
   reset: () => void;
 }
@@ -70,6 +71,14 @@ export const useEstimateStore = create<EstimateStore>((set, get) => ({
   setStep2: (data) => set((state) => ({ step2: { ...state.step2, ...data } })),
 
   setStep3: (data) => set((state) => ({ step3: { ...state.step3, ...data } })),
+
+  setStep4: (processId, data) =>
+    set((state) => ({
+      step4: {
+        ...state.step4,
+        [processId]: { ...state.step4[processId], ...data },
+      },
+    })),
 
   toggleProcess: (processId) =>
     set((state) => {
