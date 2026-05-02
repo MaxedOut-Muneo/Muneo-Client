@@ -114,6 +114,7 @@ export const areaInput = style({
   borderRadius: vars.radius.base,
   backgroundColor: vars.color.white,
   overflow: 'hidden',
+  alignSelf: 'flex-start',
 });
 
 export const areaInputNumber = style({
