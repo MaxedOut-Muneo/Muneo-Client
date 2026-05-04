@@ -2,6 +2,7 @@
 
 export type { SVGProps as IconProps } from 'react';
 
+export { default as ArrowUndoDownLeftIcon } from './ArrowUndoDownLeftIcon';
 export { default as CaretDownIcon } from './CaretDownIcon';
 export { default as DoneRingRoundFillIcon } from './DoneRingRoundFillIcon';
 export { default as CloseRoundFill } from './CloseRoundFill';
