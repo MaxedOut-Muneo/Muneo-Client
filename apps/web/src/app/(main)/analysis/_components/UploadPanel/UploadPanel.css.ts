@@ -84,6 +84,12 @@ export const dropzoneSub = style({
   lineHeight: 'normal',
 });
 
+export const uploadArea = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '12px',
+});
+
 export const fileList = style({
   display: 'flex',
   flexDirection: 'column',

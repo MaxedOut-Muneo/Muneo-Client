@@ -38,7 +38,7 @@ export function UploadPanel() {
       </div>
 
       <div className={styles.body}>
-        <div className={styles.fileList}>
+        <div className={styles.uploadArea}>
           <div
             className={`${styles.dropzone}${dragging ? ` ${styles.dropzoneDragging}` : ''}`}
             onClick={() => inputRef.current?.click()}
