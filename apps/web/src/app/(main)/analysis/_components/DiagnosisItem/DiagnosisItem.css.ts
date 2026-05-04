@@ -22,7 +22,7 @@ export const badge = style({
   fontSize: vars.typography.fontSize.sm,
   fontWeight: vars.typography.fontWeight.bold,
   lineHeight: 'normal',
-  whiteSpace: 'nowrap',
+  whiteSpace: 'normal',
 });
 
 export const badgeNormal = style({
