@@ -173,6 +173,7 @@ interface SummaryPanelProps {
   elevatorLabel: string;
   floorLabel: string;
   occupancyLabel: string;
+  demolitionLabel: string;
   modeLabel: string;
   processCount: number;
   onEdit: () => void;
@@ -187,6 +188,7 @@ function SummaryPanel({
   elevatorLabel,
   floorLabel,
   occupancyLabel,
+  demolitionLabel,
   modeLabel,
   processCount,
   onEdit,
@@ -196,7 +198,7 @@ function SummaryPanel({
     { label: '지역 / 공간', value: `${regionLabel} · ${spaceLabel}` },
     { label: '면적 / 방', value: `${areaLabel} / ${roomLabel}` },
     { label: '연식 / 등급', value: `${buildingAgeLabel} / 중급` },
-    { label: '철거 / 거주', value: `있음 / ${occupancyLabel}` },
+    { label: '철거 / 거주', value: `${demolitionLabel} / ${occupancyLabel}` },
     { label: '층수 / EV', value: `${floorLabel} / ${elevatorLabel}` },
   ];
 
@@ -280,6 +282,8 @@ export function EstimateResult() {
   const occupancyLabel = step3.occupancy ?? '-';
   const processCount = step2.selectedProcesses.length;
   const modeLabel = step2.mode === 'full' ? '전체 리모델링' : '부분 시공';
+  const demolitionLabel = step2.selectedProcesses.includes('demolition') ? '있음' : '없음';
+  const filteredEstimates = MOCK_ESTIMATES.filter((e) => step2.selectedProcesses.includes(e.id));
 
   return (
     <div className={styles.container}>
@@ -293,6 +297,7 @@ export function EstimateResult() {
           elevatorLabel={elevatorLabel}
           floorLabel={floorLabel}
           occupancyLabel={occupancyLabel}
+          demolitionLabel={demolitionLabel}
           modeLabel={modeLabel}
           processCount={processCount}
           onEdit={() => goToStep(1)}
@@ -304,7 +309,7 @@ export function EstimateResult() {
           <div className={styles.detailSection}>
             <span className={styles.detailTitle}>공정별 세부 견적</span>
             <div className={styles.accordionList}>
-              {MOCK_ESTIMATES.map((estimate) => (
+              {filteredEstimates.map((estimate) => (
                 <AccordionItem key={estimate.id} estimate={estimate} />
               ))}
             </div>
