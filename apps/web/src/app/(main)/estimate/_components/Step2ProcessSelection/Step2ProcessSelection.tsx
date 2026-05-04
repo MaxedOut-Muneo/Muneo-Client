@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useEstimateStore } from '../../_store/estimateStore';
 import { BASIC_PROCESSES, OPTIONAL_PROCESSES } from '../../estimate.types';
 import { ProcessCheckbox } from '../ProcessCheckbox/ProcessCheckbox';
@@ -10,6 +11,16 @@ const BASIC_ROWS = [BASIC_PROCESSES.slice(0, 5), BASIC_PROCESSES.slice(5, 10), B
 
 export function Step2ProcessSelection() {
   const { step2, setStep2, toggleProcess, nextStep, prevStep } = useEstimateStore();
+  const [validationError, setValidationError] = useState(false);
+
+  const handleNext = () => {
+    if (step2.selectedProcesses.length === 0) {
+      setValidationError(true);
+      return;
+    }
+    setValidationError(false);
+    nextStep();
+  };
 
   const handleModeChange = (mode: 'full' | 'partial') => {
     if (mode === 'full') {
@@ -77,7 +88,10 @@ export function Step2ProcessSelection() {
             </div>
           </div>
 
-          <StepActions onNext={nextStep} onSecondary={prevStep} />
+          {validationError && (
+            <p style={{ color: 'red', fontSize: '13px', marginBottom: '8px' }}>공정을 1개 이상 선택해주세요.</p>
+          )}
+          <StepActions onNext={handleNext} onSecondary={prevStep} />
         </div>
       </div>
     </div>
