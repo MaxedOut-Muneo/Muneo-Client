@@ -47,5 +47,6 @@ export const useAnalysisStore = create<AnalysisStore>((set) => ({
       set({ error: '분석 중 오류가 발생했습니다.', loading: false });
     }
   },
-  reset: () => set({ view: 'input', form: { ...DEFAULT_FORM }, files: [], diagnosisResult: null, error: null }),
+  reset: () =>
+    set({ view: 'input', form: { ...DEFAULT_FORM }, files: [], diagnosisResult: null, error: null, loading: false }),
 }));
