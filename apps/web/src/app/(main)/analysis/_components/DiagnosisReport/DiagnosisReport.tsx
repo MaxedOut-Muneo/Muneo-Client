@@ -1,9 +1,8 @@
 'use client';
 
-import { MOCK_SUMMARY } from '../../_mocks/analysis.mock';
+import { CircleWarningIcon, StatusCard, TriangleWarningIcon } from '@muneo/design-system';
 import { useAnalysisStore } from '../../_store/analysisStore';
 import { ProcessSection } from '../ProcessSection/ProcessSection';
-import { StatusSummaryCard } from '../StatusSummaryCard/StatusSummaryCard';
 import * as styles from './DiagnosisReport.css';
 
 export function DiagnosisReport() {
@@ -28,26 +27,26 @@ export function DiagnosisReport() {
       </div>
 
       <div className={styles.summaryCards}>
-        <StatusSummaryCard
+        <StatusCard
           variant="danger"
-          icon="⚠"
+          icon={<TriangleWarningIcon width={24} height={24} />}
           label="누락항목"
-          count={result.missingCount}
-          hint="필수 항목 미포함"
+          value={`${result.missingCount}건`}
+          className={styles.summaryCard}
         />
-        <StatusSummaryCard
+        <StatusCard
           variant="warning"
-          icon="!"
+          icon={<CircleWarningIcon width={24} height={24} />}
           label="발견한 리스크 항목"
-          count={result.riskCount}
-          hint="모호 표현/중복 기재"
+          value={`${result.riskCount}건`}
+          className={styles.summaryCard}
         />
-        <StatusSummaryCard
+        <StatusCard
           variant="info"
-          icon="i"
+          icon={<CircleWarningIcon width={24} height={24} />}
           label="정보 미비"
-          count={result.insufficientCount}
-          hint="수량·단위·브랜드 누락"
+          value={`${result.insufficientCount}건`}
+          className={styles.summaryCard}
         />
       </div>
 
@@ -62,9 +61,9 @@ export function DiagnosisReport() {
         <div className={styles.summaryBody}>
           <span className={styles.summarySubtitle}>전체 리스크 의심 항목</span>
           <div className={styles.summaryBadges}>
-            <span className={`${styles.summaryBadge} ${styles.badgeDanger}`}>누락 {MOCK_SUMMARY.missingCount}</span>
-            <span className={`${styles.summaryBadge} ${styles.badgeWarning}`}>불분명 {MOCK_SUMMARY.unclearCount}</span>
-            <span className={`${styles.summaryBadge} ${styles.badgeInfo}`}>미비 {MOCK_SUMMARY.insufficientCount}</span>
+            <span className={`${styles.summaryBadge} ${styles.badgeDanger}`}>누락 {result.missingCount}</span>
+            <span className={`${styles.summaryBadge} ${styles.badgeWarning}`}>불분명 {result.riskCount}</span>
+            <span className={`${styles.summaryBadge} ${styles.badgeInfo}`}>미비 {result.insufficientCount}</span>
           </div>
         </div>
       </div>

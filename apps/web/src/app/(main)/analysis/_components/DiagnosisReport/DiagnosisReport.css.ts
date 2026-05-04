@@ -58,6 +58,11 @@ export const summaryCards = style({
   alignItems: 'stretch',
 });
 
+export const summaryCard = style({
+  flex: '1 0 0',
+  alignSelf: 'stretch',
+});
+
 export const sections = style({
   display: 'flex',
   flexDirection: 'column',
