@@ -1097,7 +1097,11 @@ export function Step4ProcessDetail() {
                       data={step4[process.id as keyof typeof step4] ?? {}}
                       onChange={(patch) => setStep4(process.id as keyof typeof step4, patch)}
                     />
-                  ) : null}
+                  ) : (
+                    <div className={styles.sectionBody}>
+                      <p className={styles.infoNote}>해당 공정의 세부 입력은 준비 중입니다.</p>
+                    </div>
+                  )}
                 </div>
               </div>
             );
