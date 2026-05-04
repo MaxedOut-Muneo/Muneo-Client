@@ -11,11 +11,24 @@ export const sectionHeader = style({
   display: 'flex',
   alignItems: 'center',
   gap: '8px',
+  background: 'none',
+  border: 'none',
+  padding: 0,
+  cursor: 'pointer',
+  width: '100%',
+  textAlign: 'left',
 });
 
 export const chevron = style({
   fontSize: '12px',
   color: vars.color.neutral.n700,
+  display: 'inline-block',
+  transition: 'transform 0.3s ease',
+  transformOrigin: 'center',
+});
+
+export const chevronClosed = style({
+  transform: 'rotate(-90deg)',
 });
 
 export const sectionName = style({
@@ -28,14 +41,27 @@ export const sectionName = style({
   whiteSpace: 'nowrap',
 });
 
+export const collapseWrapper = style({
+  display: 'grid',
+  gridTemplateRows: '1fr',
+  transition: 'grid-template-rows 0.3s ease',
+  overflow: 'hidden',
+});
+
+export const collapseWrapperClosed = style({
+  gridTemplateRows: '0fr',
+});
+
 export const itemList = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '16px',
+  minHeight: 0,
+  overflow: 'hidden',
 });
 
 export const divider = style({
   height: '1px',
   backgroundColor: vars.color.neutral.n200,
-  marginTop: '12px',
+  marginTop: '4px',
 });

@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import { type ProcessSectionData } from '../../_types/analysis.types';
 import { DiagnosisItem } from '../DiagnosisItem/DiagnosisItem';
 import * as styles from './ProcessSection.css';
@@ -7,16 +10,25 @@ interface ProcessSectionProps {
 }
 
 export function ProcessSection({ section }: ProcessSectionProps) {
+  const [open, setOpen] = useState(true);
+
   return (
     <div className={styles.section}>
-      <div className={styles.sectionHeader}>
-        <span className={styles.chevron}>▼</span>
+      <button
+        type="button"
+        className={styles.sectionHeader}
+        onClick={() => setOpen((prev) => !prev)}
+        aria-expanded={open}
+      >
+        <span className={`${styles.chevron}${open ? '' : ` ${styles.chevronClosed}`}`}>▼</span>
         <span className={styles.sectionName}>{section.name}</span>
-      </div>
-      <div className={styles.itemList}>
-        {section.items.map((item) => (
-          <DiagnosisItem key={item.id} item={item} />
-        ))}
+      </button>
+      <div className={`${styles.collapseWrapper}${open ? '' : ` ${styles.collapseWrapperClosed}`}`}>
+        <div className={styles.itemList}>
+          {section.items.map((item) => (
+            <DiagnosisItem key={item.id} item={item} />
+          ))}
+        </div>
       </div>
       <div className={styles.divider} />
     </div>
