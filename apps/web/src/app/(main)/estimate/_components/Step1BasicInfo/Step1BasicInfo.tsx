@@ -57,8 +57,8 @@ export function Step1BasicInfo() {
                   type="number"
                   min={0}
                   className={styles.areaInputNumber}
-                  value={step1.area ?? 0}
-                  onChange={(e) => setStep1({ area: Number(e.target.value) || null })}
+                  value={step1.area ?? ''}
+                  onChange={(e) => setStep1({ area: e.target.value === '' ? null : Number(e.target.value) })}
                 />
                 <span className={styles.areaUnit}>평</span>
               </div>
