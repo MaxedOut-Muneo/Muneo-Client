@@ -411,7 +411,7 @@ function CarpentrySection({ data, onChange }: ProcessSectionProps<CarpentryDetai
               selected={(data.carpentryExtra ?? []).includes(item)}
               onClick={() => {
                 const current = data.carpentryExtra ?? [];
-                const next =
+                const next: CarpentryExtra[] =
                   item === '없음'
                     ? current.includes('없음')
                       ? []
