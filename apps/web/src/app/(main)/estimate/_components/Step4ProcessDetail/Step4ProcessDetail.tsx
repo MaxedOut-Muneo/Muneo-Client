@@ -121,7 +121,9 @@ function PlumbingSection({ data, onChange }: ProcessSectionProps<PlumbingDetail>
             <SelectButton
               key={opt}
               selected={data.waterproofNeed === opt}
-              onClick={() => onChange({ waterproofNeed: opt })}
+              onClick={() =>
+                onChange(opt === '필요' ? { waterproofNeed: opt } : { waterproofNeed: opt, waterproofCount: undefined })
+              }
             >
               {opt}
             </SelectButton>
@@ -161,7 +163,11 @@ function PlumbingSection({ data, onChange }: ProcessSectionProps<PlumbingDetail>
             <SelectButton
               key={opt}
               selected={data.balconyExpansion === opt}
-              onClick={() => onChange({ balconyExpansion: opt })}
+              onClick={() =>
+                onChange(
+                  opt === '있음' ? { balconyExpansion: opt } : { balconyExpansion: opt, balconyCount: undefined }
+                )
+              }
             >
               {opt}
             </SelectButton>
@@ -255,7 +261,13 @@ function ElectricalSection({ data, onChange }: ProcessSectionProps<ElectricalDet
       <Field label="콘센트 증설">
         <div className={styles.buttonRow}>
           {(['있음', '없음'] as const).map((opt) => (
-            <SelectButton key={opt} selected={data.outletAdd === opt} onClick={() => onChange({ outletAdd: opt })}>
+            <SelectButton
+              key={opt}
+              selected={data.outletAdd === opt}
+              onClick={() =>
+                onChange(opt === '있음' ? { outletAdd: opt } : { outletAdd: opt, outletAddCount: undefined })
+              }
+            >
               {opt}
             </SelectButton>
           ))}
@@ -397,7 +409,19 @@ function CarpentrySection({ data, onChange }: ProcessSectionProps<CarpentryDetai
             <SelectButton
               key={item}
               selected={(data.carpentryExtra ?? []).includes(item)}
-              onClick={() => onChange({ carpentryExtra: toggleItem(data.carpentryExtra ?? [], item) })}
+              onClick={() => {
+                const current = data.carpentryExtra ?? [];
+                const next =
+                  item === '없음'
+                    ? current.includes('없음')
+                      ? []
+                      : ['없음']
+                    : toggleItem(
+                        current.filter((i): i is CarpentryExtra => i !== '없음'),
+                        item
+                      );
+                onChange({ carpentryExtra: next });
+              }}
             >
               {item}
             </SelectButton>
@@ -436,7 +460,11 @@ function WallpaperSection({ data, onChange }: ProcessSectionProps<WallpaperDetai
             <SelectButton
               key={opt}
               selected={data.wallpaperScope === opt}
-              onClick={() => onChange({ wallpaperScope: opt })}
+              onClick={() =>
+                onChange(
+                  opt === '부분 도배' ? { wallpaperScope: opt } : { wallpaperScope: opt, partialRooms: undefined }
+                )
+              }
             >
               {opt}
             </SelectButton>

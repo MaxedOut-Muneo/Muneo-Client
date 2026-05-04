@@ -1,6 +1,7 @@
 'use client';
 
 import { SelectButton } from '@muneo/design-system';
+import { useId } from 'react';
 import { useEstimateStore } from '../../_store/estimateStore';
 import { type RoomCount, type Region, type SpaceType } from '../../estimate.types';
 import { StepActions } from '../StepActions/StepActions';
@@ -12,6 +13,7 @@ const ROOM_COUNTS: RoomCount[] = ['1개', '2개', '3개', '4개 이상'];
 
 export function Step1BasicInfo() {
   const { step1, setStep1, nextStep, reset } = useEstimateStore();
+  const areaInputId = useId();
 
   return (
     <div className={styles.container}>
@@ -51,14 +53,24 @@ export function Step1BasicInfo() {
             </div>
 
             <div className={styles.fieldWithGap}>
-              <span className={styles.fieldLabel}>전용 면적</span>
+              <label htmlFor={areaInputId} className={styles.fieldLabel}>
+                전용 면적
+              </label>
               <div className={styles.areaInput}>
                 <input
+                  id={areaInputId}
                   type="number"
                   min={0}
                   className={styles.areaInputNumber}
                   value={step1.area ?? ''}
-                  onChange={(e) => setStep1({ area: e.target.value === '' ? null : Number(e.target.value) })}
+                  onChange={(e) => {
+                    if (e.target.value === '') {
+                      setStep1({ area: null });
+                      return;
+                    }
+                    const parsed = Number(e.target.value);
+                    setStep1({ area: Number.isFinite(parsed) && parsed > 0 ? parsed : null });
+                  }}
                 />
                 <span className={styles.areaUnit}>평</span>
               </div>
