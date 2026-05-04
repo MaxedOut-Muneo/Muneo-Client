@@ -12,5 +12,6 @@ export const content = style({
   flexDirection: 'column',
   gap: '20px',
   alignItems: 'center',
-  width: '1080px',
+  width: '100%',
+  maxWidth: '1080px',
 });
