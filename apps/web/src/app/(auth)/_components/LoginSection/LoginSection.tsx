@@ -1,6 +1,9 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { loginSchema, type LoginFormValues } from '@/lib/validations/auth';
 import { LoginModal } from '../LoginModal';
 
 interface LoginSectionProps {
@@ -12,33 +15,31 @@ interface LoginSectionProps {
 }
 
 export const LoginSection = ({ onLogoClick, onClose, onKakaoLogin, onForgotPassword, onSignUp }: LoginSectionProps) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState<string | undefined>();
-  const [passwordError, setPasswordError] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = async () => {
-    setEmailError(undefined);
-    setPasswordError(undefined);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit = handleSubmit(async () => {
     setIsLoading(true);
     try {
       // NOTE: 로그인 API 연동
     } finally {
       setIsLoading(false);
     }
-  };
+  });
 
   return (
     <LoginModal
-      email={email}
-      password={password}
-      emailError={emailError}
-      passwordError={passwordError}
+      register={register}
+      errors={errors}
       isLoading={isLoading}
-      onEmailChange={setEmail}
-      onPasswordChange={setPassword}
-      onLogin={handleLogin}
+      onSubmit={onSubmit}
       onLogoClick={onLogoClick}
       onClose={onClose}
       onKakaoLogin={onKakaoLogin}
