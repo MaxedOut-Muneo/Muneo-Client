@@ -1,20 +1,18 @@
 'use client';
 
-import { Button, CloseRoundFill, KakaoIcon, Logo, TextField } from '@muneo/design-system';
+import { Button, CloseRoundFill, KakaoIcon, TextField } from '@muneo/design-system';
 import { useId } from 'react';
-import { TAGLINE } from '@/constants/app';
+import { type FieldErrors, type UseFormRegister } from 'react-hook-form';
+import { type LoginFormValues } from '@/lib/validations/auth';
+import { AuthModalHeader } from '../AuthModalHeader';
 import * as styles from './LoginModal.css';
 
 export interface LoginModalProps {
   className?: string;
-  email: string;
-  password: string;
-  emailError?: string;
-  passwordError?: string;
+  register: UseFormRegister<LoginFormValues>;
+  errors: FieldErrors<LoginFormValues>;
   isLoading?: boolean;
-  onEmailChange: (value: string) => void;
-  onPasswordChange: (value: string) => void;
-  onLogin: () => void;
+  onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
   onKakaoLogin?: () => void;
   onForgotPassword?: () => void;
   onSignUp?: () => void;
@@ -24,14 +22,10 @@ export interface LoginModalProps {
 
 export const LoginModal = ({
   className,
-  email,
-  password,
-  emailError,
-  passwordError,
+  register,
+  errors,
   isLoading,
-  onEmailChange,
-  onPasswordChange,
-  onLogin,
+  onSubmit,
   onKakaoLogin,
   onForgotPassword,
   onSignUp,
@@ -41,14 +35,6 @@ export const LoginModal = ({
   const emailId = useId();
   const passwordId = useId();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (isLoading) {
-      return;
-    }
-    onLogin();
-  };
-
   return (
     <div className={[styles.modal, className].filter(Boolean).join(' ')}>
       {onClose && (
@@ -56,18 +42,9 @@ export const LoginModal = ({
           <CloseRoundFill />
         </button>
       )}
-      <form className={styles.inner} onSubmit={handleSubmit}>
+      <form className={styles.inner} onSubmit={onSubmit} noValidate>
         <div className={styles.upper}>
-          <div className={styles.logoSection}>
-            <span className={styles.tagline}>{TAGLINE}</span>
-            {onLogoClick ? (
-              <button type="button" className={styles.logoButton} onClick={onLogoClick} aria-label="홈으로 이동">
-                <Logo width={118} height={38} />
-              </button>
-            ) : (
-              <Logo width={118} height={38} />
-            )}
-          </div>
+          <AuthModalHeader onLogoClick={onLogoClick} />
 
           <div className={styles.formSection}>
             <TextField
@@ -75,20 +52,18 @@ export const LoginModal = ({
               label="이메일"
               type="email"
               placeholder="name@example.com"
-              value={email}
-              onChange={(e) => onEmailChange(e.target.value)}
-              error={emailError}
               autoComplete="email"
+              error={errors.email?.message}
+              {...register('email')}
             />
             <TextField
               id={passwordId}
               label="비밀번호"
               type="password"
               placeholder="비밀번호를 입력하세요"
-              value={password}
-              onChange={(e) => onPasswordChange(e.target.value)}
-              error={passwordError}
               autoComplete="current-password"
+              error={errors.password?.message}
+              {...register('password')}
             />
             <button type="button" className={styles.forgotPassword} onClick={onForgotPassword}>
               비밀번호 찾기
@@ -112,9 +87,9 @@ export const LoginModal = ({
             <span className={styles.kakaoText}>카카오 로그인</span>
           </button>
 
-          <div className={styles.signupRow}>
+          <div className={styles.footerRow}>
             <span className={styles.signupText}>계정이 없으신가요?</span>
-            <div className={styles.signupDivider} />
+            <div className={styles.footerDivider} />
             <button type="button" className={styles.signupLink} onClick={onSignUp}>
               회원가입
             </button>

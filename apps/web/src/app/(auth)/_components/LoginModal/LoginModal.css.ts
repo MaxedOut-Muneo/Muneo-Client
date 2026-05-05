@@ -1,26 +1,17 @@
 import { vars } from '@muneo/design-system';
 import { style } from '@vanilla-extract/css';
 
-export const modal = style({
-  position: 'relative',
-  backgroundColor: vars.color.white,
-  borderRadius: '16px',
-  padding: `45px ${vars.space['3xl']}`,
-});
-
-export const closeButton = style({
-  position: 'absolute',
-  top: '4px',
-  right: '4px',
-  background: 'none',
-  border: 'none',
-  padding: vars.space.sm,
-  cursor: 'pointer',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: vars.color.neutral.n400,
-});
+export {
+  modal,
+  closeButton,
+  upper,
+  logoSection,
+  logoButton,
+  tagline,
+  fullWidth,
+  footerRow,
+  footerDivider,
+} from '../authModal.css';
 
 export const inner = style({
   display: 'flex',
@@ -28,36 +19,6 @@ export const inner = style({
   gap: '6px',
   width: '340px',
   maxWidth: '100%',
-});
-
-export const upper = style({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '27px',
-  width: '100%',
-});
-
-export const logoButton = style({
-  background: 'none',
-  border: 'none',
-  padding: 0,
-  cursor: 'pointer',
-});
-
-export const logoSection = style({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: vars.space.xs,
-});
-
-export const tagline = style({
-  fontFamily: vars.typography.fontFamily,
-  fontSize: vars.typography.fontSize.xs,
-  color: '#8a7da5',
-  letterSpacing: '-0.096px',
-  textAlign: 'center',
 });
 
 export const formSection = style({
@@ -86,10 +47,6 @@ export const actionSection = style({
   flexDirection: 'column',
   alignItems: 'center',
   gap: '15px',
-  width: '100%',
-});
-
-export const fullWidth = style({
   width: '100%',
 });
 
@@ -148,12 +105,6 @@ export const kakaoText = style({
   color: '#000',
 });
 
-export const signupRow = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '13px',
-});
-
 export const signupText = style({
   fontFamily: vars.typography.fontFamily,
   fontSize: '13px',
@@ -162,13 +113,6 @@ export const signupText = style({
   opacity: 0.9,
   letterSpacing: '-0.104px',
   whiteSpace: 'nowrap',
-});
-
-export const signupDivider = style({
-  width: '1px',
-  height: '14px',
-  backgroundColor: vars.color.neutral.n300,
-  flexShrink: 0,
 });
 
 export const signupLink = style({
