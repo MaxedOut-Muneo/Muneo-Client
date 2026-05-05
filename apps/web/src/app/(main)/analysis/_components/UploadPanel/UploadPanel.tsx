@@ -46,7 +46,9 @@ export function UploadPanel() {
             onClick={() => inputRef.current?.click()}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
-                if (e.key === ' ') {e.preventDefault();}
+                if (e.key === ' ') {
+                  e.preventDefault();
+                }
                 inputRef.current?.click();
               }
             }}
@@ -114,7 +116,9 @@ export function UploadPanel() {
             className={styles.actionButton}
             disabled={loading}
             onClick={() => {
-              if (loading) {return;}
+              if (loading) {
+                return;
+              }
               void submitAnalysis();
             }}
           >
