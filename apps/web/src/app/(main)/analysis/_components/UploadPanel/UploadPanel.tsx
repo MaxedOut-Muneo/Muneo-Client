@@ -15,7 +15,7 @@ function formatSize(bytes: number): string {
 }
 
 export function UploadPanel() {
-  const { files, addFile, removeFile, submitAnalysis, reset } = useAnalysisStore();
+  const { files, loading, addFile, removeFile, submitAnalysis, reset } = useAnalysisStore();
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
 
@@ -40,8 +40,16 @@ export function UploadPanel() {
       <div className={styles.body}>
         <div className={styles.uploadArea}>
           <div
+            role="button"
+            tabIndex={0}
             className={`${styles.dropzone}${dragging ? ` ${styles.dropzoneDragging}` : ''}`}
             onClick={() => inputRef.current?.click()}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                if (e.key === ' ') {e.preventDefault();}
+                inputRef.current?.click();
+              }
+            }}
             onDragOver={(e) => {
               e.preventDefault();
               setDragging(true);
@@ -104,7 +112,9 @@ export function UploadPanel() {
             variant="gradient"
             size="md"
             className={styles.actionButton}
+            disabled={loading}
             onClick={() => {
+              if (loading) {return;}
               void submitAnalysis();
             }}
           >
