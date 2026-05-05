@@ -6,7 +6,7 @@ export const sidebar = style({
   position: 'fixed',
   top: 0,
   left: 0,
-  width: '224px',
+  width: vars.layout.sidebarWidth,
   height: '100vh',
   backgroundColor: vars.color.white,
   boxShadow: '2px 0 3px rgba(0, 0, 0, 0.06)',

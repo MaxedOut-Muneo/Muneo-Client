@@ -9,6 +9,7 @@ export const vars = createThemeContract({
       primaryLight: null,
       primaryBg: null,
       secondary: null,
+      secondaryBg: null,
     },
     semantic: {
       success: null,
@@ -83,5 +84,8 @@ export const vars = createThemeContract({
     md: null,
     lg: null,
     xl: null,
+  },
+  layout: {
+    sidebarWidth: null,
   },
 });
