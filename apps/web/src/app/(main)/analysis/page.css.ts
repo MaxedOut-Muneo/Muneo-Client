@@ -1,0 +1,57 @@
+import { vars } from '@muneo/design-system';
+import { style } from '@vanilla-extract/css';
+
+export const page = style({
+  backgroundColor: vars.color.neutral.nSurface,
+  minHeight: '100vh',
+  padding: '46px 60px 100px',
+});
+
+export const content = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '20px',
+  width: '100%',
+  maxWidth: '1080px',
+});
+
+export const pageHeader = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '8px',
+});
+
+export const pageTitle = style({
+  fontFamily: vars.typography.fontFamily,
+  fontSize: '30px',
+  fontWeight: vars.typography.fontWeight.bold,
+  color: vars.color.neutral.n900,
+  lineHeight: 'normal',
+});
+
+export const pageSubtitle = style({
+  fontFamily: vars.typography.fontFamily,
+  fontSize: vars.typography.fontSize.sm,
+  fontWeight: vars.typography.fontWeight.regular,
+  color: vars.color.neutral.n500,
+  lineHeight: 'normal',
+});
+
+export const loadingState = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  minHeight: '400px',
+});
+
+export const loadingText = style({
+  fontFamily: vars.typography.fontFamily,
+  fontSize: vars.typography.fontSize.md,
+  color: vars.color.neutral.n500,
+});
+
+export const errorText = style({
+  fontFamily: vars.typography.fontFamily,
+  fontSize: vars.typography.fontSize.md,
+  color: vars.color.semantic.danger,
+});

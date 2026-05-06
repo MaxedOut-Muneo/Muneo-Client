@@ -8,7 +8,7 @@ import * as styles from './layout.css';
 const NAV_TO_PATH: Record<SidebarNavId, string> = {
   home: '/home',
   estimate: '/estimate',
-  risk: '/risk',
+  risk: '/analysis',
   history: '/history',
   settings: '/settings',
 };
