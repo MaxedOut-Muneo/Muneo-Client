@@ -164,9 +164,9 @@ jobs:
             const formatResult = getStepResult(formatJob, 'Format check');
 
             let comment = '## 🔍 CI 검증 결과\n\n';
-            comment += `${icon(formatResult)} **Prettier**: ${label(formatResult)}\n\n`;
             comment += '| 검증 항목 | web | admin |\n';
             comment += '|-----------|-----|-------|\n';
+            comment += `| **Prettier** | ${icon(formatResult)} ${label(formatResult)} | ${icon(formatResult)} ${label(formatResult)} |\n`;
 
             for (const step of ['Type check', 'Lint check', 'Run tests', 'Build']) {
               const webResult = getStepResult(webJob, step);
