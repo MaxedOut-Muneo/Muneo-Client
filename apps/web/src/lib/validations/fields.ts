@@ -10,7 +10,7 @@ export const passwordField = z
   .min(1, '반드시 입력해야하는 필수 사항입니다.')
   .regex(/^(?=.*[a-zA-Z])(?=.*\d).+$/, '비밀번호는 최소 1개의 영문자, 숫자를 포함해야 합니다.');
 
-export const nameField = z.string().min(1, '반드시 입력해야하는 필수 사항입니다.');
+export const nameField = z.string().trim().min(1, '반드시 입력해야하는 필수 사항입니다.');
 
 export const phoneField = z
   .string()
