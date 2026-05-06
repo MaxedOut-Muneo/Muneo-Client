@@ -15,9 +15,14 @@ export const nameField = z.string().min(1, '반드시 입력해야하는 필수 
 export const phoneField = z
   .string()
   .min(1, '반드시 입력해야하는 필수 사항입니다.')
-  .regex(/^[0-9-]+$/, '올바른 연락처 형식이 아닙니다.');
+  .regex(/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/, '올바른 연락처 형식이 아닙니다. (예: 010-1234-5678)');
 
 export const birthDateField = z
   .string()
   .min(1, '반드시 입력해야하는 필수 사항입니다.')
-  .regex(/^\d{4}-\d{2}-\d{2}$/, '날짜 형식은 YYYY-MM-DD입니다.');
+  .regex(/^\d{4}-\d{2}-\d{2}$/, '날짜 형식은 YYYY-MM-DD입니다.')
+  .refine((val) => {
+    const [year, month, day] = val.split('-').map(Number);
+    const date = new Date(year, month - 1, day);
+    return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
+  }, '존재하지 않는 날짜입니다.');
