@@ -1,32 +1,74 @@
 import { vars } from '@muneo/design-system';
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 
 export const card = style({
   backgroundColor: vars.color.white,
   borderRadius: '16px',
   boxShadow: '0px 2px 2px 0px rgba(0, 0, 0, 0.11)',
-  padding: '26px 38px 40px 37px',
+  padding: '26px 38px 32px 37px',
   width: '100%',
+});
+
+export const cardHeader = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  marginBottom: '20px',
 });
 
 export const cardTitle = style({
   fontSize: vars.typography.fontSize.sm,
   fontWeight: vars.typography.fontWeight.bold,
   color: vars.color.neutral.n600,
-  marginBottom: '20px',
+});
+
+export const cardTitleCount = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginLeft: '8px',
+  padding: '1px 7px',
+  borderRadius: '999px',
+  backgroundColor: vars.color.brand.primaryBg,
+  color: vars.color.brand.primary,
+  fontSize: vars.typography.fontSize.xs,
+  fontWeight: vars.typography.fontWeight.semiBold,
+});
+
+export const viewAllLink = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '2px',
+  fontSize: vars.typography.fontSize.xs,
+  fontWeight: vars.typography.fontWeight.medium,
+  color: vars.color.neutral.n400,
+  textDecoration: 'none',
+  transition: 'color 0.15s ease',
+  selectors: {
+    '&:hover': {
+      color: vars.color.brand.primary,
+    },
+  },
 });
 
 export const table = style({
   width: '100%',
   borderCollapse: 'collapse',
+  tableLayout: 'fixed',
 });
+
+export const colDate = style({ width: '110px' });
+export const colType = style({ width: '130px' });
+export const colConstruction = style({});
+export const colRisk = style({ width: '100px' });
+export const colAction = style({ width: '28px' });
 
 export const thead = style({
   borderBottom: `1px solid ${vars.color.neutral.n200}`,
 });
 
 export const th = style({
-  padding: '12px 0',
+  padding: '10px 12px 10px 0',
   fontFamily: vars.typography.fontFamily,
   fontSize: vars.typography.fontSize.xs,
   fontWeight: vars.typography.fontWeight.bold,
@@ -40,55 +82,54 @@ export const thInner = style({
   alignItems: 'center',
   gap: '2px',
   cursor: 'pointer',
-});
-
-export const tr = style({
-  borderBottom: `1px solid ${vars.color.neutral.n200}`,
   selectors: {
-    '&:last-child': {
-      borderBottom: 'none',
+    '&:hover': {
+      color: vars.color.neutral.n600,
     },
   },
 });
 
+export const tr = style({
+  borderBottom: `1px solid ${vars.color.neutral.n200}`,
+  cursor: 'pointer',
+  transition: 'background-color 0.1s ease',
+  selectors: {
+    '&:last-child': {
+      borderBottom: 'none',
+    },
+    '&:hover': {
+      backgroundColor: vars.color.neutral.nSurface,
+    },
+  },
+});
+
+globalStyle(`${tr}:hover td:last-child`, { opacity: 1 });
+
 export const td = style({
-  padding: '14px 0',
+  padding: '13px 12px 13px 0',
   fontFamily: vars.typography.fontFamily,
   fontSize: vars.typography.fontSize.xs,
   fontWeight: vars.typography.fontWeight.regular,
   color: vars.color.neutral.n700,
   verticalAlign: 'middle',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
 });
 
-export const tdDate = style([
-  td,
-  {
-    opacity: 0.8,
-    fontWeight: vars.typography.fontWeight.medium,
-    width: '120px',
-  },
-]);
+export const tdDate = style([td, { fontWeight: vars.typography.fontWeight.medium, color: vars.color.neutral.n500 }]);
+export const tdType = style([td]);
+export const tdConstruction = style([td]);
+export const tdRisk = style([td]);
 
-export const tdType = style([
+export const tdAction = style([
   td,
   {
-    fontWeight: vars.typography.fontWeight.semiBold,
-    width: '140px',
-  },
-]);
-
-export const tdConstruction = style([
-  td,
-  {
-    width: '180px',
-  },
-]);
-
-export const tdRisk = style([
-  td,
-  {
-    fontWeight: vars.typography.fontWeight.semiBold,
-    width: '120px',
+    opacity: 0,
+    transition: 'opacity 0.1s ease',
+    color: vars.color.neutral.n300,
+    textAlign: 'right',
+    paddingRight: 0,
   },
 ]);
 
@@ -112,7 +153,7 @@ export const riskSafe = style([
   { backgroundColor: vars.color.semantic.successBg, color: vars.color.semantic.success },
 ]);
 
-export const riskNone = style({ color: vars.color.neutral.n400 });
+export const riskNone = style({ color: vars.color.neutral.n300, fontSize: vars.typography.fontSize.xs });
 
 export const analysisRisk = style([
   badge,
