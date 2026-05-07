@@ -29,13 +29,17 @@ function applyFilters(rows: HistoryRow[], filters: AppliedFilters): HistoryRow[]
     if (filters.startDate) {
       const start = new Date(filters.startDate);
       start.setHours(0, 0, 0, 0);
-      if (rowDate < start) {return false;}
+      if (rowDate < start) {
+        return false;
+      }
     }
 
     if (filters.endDate) {
       const end = new Date(filters.endDate);
       end.setHours(23, 59, 59, 999);
-      if (rowDate > end) {return false;}
+      if (rowDate > end) {
+        return false;
+      }
     }
 
     return true;
