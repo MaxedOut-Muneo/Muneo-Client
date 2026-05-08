@@ -15,6 +15,12 @@ export default async function HistoryDetailPage({ params }: { params: Promise<{ 
     notFound();
   }
 
+  const diagnosisDetail = MOCK_DIAGNOSIS_DETAILS[id];
+  const estimateDetail = MOCK_ESTIMATE_DETAILS[id];
+
+  if (row.analysisType === '리스크 진단' && !diagnosisDetail) {notFound();}
+  if (row.analysisType !== '리스크 진단' && !estimateDetail) {notFound();}
+
   return (
     <div className={styles.page}>
       <TransitionLink href="/history" className={styles.backButton}>
@@ -22,9 +28,9 @@ export default async function HistoryDetailPage({ params }: { params: Promise<{ 
       </TransitionLink>
       <div className={styles.content}>
         {row.analysisType === '리스크 진단' ? (
-          <DiagnosisDetailView result={MOCK_DIAGNOSIS_DETAILS[id]} />
+          <DiagnosisDetailView result={diagnosisDetail!} />
         ) : (
-          <EstimateDetailView data={MOCK_ESTIMATE_DETAILS[id]} />
+          <EstimateDetailView data={estimateDetail!} />
         )}
       </div>
     </div>
