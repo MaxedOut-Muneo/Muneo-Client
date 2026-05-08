@@ -1,4 +1,7 @@
+'use client';
+
 import { CaretDownIcon } from '@muneo/design-system';
+import { useRouter } from 'next/navigation';
 import { TransitionLink } from '@/components/TransitionLink';
 import { type HistoryRow, type RiskStatus } from '../../_types/home.types';
 import * as styles from './HistoryTable.css';
@@ -30,6 +33,7 @@ function AnalysisTypeBadge({ label }: { label: string }) {
 }
 
 export function HistoryTable({ rows }: HistoryTableProps) {
+  const router = useRouter();
   return (
     <div className={styles.card}>
       <div className={styles.cardHeader}>
@@ -65,7 +69,16 @@ export function HistoryTable({ rows }: HistoryTableProps) {
         </thead>
         <tbody>
           {rows.map((row) => (
-            <tr key={row.id} className={styles.tr}>
+            <tr
+              key={row.id}
+              className={styles.tr}
+              role="link"
+              tabIndex={0}
+              onClick={() => router.push(`/history/${row.id}`)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {router.push(`/history/${row.id}`);}
+              }}
+            >
               <td className={styles.tdDate}>{formatDate(row.date)}</td>
               <td className={styles.tdType}>
                 <AnalysisTypeBadge label={row.analysisType} />
