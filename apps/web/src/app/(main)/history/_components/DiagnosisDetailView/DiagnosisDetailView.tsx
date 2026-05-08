@@ -60,7 +60,7 @@ export function DiagnosisDetailView({ result }: DiagnosisDetailViewProps) {
           <span className={styles.summarySubtitle}>전체 리스크 의심 항목</span>
           <div className={styles.summaryBadges}>
             <span className={`${styles.summaryBadge} ${styles.badgeDanger}`}>누락 {result.missingCount}</span>
-            <span className={`${styles.summaryBadge} ${styles.badgeWarning}`}>불분명 {result.riskCount}</span>
+            <span className={`${styles.summaryBadge} ${styles.badgeWarning}`}>리스크 {result.riskCount}</span>
             <span className={`${styles.summaryBadge} ${styles.badgeInfo}`}>미비 {result.insufficientCount}</span>
           </div>
         </div>
