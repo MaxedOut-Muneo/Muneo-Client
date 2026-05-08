@@ -76,7 +76,9 @@ export function HistoryTable({ rows }: HistoryTableProps) {
               tabIndex={0}
               onClick={() => router.push(`/history/${row.id}`)}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') {router.push(`/history/${row.id}`);}
+                if (e.key === 'Enter') {
+                  router.push(`/history/${row.id}`);
+                }
               }}
             >
               <td className={styles.tdDate}>{formatDate(row.date)}</td>

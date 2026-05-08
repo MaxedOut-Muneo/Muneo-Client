@@ -9,8 +9,12 @@ interface HistoryTableProps {
 const COLUMNS = ['번호', '날짜', '분석 유형', '공사 유형', '업체', '리스크', '상태'] as const;
 
 function getStatusClass(status: AnalysisStatus) {
-  if (status === '완료') {return styles.statusComplete;}
-  if (status === '진행중') {return styles.statusInProgress;}
+  if (status === '완료') {
+    return styles.statusComplete;
+  }
+  if (status === '진행중') {
+    return styles.statusInProgress;
+  }
   return styles.statusPending;
 }
 
@@ -62,7 +66,9 @@ export function HistoryTable({ rows, onRowClick }: HistoryTableProps) {
                 tabIndex={0}
                 onClick={() => onRowClick?.(row.id)}
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {onRowClick?.(row.id);}
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    onRowClick?.(row.id);
+                  }
                 }}
               >
                 <td className={styles.td}>{row.id}</td>

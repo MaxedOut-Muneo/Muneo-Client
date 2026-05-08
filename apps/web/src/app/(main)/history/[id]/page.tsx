@@ -18,8 +18,12 @@ export default async function HistoryDetailPage({ params }: { params: Promise<{ 
   const diagnosisDetail = MOCK_DIAGNOSIS_DETAILS[id];
   const estimateDetail = MOCK_ESTIMATE_DETAILS[id];
 
-  if (row.analysisType === '리스크 진단' && !diagnosisDetail) {notFound();}
-  if (row.analysisType !== '리스크 진단' && !estimateDetail) {notFound();}
+  if (row.analysisType === '리스크 진단' && !diagnosisDetail) {
+    notFound();
+  }
+  if (row.analysisType !== '리스크 진단' && !estimateDetail) {
+    notFound();
+  }
 
   return (
     <div className={styles.page}>
