@@ -69,6 +69,8 @@ export const riskDanger = style({ color: '#ef4444' });
 export const riskSafe = style({ color: '#10b981' });
 export const riskNone = style({ color: '#374151' });
 export const statusComplete = style({ color: '#10b981' });
+export const statusInProgress = style({ color: '#f59e0b' });
+export const statusPending = style({ color: '#9ca3af' });
 
 export const emptyRow = style({
   textAlign: 'center',
