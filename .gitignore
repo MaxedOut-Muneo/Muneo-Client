@@ -32,6 +32,10 @@ build
 .claude
 CLAUDE.md
 .omc
+.codex
+.omx
+AGENTS.md
+AGENTS.override.md
 
 # playwright
 playwright-report/
@@ -39,3 +43,11 @@ test-results/
 
 # debug
 npm-debug.log*
+.codex/*
+!.codex/agents/
+!.codex/agents/**
+!.codex/skills/
+!.codex/skills/**
+.codex/skills/.system/**
+!.codex/prompts/
+!.codex/prompts/**
