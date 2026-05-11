@@ -28,6 +28,12 @@ const INITIAL_MESSAGES: Message[] = [
 ];
 
 const EXIT_DURATION = 220;
+const CHAT_PANEL_ID = 'floating-chat-panel';
+
+const createMessageId = (): string =>
+  typeof crypto !== 'undefined' && 'randomUUID' in crypto
+    ? `u-${crypto.randomUUID()}`
+    : `u-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
 
 export const FloatingChatLauncher = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +49,7 @@ export const FloatingChatLauncher = () => {
     if (!trimmed) {
       return;
     }
-    setMessages((prev) => [...prev, { id: `u-${Date.now()}`, role: 'user', content: trimmed }]);
+    setMessages((prev) => [...prev, { id: createMessageId(), role: 'user', content: trimmed }]);
     setInput('');
   };
 
@@ -52,7 +58,7 @@ export const FloatingChatLauncher = () => {
   return (
     <>
       {chatMounted && (
-        <div className={`${chatWrapper}${isExiting ? ` ${chatWrapperExit}` : ''}`}>
+        <div id={CHAT_PANEL_ID} className={`${chatWrapper}${isExiting ? ` ${chatWrapperExit}` : ''}`}>
           <FloatingChat>
             <FloatingChat.Header
               logo={<Logo2 className={logoBadge} />}
@@ -86,6 +92,7 @@ export const FloatingChatLauncher = () => {
         onClick={toggle}
         aria-label={isOpen ? 'AI 상담 챗 닫기' : 'AI 상담 챗 열기'}
         aria-expanded={isOpen}
+        aria-controls={CHAT_PANEL_ID}
       >
         {isOpen ? (
           <span key="close" className={buttonContent}>
