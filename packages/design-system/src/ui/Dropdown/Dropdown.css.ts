@@ -41,7 +41,7 @@ export const panel = style({
   position: 'absolute',
   top: 'calc(100% + 4px)',
   left: 0,
-  right: 0,
+  minWidth: '100%',
   zIndex: 10,
   backgroundColor: vars.color.white,
   border: `1px solid ${vars.color.neutral.n200}`,
@@ -64,6 +64,7 @@ export const optionItem = style({
   color: vars.color.neutral.n900,
   fontFamily: vars.typography.fontFamily,
   cursor: 'pointer',
+  whiteSpace: 'nowrap',
   selectors: {
     '&[aria-selected="true"]': {
       color: vars.color.brand.primary,
