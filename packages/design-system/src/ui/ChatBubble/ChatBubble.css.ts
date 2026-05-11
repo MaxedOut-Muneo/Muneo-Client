@@ -1,3 +1,4 @@
+import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../../styles/tokens.css';
 
@@ -13,6 +14,9 @@ export const chatBubbleRecipe = recipe({
   variants: {
     variant: {
       ai: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '10px',
         backgroundColor: vars.color.neutral.nSurface,
         color: vars.color.neutral.n900,
         maxWidth: '400px',
@@ -32,4 +36,37 @@ export const chatBubbleRecipe = recipe({
   defaultVariants: {
     variant: 'ai',
   },
+});
+
+export const recommendationGroup = style({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-end',
+  justifyContent: 'center',
+  gap: vars.space.xs,
+  width: '100%',
+});
+
+export const recommendation = style({
+  display: 'flex',
+  alignItems: 'center',
+  width: '100%',
+  paddingTop: '6px',
+  paddingBottom: '6px',
+  paddingLeft: vars.space.md,
+  paddingRight: vars.space.md,
+  borderRadius: vars.radius.sm,
+  backgroundColor: vars.color.brand.primaryBg,
+  color: vars.color.brand.primary,
+  fontFamily: vars.typography.fontFamily,
+  fontSize: '11px',
+  fontWeight: vars.typography.fontWeight.regular,
+  lineHeight: '1.4',
+});
+
+export const ragLabel = style({
+  fontFamily: vars.typography.fontFamily,
+  fontSize: '9px',
+  fontWeight: vars.typography.fontWeight.regular,
+  color: vars.color.neutral.n400,
 });
