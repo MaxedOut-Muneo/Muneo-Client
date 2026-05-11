@@ -3,6 +3,7 @@
 import { Button } from '@muneo/design-system';
 import { useState } from 'react';
 import { useEstimateStore } from '../../_store/estimateStore';
+import { type ProcessId } from '../../_types';
 import * as styles from './Step5EstimateReview.css';
 
 // ─────────── 타입 ───────────
@@ -14,7 +15,7 @@ interface EstimateItem {
 }
 
 interface ProcessEstimate {
-  id: string;
+  id: ProcessId;
   name: string;
   totalRange: string;
   items: EstimateItem[];

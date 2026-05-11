@@ -1,10 +1,10 @@
-import { type ProcessInfo } from '../../estimate.types';
+import { type ProcessId, type ProcessInfo } from '../../_types';
 import * as styles from './ProcessCheckbox.css';
 
 interface ProcessCheckboxProps {
   process: ProcessInfo;
   selected: boolean;
-  onToggle: (id: string) => void;
+  onToggle: (id: ProcessId) => void;
 }
 
 export function ProcessCheckbox({ process, selected, onToggle }: ProcessCheckboxProps) {
@@ -12,7 +12,7 @@ export function ProcessCheckbox({ process, selected, onToggle }: ProcessCheckbox
     <button
       type="button"
       className={selected ? styles.cardSelected : styles.cardUnselected}
-      onClick={() => onToggle(process.id)}
+      onClick={() => onToggle(process.id as ProcessId)}
       aria-pressed={selected}
     >
       <span className={selected ? styles.processNameSelected : styles.processNameUnselected}>{process.name}</span>

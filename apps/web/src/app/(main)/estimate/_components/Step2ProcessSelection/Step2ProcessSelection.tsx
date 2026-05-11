@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useEstimateStore } from '../../_store/estimateStore';
-import { BASIC_PROCESSES, OPTIONAL_PROCESSES } from '../../estimate.types';
+import { BASIC_PROCESSES, OPTIONAL_PROCESSES } from '../../_types';
 import { ProcessCheckbox } from '../ProcessCheckbox/ProcessCheckbox';
 import { StepActions } from '../StepActions/StepActions';
 import * as styles from './Step2ProcessSelection.css';

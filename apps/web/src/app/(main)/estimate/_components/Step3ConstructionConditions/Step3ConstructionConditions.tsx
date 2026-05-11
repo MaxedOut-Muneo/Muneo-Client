@@ -2,21 +2,9 @@
 
 import { SelectButton } from '@muneo/design-system';
 import { useEstimateStore } from '../../_store/estimateStore';
-import {
-  type BuildingAge,
-  type ConstructionTiming,
-  type Elevator,
-  type Occupancy,
-  type TruckAccess,
-} from '../../estimate.types';
+import { BUILDING_AGES, CONSTRUCTION_TIMINGS, ELEVATOR_OPTIONS, OCCUPANCIES, TRUCK_ACCESSES } from '../../_types';
 import { StepActions } from '../StepActions/StepActions';
 import * as styles from './Step3ConstructionConditions.css';
-
-const BUILDING_AGES: BuildingAge[] = ['신축(3년 이하)', '10년 이하', '10~20년 이하', '20년 이상'];
-const ELEVATORS: Elevator[] = ['있음', '없음'];
-const OCCUPANCIES: Occupancy[] = ['거주 중', '공실'];
-const TRUCK_ACCESSES: TruckAccess[] = ['가능', '불가(골목/지하)', '모름'];
-const CONSTRUCTION_TIMINGS: ConstructionTiming[] = ['1개월 이내', '1~3개월', '3개월 이후', '미정'];
 
 export function Step3ConstructionConditions() {
   const { step3, setStep3, nextStep, prevStep } = useEstimateStore();
@@ -56,7 +44,7 @@ export function Step3ConstructionConditions() {
                 <div className={styles.field}>
                   <span className={styles.fieldLabel}>엘리베이터</span>
                   <div className={styles.buttonRow}>
-                    {ELEVATORS.map((ev) => (
+                    {ELEVATOR_OPTIONS.map((ev) => (
                       <SelectButton
                         key={ev}
                         selected={step3.elevator === ev}

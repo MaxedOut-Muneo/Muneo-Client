@@ -5,25 +5,26 @@ import { type ReactNode, useState } from 'react';
 import { useEstimateStore } from '../../_store/estimateStore';
 import {
   BASIC_PROCESSES,
+  CARPENTRY_EXTRAS,
+  DEMOLITION_ITEMS,
   OPTIONAL_PROCESSES,
+  PAINTING_AREAS,
+  SANITARY_WARES,
+  TILE_LOCATIONS,
+  WALLPAPER_ROOMS,
   type BathroomDetail,
   type CarpentryDetail,
   type CarpentryExtra,
   type DemolitionDetail,
-  type DemolitionItem,
   type ElectricalDetail,
   type FinishingDetail,
   type FlooringDetail,
   type KitchenDetail,
-  type PaintingArea,
   type PaintingDetail,
   type PlumbingDetail,
-  type SanitaryWare,
   type TileDetail,
-  type TileLocation,
   type WallpaperDetail,
-  type WallpaperRoom,
-} from '../../estimate.types';
+} from '../../_types';
 import { StepActions } from '../StepActions/StepActions';
 import * as styles from './Step4ProcessDetail.css';
 
@@ -53,17 +54,6 @@ interface ProcessSectionProps<T> {
   data: Partial<T>;
   onChange: (patch: Partial<T>) => void;
 }
-
-const DEMOLITION_ITEMS: DemolitionItem[] = [
-  '몰딩·걸레받이',
-  '도어·문틀',
-  '마루·장판',
-  '욕실 타일',
-  '주방',
-  '천정',
-  '벽체·조적',
-  '붙박이장·가구',
-];
 
 function DemolitionSection({ data, onChange }: ProcessSectionProps<DemolitionDetail>) {
   return (
@@ -326,7 +316,6 @@ function ElectricalSection({ data, onChange }: ProcessSectionProps<ElectricalDet
 }
 
 // ─────────── 4. 목공 ───────────
-const CARPENTRY_EXTRAS: CarpentryExtra[] = ['가벽 신설', '웨인스코팅', '아치문', '아트월', '천장 보강(실링팬)', '없음'];
 
 function CarpentrySection({ data, onChange }: ProcessSectionProps<CarpentryDetail>) {
   return (
@@ -435,7 +424,6 @@ function CarpentrySection({ data, onChange }: ProcessSectionProps<CarpentryDetai
 }
 
 // ─────────── 5. 도배 ───────────
-const WALLPAPER_ROOMS: WallpaperRoom[] = ['거실', '주방', '침실1', '침실2', '침실3', '현관'];
 
 function WallpaperSection({ data, onChange }: ProcessSectionProps<WallpaperDetail>) {
   return (
@@ -615,14 +603,6 @@ function FlooringSection({ data, onChange }: ProcessSectionProps<FlooringDetail>
 }
 
 // ─────────── 7. 타일 ───────────
-const TILE_LOCATIONS: TileLocation[] = [
-  '현관 바닥',
-  '주방 벽면(백스플래시)',
-  '발코니 바닥',
-  '발코니 벽면',
-  '거실 바닥',
-];
-
 function TileSection({ data, onChange }: ProcessSectionProps<TileDetail>) {
   return (
     <div className={styles.sectionBody}>
@@ -668,7 +648,6 @@ function TileSection({ data, onChange }: ProcessSectionProps<TileDetail>) {
 }
 
 // ─────────── 8. 욕실 ───────────
-const SANITARY_WARES: SanitaryWare[] = ['양변기', '세면대', '욕조', '샤워부스'];
 
 function BathroomSection({ data, onChange }: ProcessSectionProps<BathroomDetail>) {
   return (
@@ -934,7 +913,6 @@ function KitchenSection({ data, onChange }: ProcessSectionProps<KitchenDetail>) 
 }
 
 // ─────────── 10. 도장 ───────────
-const PAINTING_AREAS: PaintingArea[] = ['전면 발코니', '후면 발코니', '다용도실', '벽면 페인트', '천정'];
 
 function PaintingSection({ data, onChange }: ProcessSectionProps<PaintingDetail>) {
   return (
