@@ -13,7 +13,7 @@ export interface ChatBubbleProps {
 
 export const ChatBubble = forwardRef<HTMLDivElement, ChatBubbleProps>(
   ({ variant, children, recommendation: recommendationNode, ragLabel: ragLabelNode, className }, ref) => {
-    const showRecommendation = variant === 'ai' && (recommendationNode || ragLabelNode);
+    const showRecommendation = variant === 'ai' && (recommendationNode != null || ragLabelNode != null);
 
     return (
       <div ref={ref} className={`${chatBubbleRecipe({ variant })}${className ? ` ${className}` : ''}`}>
