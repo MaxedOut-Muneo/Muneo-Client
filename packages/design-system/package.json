@@ -9,11 +9,13 @@
   "exports": {
     ".": "./src/index.ts",
     "./styles/global.css": "./src/styles/global.css.ts",
+    "./assets/*.svg": "./src/assets/*.svg",
     "./*": "./src/*.tsx"
   },
   "scripts": {
     "lint": "eslint .",
     "build:icons": "tsx scripts/build-icons.ts",
+    "gen:index": "tsx scripts/gen-index.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
