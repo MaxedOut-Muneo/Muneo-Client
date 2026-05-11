@@ -12,6 +12,7 @@ concurrency:
 permissions:
   contents: read
   pull-requests: write
+  actions: read
 
 jobs:
   setup:
@@ -106,6 +107,27 @@ jobs:
         continue-on-error: true
         run: pnpm turbo build --filter=${{ matrix.app }}
 
+      - name: Write CI result
+        if: always()
+        run: |
+          mkdir -p ci-results
+          cat > "ci-results/${{ matrix.app }}.json" <<'JSON'
+          {
+            "typeCheck": "${{ steps.type-check.outcome }}",
+            "lint": "${{ steps.lint.outcome }}",
+            "test": "${{ steps.test.outcome }}",
+            "build": "${{ steps.build.outcome }}"
+          }
+          JSON
+
+      - name: Upload CI result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-result-${{ matrix.app }}
+          path: ci-results/${{ matrix.app }}.json
+          if-no-files-found: error
+
       - name: Check results
         if: always()
         run: |
@@ -138,10 +160,21 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+      - name: Download CI results
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          pattern: ci-result-*
+          path: ci-results
+          merge-multiple: true
+
       - name: Comment results on PR
         uses: actions/github-script@v7
         with:
           script: |
+            const fs = require('fs');
+            const path = require('path');
+
             const { data: jobs } = await github.rest.actions.listJobsForWorkflowRun({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -149,8 +182,6 @@ jobs:
             });
 
             const formatJob = jobs.jobs.find(j => j.name === 'format');
-            const webJob = jobs.jobs.find(j => j.name === 'ci (web)');
-            const adminJob = jobs.jobs.find(j => j.name === 'ci (admin)');
 
             const getStepResult = (job, stepName) => {
               if (!job) return 'skipped';
@@ -158,21 +189,41 @@ jobs:
               return step?.conclusion || 'skipped';
             };
 
+            const readAppResult = (app) => {
+              const filePath = path.join('ci-results', `${app}.json`);
+              if (!fs.existsSync(filePath)) {
+                return {
+                  typeCheck: 'skipped',
+                  lint: 'skipped',
+                  test: 'skipped',
+                  build: 'skipped',
+                };
+              }
+
+              return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+            };
+
             const icon = (status) => status === 'success' ? '✅' : status === 'skipped' ? '⏭️' : '❌';
             const label = (status) => status === 'success' ? '통과' : status === 'skipped' ? '스킵' : '실패';
 
             const formatResult = getStepResult(formatJob, 'Format check');
+            const webResult = readAppResult('web');
+            const adminResult = readAppResult('admin');
+
+            const rows = [
+              ['Type', webResult.typeCheck, adminResult.typeCheck],
+              ['Prettier', formatResult, formatResult],
+              ['Lint', webResult.lint, adminResult.lint],
+              ['tests', webResult.test, adminResult.test],
+              ['Build', webResult.build, adminResult.build],
+            ];
 
             let comment = '## 🔍 CI 검증 결과\n\n';
             comment += '| 검증 항목 | web | admin |\n';
             comment += '|-----------|-----|-------|\n';
-            comment += `| **Prettier** | ${icon(formatResult)} ${label(formatResult)} | ${icon(formatResult)} ${label(formatResult)} |\n`;
 
-            for (const step of ['Type check', 'Lint check', 'Run tests', 'Build']) {
-              const webResult = getStepResult(webJob, step);
-              const adminResult = getStepResult(adminJob, step);
-              const name = step.replace(' check', '').replace('Run ', '');
-              comment += `| **${name}** | ${icon(webResult)} ${label(webResult)} | ${icon(adminResult)} ${label(adminResult)} |\n`;
+            for (const [name, webStatus, adminStatus] of rows) {
+              comment += `| **${name}** | ${icon(webStatus)} ${label(webStatus)} | ${icon(adminStatus)} ${label(adminStatus)} |\n`;
             }
 
             try {
