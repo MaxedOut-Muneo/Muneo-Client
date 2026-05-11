@@ -1,5 +1,4 @@
 import { type ReactNode } from 'react';
-import { FloatingChatButton } from './_components/FloatingChatButton/FloatingChatButton';
 import { Footer } from './_components/Footer/Footer';
 import { Header } from './_components/Header/Header';
 import * as styles from './layout.css';
@@ -10,7 +9,6 @@ export default function LandingLayout({ children, modal }: { children: ReactNode
       <Header />
       {children}
       <Footer />
-      <FloatingChatButton />
       {modal}
     </div>
   );
