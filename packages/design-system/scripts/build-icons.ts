@@ -11,17 +11,9 @@ const svgFillDir = join(iconsRoot, 'svg-fill');
 
 const tag = '// @generated';
 
-const toIconName = (filename: string): string => {
-  const base = filename.replace(extname(filename), '');
-  const name =
-    base
-      .split(/[-_\s]+/)
-      .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
-      .join('') + 'Icon';
-  return /^\d/.test(name) ? `Svg${name}` : name;
-};
+const BRAND_ASSET_NAMES = new Set(['Logo', 'Logo2', 'FloatingMuneo', 'KakaoIcon', 'CloseRoundFill']);
 
-const toComponentName = (filename: string): string => {
+const toPascalCase = (filename: string): string => {
   const base = filename.replace(extname(filename), '');
   const name = base
     .split(/[-_\s]+/)
@@ -30,7 +22,24 @@ const toComponentName = (filename: string): string => {
   return /^\d/.test(name) ? `Svg${name}` : name;
 };
 
+const toIconName = (filename: string): string => {
+  const pascal = toPascalCase(filename);
+  return pascal.endsWith('Icon') ? pascal : `${pascal}Icon`;
+};
+
+const toComponentName = (filename: string): string => {
+  const pascal = toPascalCase(filename);
+  if (BRAND_ASSET_NAMES.has(pascal)) {
+    return pascal;
+  }
+  return pascal.endsWith('Icon') ? pascal : `${pascal}Icon`;
+};
+
 const normalizeFill = (svg: string): string => svg.replace(/fill="(?!none\b)[^"]*"/gi, 'fill="currentColor"');
+
+const normalizeStroke = (svg: string): string => svg.replace(/stroke="(?!none\b)[^"]*"/gi, 'stroke="currentColor"');
+
+const normalizeColors = (svg: string): string => normalizeStroke(normalizeFill(svg));
 
 const extractViewBox = (svg: string): string | null => {
   const m = svg.match(/viewBox=["']([^"']+)["']/i);
@@ -50,7 +59,7 @@ const convertSvg = async (
   const idPrefix = name.toLowerCase();
 
   let code = await transform(
-    normalize ? normalizeFill(raw) : raw,
+    normalize ? normalizeColors(raw) : raw,
     {
       typescript: true,
       jsxRuntime: 'automatic',
