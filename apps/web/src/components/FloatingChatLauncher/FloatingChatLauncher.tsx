@@ -1,7 +1,8 @@
 'use client';
 
 import { ChatBubble, ChatInput, CloseIconMdIcon, FloatingChat, FloatingMuneo, Logo2 } from '@muneo/design-system';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useDelayedUnmount } from '@/hooks/useDelayedUnmount';
 import {
   buttonContent,
   chatWrapper,
@@ -30,21 +31,9 @@ const EXIT_DURATION = 220;
 
 export const FloatingChatLauncher = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [chatMounted, setChatMounted] = useState(false);
+  const chatMounted = useDelayedUnmount(isOpen, EXIT_DURATION);
   const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
   const [input, setInput] = useState('');
-
-  useEffect(() => {
-    if (isOpen) {
-      setChatMounted(true);
-      return;
-    }
-    if (!chatMounted) {
-      return;
-    }
-    const timer = window.setTimeout(() => setChatMounted(false), EXIT_DURATION);
-    return () => window.clearTimeout(timer);
-  }, [isOpen, chatMounted]);
 
   const toggle = () => setIsOpen((prev) => !prev);
   const close = () => setIsOpen(false);
