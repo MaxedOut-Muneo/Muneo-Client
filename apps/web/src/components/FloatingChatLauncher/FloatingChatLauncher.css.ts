@@ -61,6 +61,11 @@ export const floatingButton = style({
       outlineOffset: '2px',
     },
   },
+  '@media': {
+    '(prefers-reduced-motion: reduce)': {
+      transition: 'none',
+    },
+  },
 });
 
 export const buttonContent = style({
@@ -70,6 +75,11 @@ export const buttonContent = style({
   justifyContent: 'center',
   gap: '2px',
   animation: `${iconFadeIn} 220ms ${EASE_OUT} both`,
+  '@media': {
+    '(prefers-reduced-motion: reduce)': {
+      animation: 'none',
+    },
+  },
 });
 
 export const triggerIcon = style({
@@ -95,11 +105,22 @@ export const chatWrapper = style({
   zIndex: 110,
   transformOrigin: 'bottom right',
   animation: `${slideUpIn} 320ms ${EASE_OUT} both`,
+  '@media': {
+    '(prefers-reduced-motion: reduce)': {
+      animation: 'none',
+    },
+  },
 });
 
 export const chatWrapperExit = style({
   animation: `${slideDownOut} 220ms ${EASE_IN_OUT} both`,
   pointerEvents: 'none',
+  '@media': {
+    '(prefers-reduced-motion: reduce)': {
+      animation: 'none',
+      opacity: 0,
+    },
+  },
 });
 
 export const logoBadge = style({
