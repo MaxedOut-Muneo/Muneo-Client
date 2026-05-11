@@ -47,6 +47,8 @@ const convertSvg = async (
   const raw = await readFile(join(dir, file), 'utf-8');
   const viewBox = extractViewBox(raw);
 
+  const idPrefix = name.toLowerCase();
+
   let code = await transform(
     normalize ? normalizeFill(raw) : raw,
     {
@@ -55,6 +57,23 @@ const convertSvg = async (
       expandProps: 'end',
       prettier: false,
       plugins: [svgoPlugin, jsxPlugin],
+      svgoConfig: {
+        plugins: [
+          {
+            name: 'preset-default',
+            params: {
+              overrides: {
+                removeViewBox: false,
+                inlineStyles: { onlyMatchedOnce: false },
+              },
+            },
+          },
+          {
+            name: 'prefixIds',
+            params: { prefix: idPrefix },
+          },
+        ],
+      },
     },
     { componentName: name }
   );
