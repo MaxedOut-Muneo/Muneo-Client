@@ -9,11 +9,15 @@
   "exports": {
     ".": "./src/index.ts",
     "./styles/global.css": "./src/styles/global.css.ts",
+    "./assets/*.svg": "./src/assets/*.svg",
     "./*": "./src/*.tsx"
   },
   "scripts": {
     "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "build:icons": "tsx scripts/build-icons.ts",
+    "gen:index": "tsx scripts/gen-index.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -27,17 +31,23 @@
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
     "@svgr/plugin-svgo": "^8.1.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^25.5.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vanilla-extract/vite-plugin": "^4.0.20",
+    "@vitejs/plugin-react": "^5.0.3",
     "eslint": "^9.39.4",
+    "jsdom": "^29.0.1",
     "prettier": "^3.8.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "storybook": "^10.3.3",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
   },
   "peerDependencies": {
     "react": "^19",

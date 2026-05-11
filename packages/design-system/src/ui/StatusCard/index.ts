@@ -1,1 +1,3 @@
-export { StatusCard, type StatusCardProps } from './StatusCard';
+// @generated
+
+export * from './StatusCard';

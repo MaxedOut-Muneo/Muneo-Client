@@ -1,1 +1,3 @@
-export { Button, type ButtonProps } from './Button';
+// @generated
+
+export * from './Button';

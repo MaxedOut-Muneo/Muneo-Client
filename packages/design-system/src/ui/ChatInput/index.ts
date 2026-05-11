@@ -1,1 +1,3 @@
+// @generated
+
 export * from './ChatInput';

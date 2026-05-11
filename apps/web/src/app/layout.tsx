@@ -2,6 +2,7 @@ import { lightTheme } from '@muneo/design-system';
 import '@muneo/design-system/styles/global.css';
 import { type Metadata } from 'next';
 import localFont from 'next/font/local';
+import { FloatingChatLauncher } from '@/components/FloatingChatLauncher';
 import { QueryProvider } from './providers/QueryProvider';
 import './globals.css';
 
@@ -49,7 +50,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       data-scroll-behavior="smooth"
     >
       <body>
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          {children}
+          <FloatingChatLauncher />
+        </QueryProvider>
       </body>
     </html>
   );
