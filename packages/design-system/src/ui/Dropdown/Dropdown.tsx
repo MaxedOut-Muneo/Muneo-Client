@@ -62,9 +62,17 @@ export const Dropdown = <T,>({
               className={optionItem}
               role="option"
               aria-selected={opt.value === value}
+              tabIndex={0}
               onClick={() => {
                 onChange?.(opt.value);
                 setOpen(false);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onChange?.(opt.value);
+                  setOpen(false);
+                }
               }}
             >
               {opt.label}
