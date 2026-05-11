@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const emailField = z
   .string()
   .min(1, '반드시 입력해야하는 필수 사항입니다.')
-  .email('올바른 이메일 형식이 아닙니다.');
+  .pipe(z.email('올바른 이메일 형식이 아닙니다.'));
 
 export const passwordField = z
   .string()
