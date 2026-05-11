@@ -1,8 +1,17 @@
-export type SpaceType = '아파트' | '빌라' | '오피스텔' | '단독 주택';
-export type Region = '서울' | '수도권' | '지방';
-export type BuildingAge = '5년 이하' | '5~10년' | '10~20년' | '20년 이상';
-export type ElevatorOption = '있음' | '없음';
-export type DiagnosisStatus = '정상' | '누락' | '미비' | '불분명';
+export const SPACE_TYPES = ['아파트', '빌라', '오피스텔', '단독 주택'] as const;
+export type SpaceType = (typeof SPACE_TYPES)[number];
+
+export const REGIONS = ['서울', '수도권', '지방'] as const;
+export type Region = (typeof REGIONS)[number];
+
+export const BUILDING_AGES = ['5년 이하', '5~10년', '10~20년', '20년 이상'] as const;
+export type BuildingAge = (typeof BUILDING_AGES)[number];
+
+export const ELEVATOR_OPTIONS = ['있음', '없음'] as const;
+export type ElevatorOption = (typeof ELEVATOR_OPTIONS)[number];
+
+export const DIAGNOSIS_STATUSES = ['정상', '누락', '미비', '불분명'] as const;
+export type DiagnosisStatus = (typeof DIAGNOSIS_STATUSES)[number];
 
 export interface AnalysisFormData {
   spaceType: SpaceType | null;
