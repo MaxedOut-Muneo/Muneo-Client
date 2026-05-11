@@ -14,7 +14,6 @@ import RemoveMinusIcon from '../../assets/icons/RemoveMinusIcon';
 import {
   aiRow,
   avatar,
-  avatarImg,
   body,
   footer,
   header,
@@ -22,7 +21,6 @@ import {
   headerLeft,
   iconButton,
   logo,
-  logoImg,
   root,
   subtitle,
   title,
@@ -50,8 +48,6 @@ FloatingChatRoot.displayName = 'FloatingChat';
 const FloatingChatHeader = forwardRef<HTMLDivElement, FloatingChatHeaderProps>(
   (
     {
-      logoSrc,
-      logoAlt = '',
       logo: logoNode,
       title: titleNode,
       subtitle: subtitleNode,
@@ -66,9 +62,7 @@ const FloatingChatHeader = forwardRef<HTMLDivElement, FloatingChatHeaderProps>(
     return (
       <div ref={ref} className={`${header}${className ? ` ${className}` : ''}`}>
         <div className={headerLeft}>
-          <div className={logo}>
-            {logoNode ?? (logoSrc ? <img className={logoImg} src={logoSrc} alt={logoAlt} /> : null)}
-          </div>
+          <div className={logo}>{logoNode}</div>
           <div className={titleBlock}>
             <span className={title}>{titleNode}</span>
             {subtitleNode && <span className={subtitle}>{subtitleNode}</span>}
@@ -102,12 +96,10 @@ const FloatingChatBody = forwardRef<HTMLDivElement, FloatingChatBodyProps>(({ ch
 FloatingChatBody.displayName = 'FloatingChat.Body';
 
 const FloatingChatAIMessage = forwardRef<HTMLDivElement, FloatingChatAIMessageProps>(
-  ({ avatarSrc, avatarAlt = '', avatar: avatarNode, children, className }, ref) => {
+  ({ avatar: avatarNode, children, className }, ref) => {
     return (
       <div ref={ref} className={`${aiRow}${className ? ` ${className}` : ''}`}>
-        <div className={avatar}>
-          {avatarNode ?? (avatarSrc ? <img className={avatarImg} src={avatarSrc} alt={avatarAlt} /> : null)}
-        </div>
+        <div className={avatar}>{avatarNode}</div>
         {children}
       </div>
     );

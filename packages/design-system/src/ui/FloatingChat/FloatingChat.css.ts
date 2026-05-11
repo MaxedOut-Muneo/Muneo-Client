@@ -50,12 +50,6 @@ export const logo = style({
   flexShrink: 0,
 });
 
-export const logoImg = style({
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover',
-});
-
 export const titleBlock = style({
   display: 'flex',
   flexDirection: 'column',
@@ -153,12 +147,6 @@ export const avatar = style({
   backgroundColor: vars.color.white,
   overflow: 'hidden',
   flexShrink: 0,
-});
-
-export const avatarImg = style({
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover',
 });
 
 export const footer = style({

@@ -6,8 +6,6 @@ export interface FloatingChatProps {
 }
 
 export interface FloatingChatHeaderProps {
-  logoSrc?: string;
-  logoAlt?: string;
   logo?: ReactNode;
   title: ReactNode;
   subtitle?: ReactNode;
@@ -24,8 +22,6 @@ export interface FloatingChatBodyProps {
 }
 
 export interface FloatingChatAIMessageProps {
-  avatarSrc?: string;
-  avatarAlt?: string;
   avatar?: ReactNode;
   children: ReactNode;
   className?: string;
