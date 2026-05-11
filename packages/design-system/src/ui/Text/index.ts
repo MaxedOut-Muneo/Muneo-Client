@@ -1,1 +1,3 @@
-export { Text } from './Text';
+// @generated
+
+export * from './Text';
