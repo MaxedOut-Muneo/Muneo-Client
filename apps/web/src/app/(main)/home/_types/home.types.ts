@@ -5,6 +5,7 @@ export interface HistoryRow {
   date: string;
   analysisType: string;
   constructionType: string;
+  vendor?: string | null;
   risk: RiskStatus;
 }
 

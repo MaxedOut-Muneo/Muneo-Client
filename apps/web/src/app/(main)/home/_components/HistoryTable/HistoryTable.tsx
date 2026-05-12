@@ -1,6 +1,6 @@
 'use client';
 
-import { CaretDownIcon } from '@muneo/design-system';
+import { CaretDownSmIcon } from '@muneo/design-system';
 import { useRouter } from 'next/navigation';
 import { TransitionLink } from '@/components/TransitionLink';
 import { type HistoryRow, type RiskStatus } from '../../_types/home.types';
@@ -12,12 +12,12 @@ interface HistoryTableProps {
 
 const COLUMNS = ['날짜', '분석 유형', '공사 유형', '리스크'] as const;
 
-function formatDate(dateStr: string) {
+const formatDate = (dateStr: string) => {
   const [, month, day] = dateStr.split('-');
   return `${parseInt(month)}월 ${parseInt(day)}일`;
-}
+};
 
-function RiskBadge({ risk }: { risk: RiskStatus }) {
+const RiskBadge = ({ risk }: { risk: RiskStatus }) => {
   if (risk.type === 'danger') {
     return <span className={styles.riskDanger}>{risk.label}</span>;
   }
@@ -25,14 +25,14 @@ function RiskBadge({ risk }: { risk: RiskStatus }) {
     return <span className={styles.riskSafe}>{risk.label}</span>;
   }
   return <span className={styles.riskNone}>—</span>;
-}
+};
 
-function AnalysisTypeBadge({ label }: { label: string }) {
+const AnalysisTypeBadge = ({ label }: { label: string }) => {
   const isRisk = label === '리스크 진단';
   return <span className={isRisk ? styles.analysisRisk : styles.analysisEstimate}>{label}</span>;
-}
+};
 
-export function HistoryTable({ rows }: HistoryTableProps) {
+export const HistoryTable = ({ rows }: HistoryTableProps) => {
   const router = useRouter();
   return (
     <div className={styles.card}>
@@ -43,7 +43,7 @@ export function HistoryTable({ rows }: HistoryTableProps) {
         </h3>
         <TransitionLink href="/history" className={styles.viewAllLink}>
           전체 이력 보기
-          <CaretDownIcon width={14} height={14} style={{ transform: 'rotate(-90deg)' }} />
+          <CaretDownSmIcon width={24} height={24} style={{ transform: 'rotate(-90deg)' }} />
         </TransitionLink>
       </div>
       <table className={styles.table}>
@@ -60,7 +60,7 @@ export function HistoryTable({ rows }: HistoryTableProps) {
               <th key={col} className={styles.th}>
                 <span className={styles.thInner}>
                   {col}
-                  <CaretDownIcon width={14} height={14} />
+                  <CaretDownSmIcon width={24} height={24} />
                 </span>
               </th>
             ))}
@@ -90,7 +90,7 @@ export function HistoryTable({ rows }: HistoryTableProps) {
                 <RiskBadge risk={row.risk} />
               </td>
               <td className={styles.tdAction}>
-                <CaretDownIcon width={14} height={14} style={{ transform: 'rotate(-90deg)' }} />
+                <CaretDownSmIcon width={14} height={14} style={{ transform: 'rotate(-90deg)' }} />
               </td>
             </tr>
           ))}
@@ -98,4 +98,4 @@ export function HistoryTable({ rows }: HistoryTableProps) {
       </table>
     </div>
   );
-}
+};

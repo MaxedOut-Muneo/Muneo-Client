@@ -19,6 +19,7 @@ export const cardHeader = style({
 export const cardTitle = style({
   fontSize: vars.typography.fontSize.sm,
   fontWeight: vars.typography.fontWeight.bold,
+  fontFamily: vars.typography.fontFamily,
   color: vars.color.neutral.n600,
 });
 
@@ -33,6 +34,7 @@ export const cardTitleCount = style({
   color: vars.color.brand.primary,
   fontSize: vars.typography.fontSize.xs,
   fontWeight: vars.typography.fontWeight.semiBold,
+  fontFamily: vars.typography.fontFamily,
 });
 
 export const viewAllLink = style({
@@ -41,6 +43,7 @@ export const viewAllLink = style({
   gap: '2px',
   fontSize: vars.typography.fontSize.xs,
   fontWeight: vars.typography.fontWeight.medium,
+  fontFamily: vars.typography.fontFamily,
   color: vars.color.neutral.n400,
   textDecoration: 'none',
   transition: 'color 0.15s ease',
