@@ -22,7 +22,9 @@ export const sectionHeader = style({
 export const chevron = style({
   fontSize: '12px',
   color: vars.color.neutral.n700,
-  display: 'inline-block',
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
   transition: 'transform 0.3s ease',
   transformOrigin: 'center',
 });

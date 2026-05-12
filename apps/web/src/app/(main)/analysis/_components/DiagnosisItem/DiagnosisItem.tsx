@@ -1,3 +1,4 @@
+import { CircleWarningIcon } from '@muneo/design-system';
 import { type DiagnosisItemData, type DiagnosisStatus } from '../../_types/analysis.types';
 import * as styles from './DiagnosisItem.css';
 
@@ -12,7 +13,7 @@ interface DiagnosisItemProps {
   item: DiagnosisItemData;
 }
 
-export function DiagnosisItem({ item }: DiagnosisItemProps) {
+export const DiagnosisItem = ({ item }: DiagnosisItemProps) => {
   const style = STATUS_STYLES[item.status];
 
   return (
@@ -21,8 +22,13 @@ export function DiagnosisItem({ item }: DiagnosisItemProps) {
       <div className={styles.texts}>
         <span className={styles.title}>{item.title}</span>
         {item.description && <span className={styles.description}>{item.description}</span>}
-        {item.actionNote && <span className={`${styles.actionNote} ${style.actionNote}`}>ⓘ {item.actionNote}</span>}
+        {item.actionNote && (
+          <span className={`${styles.actionNote} ${style.actionNote}`}>
+            <CircleWarningIcon width={16} height={16} />
+            {item.actionNote}
+          </span>
+        )}
       </div>
     </div>
   );
-}
+};

@@ -1,5 +1,6 @@
 'use client';
 
+import { CaretDownIcon } from '@muneo/design-system';
 import { useState } from 'react';
 import { type ProcessSectionData } from '../../_types/analysis.types';
 import { DiagnosisItem } from '../DiagnosisItem/DiagnosisItem';
@@ -9,7 +10,7 @@ interface ProcessSectionProps {
   section: ProcessSectionData;
 }
 
-export function ProcessSection({ section }: ProcessSectionProps) {
+export const ProcessSection = ({ section }: ProcessSectionProps) => {
   const [open, setOpen] = useState(true);
 
   return (
@@ -20,7 +21,9 @@ export function ProcessSection({ section }: ProcessSectionProps) {
         onClick={() => setOpen((prev) => !prev)}
         aria-expanded={open}
       >
-        <span className={`${styles.chevron}${open ? '' : ` ${styles.chevronClosed}`}`}>▼</span>
+        <span className={`${styles.chevron}${open ? '' : ` ${styles.chevronClosed}`}`}>
+          <CaretDownIcon width={14} height={14} />
+        </span>
         <span className={styles.sectionName}>{section.name}</span>
       </button>
       <div className={`${styles.collapseWrapper}${open ? '' : ` ${styles.collapseWrapperClosed}`}`}>
@@ -33,4 +36,4 @@ export function ProcessSection({ section }: ProcessSectionProps) {
       <div className={styles.divider} />
     </div>
   );
-}
+};
