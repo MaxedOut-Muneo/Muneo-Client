@@ -14,7 +14,6 @@ import {
   WALLPAPER_ROOMS,
   type BathroomDetail,
   type CarpentryDetail,
-  type CarpentryExtra,
   type DemolitionDetail,
   type ElectricalDetail,
   type FinishingDetail,
@@ -400,16 +399,7 @@ const CarpentrySection = ({ data, onChange }: ProcessSectionProps<CarpentryDetai
               selected={(data.carpentryExtra ?? []).includes(item)}
               onClick={() => {
                 const current = data.carpentryExtra ?? [];
-                const next: CarpentryExtra[] =
-                  item === '없음'
-                    ? current.includes('없음')
-                      ? []
-                      : ['없음']
-                    : toggleItem(
-                        current.filter((i): i is CarpentryExtra => i !== '없음'),
-                        item
-                      );
-                onChange({ carpentryExtra: next });
+                onChange({ carpentryExtra: toggleItem(current, item) });
               }}
             >
               {item}
