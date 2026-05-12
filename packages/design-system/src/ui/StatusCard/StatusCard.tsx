@@ -10,17 +10,28 @@ export interface StatusCardProps {
   icon: ReactNode;
   label: string;
   value: string | number;
+  description?: string;
+  highlight?: boolean;
   className?: string;
 }
 
-export const StatusCard = ({ variant, icon, label, value, className }: StatusCardProps) => {
+export const StatusCard = ({
+  variant,
+  icon,
+  label,
+  value,
+  description,
+  highlight = false,
+  className,
+}: StatusCardProps) => {
   return (
     <div className={clsx(styles.cardRecipe({ variant }), className)}>
       <div className={styles.inner}>
         <div className={styles.iconWrapper}>{icon}</div>
         <div className={styles.content}>
-          <span className={styles.label}>{label}</span>
-          <span className={styles.value}>{value}</span>
+          <span className={highlight ? styles.labelHighlight : styles.label}>{label}</span>
+          <span className={highlight ? styles.valueHighlight : styles.value}>{value}</span>
+          {description && <span className={styles.description}>{description}</span>}
         </div>
       </div>
     </div>

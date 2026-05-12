@@ -10,7 +10,7 @@ export const cardRecipe = recipe({
     alignItems: 'flex-start',
     gap: '10px',
     borderRadius: '12px',
-    boxShadow: '0px 2px 2px 0px rgba(0, 0, 0, 0.08)',
+    boxShadow: '0px 2px 1px 0px rgba(0, 0, 0, 0.08)',
     padding: `${vars.space.lg} 50px ${vars.space.lg} ${vars.space.md}`,
   },
   variants: {
@@ -56,6 +56,13 @@ export const label = style({
   color: vars.color.neutral.n500,
 });
 
+export const labelHighlight = style([
+  label,
+  {
+    fontSize: vars.typography.fontSize.xs,
+  },
+]);
+
 export const value = style({
   fontFamily: vars.typography.fontFamily,
   fontSize: vars.typography.fontSize.lg,
@@ -64,4 +71,20 @@ export const value = style({
   letterSpacing: '-0.2px',
   color: vars.color.neutral.n900,
   opacity: 0.8,
+});
+
+export const valueHighlight = style([
+  value,
+  {
+    fontSize: vars.typography.fontSize.xl,
+    letterSpacing: '-0.24px',
+  },
+]);
+
+export const description = style({
+  fontFamily: vars.typography.fontFamily,
+  fontSize: vars.typography.fontSize.xxs,
+  fontWeight: vars.typography.fontWeight.regular,
+  lineHeight: 'normal',
+  color: vars.color.neutral.n500,
 });
