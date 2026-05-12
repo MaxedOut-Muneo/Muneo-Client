@@ -100,6 +100,24 @@ describe('analysisStore', () => {
       expect(state.view).toBe('report');
       expect(state.diagnosisResult).not.toBeNull();
     });
+
+    it('setTimeout이 throw하면 error 메시지를 설정하고 loading=false로 전환된다', async () => {
+      const setTimeoutSpy = vi.spyOn(globalThis, 'setTimeout').mockImplementation(() => {
+        throw new Error('네트워크 오류');
+      });
+
+      await act(async () => {
+        await useAnalysisStore.getState().submitAnalysis();
+      });
+
+      const state = useAnalysisStore.getState();
+      expect(state.loading).toBe(false);
+      expect(state.error).toBe('분석 중 오류가 발생했습니다.');
+      expect(state.view).toBe('input');
+      expect(state.diagnosisResult).toBeNull();
+
+      setTimeoutSpy.mockRestore();
+    });
   });
 
   describe('reset', () => {
