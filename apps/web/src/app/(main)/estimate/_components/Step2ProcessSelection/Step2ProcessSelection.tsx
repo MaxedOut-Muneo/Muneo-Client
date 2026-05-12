@@ -9,7 +9,7 @@ import * as styles from './Step2ProcessSelection.css';
 
 const BASIC_ROWS = [BASIC_PROCESSES.slice(0, 5), BASIC_PROCESSES.slice(5, 10), BASIC_PROCESSES.slice(10)];
 
-export function Step2ProcessSelection() {
+export const Step2ProcessSelection = () => {
   const { step2, setStep2, toggleProcess, nextStep, prevStep } = useEstimateStore();
   const [validationError, setValidationError] = useState(false);
 
@@ -96,4 +96,4 @@ export function Step2ProcessSelection() {
       </div>
     </div>
   );
-}
+};

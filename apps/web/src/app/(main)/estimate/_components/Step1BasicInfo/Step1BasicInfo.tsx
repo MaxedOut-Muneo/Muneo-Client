@@ -7,7 +7,7 @@ import { REGIONS, ROOM_COUNTS, SPACE_TYPES } from '../../_types';
 import { StepActions } from '../StepActions/StepActions';
 import * as styles from './Step1BasicInfo.css';
 
-export function Step1BasicInfo() {
+export const Step1BasicInfo = () => {
   const { step1, setStep1, nextStep, reset } = useEstimateStore();
   const areaInputId = useId();
 
@@ -92,4 +92,4 @@ export function Step1BasicInfo() {
       </div>
     </div>
   );
-}
+};

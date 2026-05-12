@@ -17,7 +17,7 @@ const STEP_COMPONENTS = {
   5: EstimateResult,
 } as const;
 
-export default function EstimatePage() {
+const EstimatePage = () => {
   const currentStep = useEstimateStore((s) => s.currentStep);
   const StepComponent = STEP_COMPONENTS[currentStep];
 
@@ -29,4 +29,6 @@ export default function EstimatePage() {
       </div>
     </div>
   );
-}
+};
+
+export default EstimatePage;

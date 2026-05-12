@@ -29,7 +29,7 @@ export const titleAccent = style({
 });
 
 export const titleHint = style({
-  fontSize: vars.typography.fontSize.xxs,
+  fontSize: vars.typography.fontSize.xs,
   fontWeight: vars.typography.fontWeight.medium,
   fontFamily: vars.typography.fontFamily,
   color: 'rgba(79, 37, 162, 0.75)',
@@ -96,8 +96,8 @@ export const buttonRow = style({
 });
 
 export const twoColRow = style({
-  display: 'flex',
-  gap: '124px',
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
   alignItems: 'center',
 });
 
@@ -108,8 +108,8 @@ export const twoColLeft = style({
 });
 
 export const twoColRight = style({
-  display: 'flex',
-  gap: '190px',
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
   alignItems: 'center',
 });
 

@@ -1,12 +1,10 @@
 'use client';
 
-import { Button } from '@muneo/design-system';
+import { ArrowLeftMdIcon, Button, CaretDownSmIcon } from '@muneo/design-system';
 import { useState } from 'react';
 import { useEstimateStore } from '../../_store/estimateStore';
 import { type ProcessId } from '../../_types';
 import * as styles from './Step5EstimateReview.css';
-
-// ─────────── 타입 ───────────
 
 interface EstimateItem {
   name: string;
@@ -21,8 +19,6 @@ interface ProcessEstimate {
   items: EstimateItem[];
   footnote?: string;
 }
-
-// ─────────── 목 데이터 ───────────
 
 const MOCK_ESTIMATES: ProcessEstimate[] = [
   {
@@ -51,9 +47,7 @@ const MOCK_PROCESS_TOTALS = [
   { name: '설비', range: '150만 ~ 220만' },
 ];
 
-// ─────────── 아코디언 아이템 ───────────
-
-function AccordionItem({ estimate }: { estimate: ProcessEstimate }) {
+const AccordionItem = ({ estimate }: { estimate: ProcessEstimate }) => {
   const [isOpen, setIsOpen] = useState(estimate.items.length > 0);
 
   return (
@@ -61,15 +55,7 @@ function AccordionItem({ estimate }: { estimate: ProcessEstimate }) {
       <button type="button" className={styles.accordionHeader} onClick={() => setIsOpen((prev) => !prev)}>
         <div className={styles.accordionHeaderLeft}>
           <span className={`${styles.accordionArrow}${isOpen ? ` ${styles.accordionArrowOpen}` : ''}`}>
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path
-                d="M3 5L7 9L11 5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <CaretDownSmIcon width={24} height={24} />
           </span>
           <span className={styles.accordionTitle}>{estimate.name} 공사</span>
         </div>
@@ -112,11 +98,11 @@ function AccordionItem({ estimate }: { estimate: ProcessEstimate }) {
       </div>
     </div>
   );
-}
+};
 
 // ─────────── 총 견적 배너 ───────────
 
-function TotalBanner() {
+const TotalBanner = () => {
   return (
     <div className={styles.totalBanner}>
       <div className={styles.bannerLeft}>
@@ -126,11 +112,11 @@ function TotalBanner() {
       <span className={styles.bannerRef}>12건 참고</span>
     </div>
   );
-}
+};
 
 // ─────────── 공정별 합산 테이블 ───────────
 
-function ProcessTotalTable() {
+const ProcessTotalTable = () => {
   return (
     <div className={styles.processTotal}>
       <span className={styles.processTotalTitle}>공정별 합산</span>
@@ -161,7 +147,7 @@ function ProcessTotalTable() {
       </div>
     </div>
   );
-}
+};
 
 // ─────────── 입력 요약 패널 (좌측) ───────────
 
@@ -180,7 +166,7 @@ interface SummaryPanelProps {
   onEdit: () => void;
 }
 
-function SummaryPanel({
+const SummaryPanel = ({
   regionLabel,
   spaceLabel,
   areaLabel,
@@ -193,7 +179,7 @@ function SummaryPanel({
   modeLabel,
   processCount,
   onEdit,
-}: SummaryPanelProps) {
+}: SummaryPanelProps) => {
   const rows = [
     { label: '시공 범위', value: `${modeLabel} (${processCount}개 공정)` },
     { label: '지역 / 공간', value: `${regionLabel} · ${spaceLabel}` },
@@ -235,7 +221,7 @@ function SummaryPanel({
       <ProcessTotalTable />
     </div>
   );
-}
+};
 
 // ─────────── 면책 & 액션 섹션 ───────────
 
@@ -243,7 +229,7 @@ interface DisclaimerSectionProps {
   onEdit: () => void;
 }
 
-function DisclaimerSection({ onEdit }: DisclaimerSectionProps) {
+const DisclaimerSection = ({ onEdit }: DisclaimerSectionProps) => {
   return (
     <div className={styles.disclaimerSection}>
       <div className={styles.disclaimerBox}>
@@ -258,19 +244,20 @@ function DisclaimerSection({ onEdit }: DisclaimerSectionProps) {
 
       <div className={styles.actionRow}>
         <Button variant="outlineSecondary" size="md" onClick={onEdit}>
+          <ArrowLeftMdIcon width={20} height={20} />
           수정하기
         </Button>
-        <Button variant="outline" size="md">
+        <Button variant="outline" size="md" style={{ color: '#6B7280', borderRadius: '12px' }}>
           PDF 다운로드
         </Button>
       </div>
     </div>
   );
-}
+};
 
 // ─────────── 메인: 가 견적 결과 ───────────
 
-export function EstimateResult() {
+export const EstimateResult = () => {
   const { step1, step2, step3, goToStep } = useEstimateStore();
 
   const regionLabel = step1.region ?? '-';
@@ -321,4 +308,4 @@ export function EstimateResult() {
       </div>
     </div>
   );
-}
+};

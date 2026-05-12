@@ -29,7 +29,7 @@ export const titleAccent = style({
 });
 
 export const titleHint = style({
-  fontSize: vars.typography.fontSize.xxs,
+  fontSize: vars.typography.fontSize.xs,
   fontWeight: vars.typography.fontWeight.medium,
   fontFamily: vars.typography.fontFamily,
   color: 'rgba(79, 37, 162, 0.75)',
@@ -95,7 +95,7 @@ export const accordionHeader = style({
 });
 
 export const accordionHeaderText = style({
-  fontSize: vars.typography.fontSize.md,
+  fontSize: vars.typography.fontSize.lg,
   fontWeight: vars.typography.fontWeight.bold,
   fontFamily: vars.typography.fontFamily,
   color: vars.color.neutral.n900,

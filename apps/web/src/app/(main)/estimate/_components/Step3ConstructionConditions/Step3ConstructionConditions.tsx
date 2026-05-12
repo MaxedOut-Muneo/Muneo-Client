@@ -6,7 +6,7 @@ import { BUILDING_AGES, CONSTRUCTION_TIMINGS, ELEVATOR_OPTIONS, OCCUPANCIES, TRU
 import { StepActions } from '../StepActions/StepActions';
 import * as styles from './Step3ConstructionConditions.css';
 
-export function Step3ConstructionConditions() {
+export const Step3ConstructionConditions = () => {
   const { step3, setStep3, nextStep, prevStep } = useEstimateStore();
 
   return (
@@ -125,4 +125,4 @@ export function Step3ConstructionConditions() {
       </div>
     </div>
   );
-}
+};

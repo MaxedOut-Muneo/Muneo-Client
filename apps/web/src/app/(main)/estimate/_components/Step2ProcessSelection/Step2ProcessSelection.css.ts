@@ -29,7 +29,7 @@ export const titleAccent = style({
 });
 
 export const titleHint = style({
-  fontSize: vars.typography.fontSize.xxs,
+  fontSize: vars.typography.fontSize.xs,
   fontWeight: vars.typography.fontWeight.regular,
   fontFamily: vars.typography.fontFamily,
   color: vars.color.neutral.n400,

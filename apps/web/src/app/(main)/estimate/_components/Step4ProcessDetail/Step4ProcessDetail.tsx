@@ -30,9 +30,9 @@ import * as styles from './Step4ProcessDetail.css';
 
 const ALL_PROCESSES = [...BASIC_PROCESSES, ...OPTIONAL_PROCESSES];
 
-function toggleItem<T>(arr: T[], item: T): T[] {
+const toggleItem = <T,>(arr: T[], item: T): T[] => {
   return arr.includes(item) ? arr.filter((i) => i !== item) : [...arr, item];
-}
+};
 
 interface FieldProps {
   label: string;
@@ -40,14 +40,14 @@ interface FieldProps {
   conditional?: boolean;
 }
 
-function Field({ label, children, conditional = false }: FieldProps) {
+const Field = ({ label, children, conditional = false }: FieldProps) => {
   return (
     <div className={conditional ? styles.conditionalField : styles.field}>
       <span className={styles.fieldLabel}>{label}</span>
       {children}
     </div>
   );
-}
+};
 
 // ─────────── 1. 철거 ───────────
 interface ProcessSectionProps<T> {
@@ -55,7 +55,7 @@ interface ProcessSectionProps<T> {
   onChange: (patch: Partial<T>) => void;
 }
 
-function DemolitionSection({ data, onChange }: ProcessSectionProps<DemolitionDetail>) {
+const DemolitionSection = ({ data, onChange }: ProcessSectionProps<DemolitionDetail>) => {
   return (
     <div className={styles.sectionBody}>
       <Field label="철거 범위">
@@ -99,10 +99,10 @@ function DemolitionSection({ data, onChange }: ProcessSectionProps<DemolitionDet
       </Field>
     </div>
   );
-}
+};
 
 // ─────────── 2. 설비 ───────────
-function PlumbingSection({ data, onChange }: ProcessSectionProps<PlumbingDetail>) {
+const PlumbingSection = ({ data, onChange }: ProcessSectionProps<PlumbingDetail>) => {
   return (
     <div className={styles.sectionBody}>
       <Field label="욕실 방수">
@@ -200,10 +200,10 @@ function PlumbingSection({ data, onChange }: ProcessSectionProps<PlumbingDetail>
       </p>
     </div>
   );
-}
+};
 
 // ─────────── 3. 전기/조명 ───────────
-function ElectricalSection({ data, onChange }: ProcessSectionProps<ElectricalDetail>) {
+const ElectricalSection = ({ data, onChange }: ProcessSectionProps<ElectricalDetail>) => {
   return (
     <div className={styles.sectionBody}>
       <Field label="조명 교체 범위">
@@ -313,11 +313,11 @@ function ElectricalSection({ data, onChange }: ProcessSectionProps<ElectricalDet
       </p>
     </div>
   );
-}
+};
 
 // ─────────── 4. 목공 ───────────
 
-function CarpentrySection({ data, onChange }: ProcessSectionProps<CarpentryDetail>) {
+const CarpentrySection = ({ data, onChange }: ProcessSectionProps<CarpentryDetail>) => {
   return (
     <div className={styles.sectionBody}>
       <Field label="몰딩 시공">
@@ -421,11 +421,11 @@ function CarpentrySection({ data, onChange }: ProcessSectionProps<CarpentryDetai
       <p className={styles.infoNote}>중문 설치 시 별도 100~200만원 추가. 우물천장은 간접조명 설치 시 필요합니다.</p>
     </div>
   );
-}
+};
 
 // ─────────── 5. 도배 ───────────
 
-function WallpaperSection({ data, onChange }: ProcessSectionProps<WallpaperDetail>) {
+const WallpaperSection = ({ data, onChange }: ProcessSectionProps<WallpaperDetail>) => {
   return (
     <div className={styles.sectionBody}>
       <Field label="벽지 종류">
@@ -505,10 +505,10 @@ function WallpaperSection({ data, onChange }: ProcessSectionProps<WallpaperDetai
       </p>
     </div>
   );
-}
+};
 
 // ─────────── 6. 바닥 ───────────
-function FlooringSection({ data, onChange }: ProcessSectionProps<FlooringDetail>) {
+const FlooringSection = ({ data, onChange }: ProcessSectionProps<FlooringDetail>) => {
   return (
     <div className={styles.sectionBody}>
       <Field label="바닥재 종류">
@@ -600,10 +600,10 @@ function FlooringSection({ data, onChange }: ProcessSectionProps<FlooringDetail>
       </p>
     </div>
   );
-}
+};
 
 // ─────────── 7. 타일 ───────────
-function TileSection({ data, onChange }: ProcessSectionProps<TileDetail>) {
+const TileSection = ({ data, onChange }: ProcessSectionProps<TileDetail>) => {
   return (
     <div className={styles.sectionBody}>
       <p className={styles.infoNote}>
@@ -645,11 +645,11 @@ function TileSection({ data, onChange }: ProcessSectionProps<TileDetail>) {
       </Field>
     </div>
   );
-}
+};
 
 // ─────────── 8. 욕실 ───────────
 
-function BathroomSection({ data, onChange }: ProcessSectionProps<BathroomDetail>) {
+const BathroomSection = ({ data, onChange }: ProcessSectionProps<BathroomDetail>) => {
   return (
     <div className={styles.sectionBody}>
       <Field label="욕실 개수">
@@ -791,10 +791,10 @@ function BathroomSection({ data, onChange }: ProcessSectionProps<BathroomDetail>
       <p className={styles.infoNote}>전면 리모델링 시 방수 공사가 필수 포함됩니다. 대형(2평 이상) 시 약 30% 할증.</p>
     </div>
   );
-}
+};
 
 // ─────────── 9. 주방 ───────────
-function KitchenSection({ data, onChange }: ProcessSectionProps<KitchenDetail>) {
+const KitchenSection = ({ data, onChange }: ProcessSectionProps<KitchenDetail>) => {
   return (
     <div className={styles.sectionBody}>
       <Field label="싱크대 형태">
@@ -910,11 +910,11 @@ function KitchenSection({ data, onChange }: ProcessSectionProps<KitchenDetail>) 
       </p>
     </div>
   );
-}
+};
 
 // ─────────── 10. 도장 ───────────
 
-function PaintingSection({ data, onChange }: ProcessSectionProps<PaintingDetail>) {
+const PaintingSection = ({ data, onChange }: ProcessSectionProps<PaintingDetail>) => {
   return (
     <div className={styles.sectionBody}>
       <Field label="시공 범위">
@@ -948,10 +948,10 @@ function PaintingSection({ data, onChange }: ProcessSectionProps<PaintingDetail>
       <p className={styles.infoNote}>발코니 확장 시 도장 면적이 줄어들어 비용이 절감될 수 있습니다.</p>
     </div>
   );
-}
+};
 
 // ─────────── 11. 마감/공과잡비 ───────────
-function FinishingSection({ data, onChange }: ProcessSectionProps<FinishingDetail>) {
+const FinishingSection = ({ data, onChange }: ProcessSectionProps<FinishingDetail>) => {
   return (
     <div className={styles.sectionBody}>
       <Field label="현장 보양">
@@ -1023,7 +1023,7 @@ function FinishingSection({ data, onChange }: ProcessSectionProps<FinishingDetai
       <p className={styles.infoNote}>아파트의 경우 관리사무소 EV 사용료가 별도 발생할 수 있습니다.</p>
     </div>
   );
-}
+};
 
 // ─────────── 섹션 라우팅 맵 ───────────
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1042,7 +1042,7 @@ const SECTION_MAP: Record<string, React.ComponentType<ProcessSectionProps<any>>>
 };
 
 // ─────────── 메인 컴포넌트 ───────────
-export function Step4ProcessDetail() {
+export const Step4ProcessDetail = () => {
   const { step1, step2, step4, setStep4, nextStep, prevStep } = useEstimateStore();
 
   const selectedProcesses = ALL_PROCESSES.filter((p) => step2.selectedProcesses.includes(p.id));
@@ -1118,4 +1118,4 @@ export function Step4ProcessDetail() {
       </div>
     </div>
   );
-}
+};

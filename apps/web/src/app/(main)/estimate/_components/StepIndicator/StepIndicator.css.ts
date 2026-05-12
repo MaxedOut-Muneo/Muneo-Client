@@ -66,7 +66,7 @@ export const stepNumberPending = style([stepNumber, { color: vars.color.neutral.
 export const stepNumberActive = style([stepNumber, { color: vars.color.white }]);
 
 export const stepLabel = style({
-  fontSize: vars.typography.fontSize.xxs,
+  fontSize: vars.typography.fontSize.xs,
   fontWeight: vars.typography.fontWeight.bold,
   fontFamily: vars.typography.fontFamily,
   lineHeight: 'normal',

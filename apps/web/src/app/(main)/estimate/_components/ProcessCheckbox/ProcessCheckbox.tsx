@@ -7,7 +7,7 @@ interface ProcessCheckboxProps {
   onToggle: (id: ProcessId) => void;
 }
 
-export function ProcessCheckbox({ process, selected, onToggle }: ProcessCheckboxProps) {
+export const ProcessCheckbox = ({ process, selected, onToggle }: ProcessCheckboxProps) => {
   return (
     <button
       type="button"
@@ -19,4 +19,4 @@ export function ProcessCheckbox({ process, selected, onToggle }: ProcessCheckbox
       <span className={styles.processDesc}>{process.description}</span>
     </button>
   );
-}
+};

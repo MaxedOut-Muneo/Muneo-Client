@@ -1,5 +1,5 @@
 import { vars } from '@muneo/design-system';
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 
 export const container = style({
   display: 'flex',
@@ -81,12 +81,12 @@ export const summaryRows = style({
 
 export const summaryRow = style({
   display: 'flex',
-  alignItems: 'center',
+  alignItems: 'flex-start',
   justifyContent: 'space-between',
   borderBottom: `1px solid ${vars.color.neutral.n100}`,
   padding: '0 4px',
   minHeight: '20px',
-  fontSize: vars.typography.fontSize.xxs,
+  fontSize: vars.typography.fontSize.xs,
   fontFamily: vars.typography.fontFamily,
   fontWeight: vars.typography.fontWeight.regular,
   lineHeight: 'normal',
@@ -114,7 +114,7 @@ export const correctionBox = style({
 });
 
 export const correctionTitle = style({
-  fontSize: vars.typography.fontSize.xxs,
+  fontSize: vars.typography.fontSize.xs,
   fontWeight: vars.typography.fontWeight.bold,
   fontFamily: vars.typography.fontFamily,
   color: vars.color.brand.primary,
@@ -128,7 +128,7 @@ export const correctionItems = style({
 });
 
 export const correctionItem = style({
-  fontSize: vars.typography.fontSize.xxs,
+  fontSize: '11px',
   fontWeight: vars.typography.fontWeight.regular,
   fontFamily: vars.typography.fontFamily,
   color: vars.color.neutral.n500,
@@ -153,7 +153,7 @@ export const processTotalTitle = style({
 export const processTotalTable = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '26px',
+  gap: '10px',
 });
 
 export const tableHeader = style({
@@ -163,7 +163,8 @@ export const tableHeader = style({
   backgroundColor: vars.color.neutral.n100,
   borderRadius: '6px',
   padding: '5px 12px',
-  fontSize: vars.typography.fontSize.xxs,
+  marginBottom: '5px',
+  fontSize: vars.typography.fontSize.xs,
   fontWeight: vars.typography.fontWeight.regular,
   fontFamily: vars.typography.fontFamily,
   color: vars.color.neutral.n500,
@@ -171,7 +172,7 @@ export const tableHeader = style({
 });
 
 export const tableHeaderCell = style({
-  fontSize: vars.typography.fontSize.xxs,
+  fontSize: vars.typography.fontSize.xs,
   fontWeight: vars.typography.fontWeight.regular,
   fontFamily: vars.typography.fontFamily,
   color: vars.color.neutral.n500,
@@ -194,7 +195,7 @@ export const tableRowContent = style({
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: '0 12px',
-  fontSize: vars.typography.fontSize.xxs,
+  fontSize: vars.typography.fontSize.xs,
   fontWeight: vars.typography.fontWeight.regular,
   fontFamily: vars.typography.fontFamily,
   color: vars.color.neutral.n900,
@@ -227,7 +228,7 @@ export const totalContent = style({
   alignItems: 'center',
   justifyContent: 'space-between',
   width: '100%',
-  fontSize: vars.typography.fontSize.xxs,
+  fontSize: '11px',
   fontWeight: vars.typography.fontWeight.bold,
   fontFamily: vars.typography.fontFamily,
   lineHeight: 'normal',
@@ -272,7 +273,7 @@ export const bannerLeft = style({
 });
 
 export const bannerSubtitle = style({
-  fontSize: vars.typography.fontSize.xxs,
+  fontSize: vars.typography.fontSize.xs,
   fontWeight: vars.typography.fontWeight.regular,
   fontFamily: vars.typography.fontFamily,
   color: vars.color.white,
@@ -298,7 +299,7 @@ export const bannerRef = style({
 export const detailSection = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '14px',
+  gap: '25px',
 });
 
 export const detailTitle = style({
@@ -347,8 +348,8 @@ export const accordionHeaderLeft = style({
 });
 
 export const accordionArrow = style({
-  width: '14px',
-  height: '14px',
+  width: '24px',
+  height: '24px',
   flexShrink: 0,
   color: vars.color.neutral.n500,
   display: 'flex',
@@ -402,14 +403,18 @@ export const accordionContent = style({
 });
 
 export const accordionTableHeader = style({
-  display: 'flex',
+  display: 'grid',
+  gridTemplateColumns: '1fr 220px 60px',
   alignItems: 'center',
-  justifyContent: 'space-between',
-  fontSize: vars.typography.fontSize.xxs,
+  fontSize: vars.typography.fontSize.xs,
   fontFamily: vars.typography.fontFamily,
   fontWeight: vars.typography.fontWeight.regular,
   color: vars.color.neutral.n500,
   lineHeight: 'normal',
+});
+
+globalStyle(`${accordionTableHeader} > *:last-child`, {
+  textAlign: 'right',
 });
 
 export const accordionDivider = style({
@@ -426,9 +431,9 @@ export const accordionRow = style({
 
 export const accordionRowContent = style({
   display: 'grid',
-  gridTemplateColumns: '1fr 140px 60px',
+  gridTemplateColumns: '1fr 220px 60px',
   alignItems: 'center',
-  fontSize: vars.typography.fontSize.xxs,
+  fontSize: vars.typography.fontSize.xs,
   fontWeight: vars.typography.fontWeight.bold,
   fontFamily: vars.typography.fontFamily,
   color: vars.color.neutral.n900,
@@ -459,7 +464,7 @@ export const footnotes = style({
 });
 
 export const footnoteGray = style({
-  fontSize: vars.typography.fontSize.xxs,
+  fontSize: '11px',
   fontWeight: vars.typography.fontWeight.regular,
   fontFamily: vars.typography.fontFamily,
   color: vars.color.neutral.n400,
@@ -467,7 +472,7 @@ export const footnoteGray = style({
 });
 
 export const footnoteOrange = style({
-  fontSize: vars.typography.fontSize.xxs,
+  fontSize: '11px',
   fontWeight: vars.typography.fontWeight.regular,
   fontFamily: vars.typography.fontFamily,
   color: vars.color.semantic.warning,
@@ -510,7 +515,7 @@ export const warningBox = style({
 });
 
 export const warningText = style({
-  fontSize: vars.typography.fontSize.xxs,
+  fontSize: vars.typography.fontSize.xs,
   fontWeight: vars.typography.fontWeight.regular,
   fontFamily: vars.typography.fontFamily,
   color: vars.color.semantic.warning,
@@ -521,7 +526,7 @@ export const warningText = style({
 });
 
 export const infoText = style({
-  fontSize: vars.typography.fontSize.xxs,
+  fontSize: vars.typography.fontSize.xs,
   fontWeight: vars.typography.fontWeight.regular,
   fontFamily: vars.typography.fontFamily,
   color: vars.color.neutral.n400,
