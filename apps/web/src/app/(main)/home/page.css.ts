@@ -11,7 +11,8 @@ export const content = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '20px',
-  maxWidth: '1080px',
+  maxWidth: '1280px',
+  margin: '0 auto',
 });
 
 export const greetingSection = style({

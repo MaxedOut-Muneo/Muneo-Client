@@ -7,6 +7,11 @@ export const page = style({
   padding: '46px 60px 100px',
 });
 
+export const container = style({
+  maxWidth: '1280px',
+  margin: '0 auto',
+});
+
 export const backButton = style({
   display: 'inline-flex',
   alignItems: 'center',
@@ -33,5 +38,4 @@ export const content = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '20px',
-  maxWidth: '1080px',
 });
