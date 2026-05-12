@@ -16,7 +16,7 @@ export type MiddleDoor = (typeof MIDDLE_DOORS)[number];
 export const COFFER_CEILINGS = ['있음', '없음'] as const;
 export type CofferCeiling = (typeof COFFER_CEILINGS)[number];
 
-export const CARPENTRY_EXTRAS = ['가벽 신설', '웨인스코팅', '아치문', '아트월', '천장 보강(실링팬)', '없음'] as const;
+export const CARPENTRY_EXTRAS = ['가벽 신설', '웨인스코팅', '아치문', '아트월', '천장 보강(실링팬)'] as const;
 export type CarpentryExtra = (typeof CARPENTRY_EXTRAS)[number];
 
 export interface CarpentryDetail {
