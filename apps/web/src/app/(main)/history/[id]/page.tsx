@@ -1,3 +1,4 @@
+import { ArrowLeftMdIcon } from '@muneo/design-system';
 import { notFound } from 'next/navigation';
 import { TransitionLink } from '@/components/TransitionLink';
 import { DiagnosisDetailView } from '../_components/DiagnosisDetailView/DiagnosisDetailView';
@@ -27,15 +28,18 @@ export default async function HistoryDetailPage({ params }: { params: Promise<{ 
 
   return (
     <div className={styles.page}>
-      <TransitionLink href="/history" className={styles.backButton}>
-        ← 분석 이력
-      </TransitionLink>
-      <div className={styles.content}>
-        {row.analysisType === '리스크 진단' ? (
-          <DiagnosisDetailView result={diagnosisDetail!} />
-        ) : (
-          <EstimateDetailView data={estimateDetail!} />
-        )}
+      <div className={styles.container}>
+        <TransitionLink href="/history" className={styles.backButton}>
+          <ArrowLeftMdIcon width={16} height={16} />
+          분석 이력
+        </TransitionLink>
+        <div className={styles.content}>
+          {row.analysisType === '리스크 진단' ? (
+            <DiagnosisDetailView result={diagnosisDetail!} />
+          ) : (
+            <EstimateDetailView data={estimateDetail!} />
+          )}
+        </div>
       </div>
     </div>
   );
