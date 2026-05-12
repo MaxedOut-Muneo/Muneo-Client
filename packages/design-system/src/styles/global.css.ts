@@ -18,3 +18,7 @@ globalStyle('body', {
   color: vars.color.neutral.n900,
   backgroundColor: vars.color.white,
 });
+
+globalStyle('button, input, textarea, select', {
+  fontFamily: 'inherit',
+});

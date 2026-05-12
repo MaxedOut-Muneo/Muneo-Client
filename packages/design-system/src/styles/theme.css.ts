@@ -36,7 +36,7 @@ export const lightTheme = createTheme(vars, {
   },
   typography: {
     fontFamily:
-      "var(--font-pretendard, 'Pretendard Variable'), Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif",
+      "var(--font-pretendard, 'Pretendard Variable'), Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif",
     fontFamilyDisplay: "var(--font-paperlogy, 'Paperlogy'), sans-serif",
     fontSize: {
       xxs: '10px',
