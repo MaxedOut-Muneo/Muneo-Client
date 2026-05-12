@@ -35,6 +35,7 @@ export interface SidebarUser {
 export interface SidebarProps {
   activeItem?: SidebarNavId;
   onItemClick?: (id: SidebarNavId) => void;
+  onItemHover?: (id: SidebarNavId) => void;
   user?: SidebarUser;
   className?: string;
 }
@@ -53,7 +54,7 @@ const NAV_ITEMS: NavItemDef[] = [
   { id: 'settings', label: '내 정보', icon: <SettingFillIcon /> },
 ];
 
-export const Sidebar = ({ activeItem, onItemClick, user, className }: SidebarProps) => {
+export const Sidebar = ({ activeItem, onItemClick, onItemHover, user, className }: SidebarProps) => {
   return (
     <aside className={`${sidebar}${className ? ` ${className}` : ''}`}>
       <div className={topSection}>
@@ -72,6 +73,8 @@ export const Sidebar = ({ activeItem, onItemClick, user, className }: SidebarPro
                   type="button"
                   className={navItemContent({ active: isActive })}
                   onClick={() => onItemClick?.(item.id)}
+                  onMouseEnter={() => onItemHover?.(item.id)}
+                  onFocus={() => onItemHover?.(item.id)}
                   aria-current={isActive ? 'page' : undefined}
                 >
                   <span className={navIcon}>{item.icon}</span>

@@ -15,7 +15,7 @@ const NAV_TO_PATH: Record<SidebarNavId, string> = {
 
 const MOCK_USER = { name: '김민수', email: 'minsu@email.com' };
 
-export default function MainLayout({ children }: { children: ReactNode }) {
+const MainLayout = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -24,8 +24,15 @@ export default function MainLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className={styles.wrapper}>
-      <Sidebar activeItem={activeItem} onItemClick={(id) => router.push(NAV_TO_PATH[id])} user={MOCK_USER} />
+      <Sidebar
+        activeItem={activeItem}
+        onItemClick={(id) => router.push(NAV_TO_PATH[id])}
+        onItemHover={(id) => router.prefetch(NAV_TO_PATH[id])}
+        user={MOCK_USER}
+      />
       <main className={styles.main}>{children}</main>
     </div>
   );
-}
+};
+
+export default MainLayout;
