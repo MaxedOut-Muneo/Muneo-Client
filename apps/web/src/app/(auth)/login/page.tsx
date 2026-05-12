@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { LoginSection } from '../_components/LoginSection';
 
-export default function LoginPage() {
+const LoginPage = () => {
   const router = useRouter();
 
   return (
@@ -19,4 +19,6 @@ export default function LoginPage() {
       <LoginSection onLogoClick={() => router.push('/')} onSignUp={() => router.push('/signup')} />
     </div>
   );
-}
+};
+
+export default LoginPage;
