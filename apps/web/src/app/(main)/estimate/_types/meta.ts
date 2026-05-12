@@ -9,8 +9,8 @@ export const STEP_LABELS = {
   5: '견적 확인',
 } satisfies Record<EstimateStep, string>;
 
-export interface ProcessInfo {
-  id: string;
+export interface ProcessInfo<TId extends string = string> {
+  id: TId;
   name: string;
   description: string;
 }

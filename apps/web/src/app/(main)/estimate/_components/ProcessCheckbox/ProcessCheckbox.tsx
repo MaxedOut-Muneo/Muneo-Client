@@ -2,7 +2,7 @@ import { type ProcessId, type ProcessInfo } from '../../_types';
 import * as styles from './ProcessCheckbox.css';
 
 interface ProcessCheckboxProps {
-  process: ProcessInfo;
+  process: ProcessInfo<ProcessId>;
   selected: boolean;
   onToggle: (id: ProcessId) => void;
 }
@@ -12,7 +12,7 @@ export const ProcessCheckbox = ({ process, selected, onToggle }: ProcessCheckbox
     <button
       type="button"
       className={selected ? styles.cardSelected : styles.cardUnselected}
-      onClick={() => onToggle(process.id as ProcessId)}
+      onClick={() => onToggle(process.id)}
       aria-pressed={selected}
     >
       <span className={selected ? styles.processNameSelected : styles.processNameUnselected}>{process.name}</span>
