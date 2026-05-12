@@ -1,7 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { MOCK_HISTORY_ROWS } from '../../_mocks/history.mock';
 import { type HistoryRow } from '../../_types/history.types';
 import { HistoryFilterBar } from '../HistoryFilterBar/HistoryFilterBar';
@@ -18,8 +17,26 @@ const ANALYSIS_TYPE_MAP: Record<string, string> = {
   estimate: '가견적서 생성',
 };
 
-function applyFilters(rows: HistoryRow[], filters: AppliedFilters): HistoryRow[] {
-  return rows.filter((row) => {
+const parseDateParam = (value: string | null): Date | undefined => {
+  if (!value) {
+    return undefined;
+  }
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? undefined : date;
+};
+
+const formatDateParam = (date: Date | undefined): string | null => {
+  if (!date) {
+    return null;
+  }
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+const applyFilters = (rows: HistoryRow[], filters: AppliedFilters): HistoryRow[] =>
+  rows.filter((row) => {
     if (filters.analysisType !== 'all' && row.analysisType !== ANALYSIS_TYPE_MAP[filters.analysisType]) {
       return false;
     }
@@ -44,26 +61,43 @@ function applyFilters(rows: HistoryRow[], filters: AppliedFilters): HistoryRow[]
 
     return true;
   });
-}
 
-export function HistoryContent() {
+export const HistoryContent = () => {
   const router = useRouter();
-  const [appliedFilters, setAppliedFilters] = useState<AppliedFilters>({
-    analysisType: 'all',
-    startDate: undefined,
-    endDate: undefined,
-  });
+  const searchParams = useSearchParams();
 
-  const filteredRows = useMemo(() => applyFilters(MOCK_HISTORY_ROWS, appliedFilters), [appliedFilters]);
+  const appliedFilters: AppliedFilters = {
+    analysisType: searchParams.get('type') ?? 'all',
+    startDate: parseDateParam(searchParams.get('from')),
+    endDate: parseDateParam(searchParams.get('to')),
+  };
+
+  const filteredRows = applyFilters(MOCK_HISTORY_ROWS, appliedFilters);
 
   return (
     <>
       <HistoryFilterBar
+        initialAnalysisType={appliedFilters.analysisType}
+        initialStartDate={appliedFilters.startDate}
+        initialEndDate={appliedFilters.endDate}
         onSearch={(analysisType, startDate, endDate) => {
-          setAppliedFilters({ analysisType, startDate, endDate });
+          const params = new URLSearchParams();
+          if (analysisType !== 'all') {
+            params.set('type', analysisType);
+          }
+          const from = formatDateParam(startDate);
+          const to = formatDateParam(endDate);
+          if (from) {
+            params.set('from', from);
+          }
+          if (to) {
+            params.set('to', to);
+          }
+          const query = params.toString();
+          router.push(query ? `/history?${query}` : '/history');
         }}
       />
       <HistoryTable rows={filteredRows} onRowClick={(id) => router.push(`/history/${id}`)} />
     </>
   );
-}
+};

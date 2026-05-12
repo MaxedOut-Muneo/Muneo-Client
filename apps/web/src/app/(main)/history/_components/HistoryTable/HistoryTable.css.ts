@@ -30,7 +30,7 @@ export const thead = style({
 export const th = style({
   padding: '12px 16px 12px 0',
   fontFamily: vars.typography.fontFamily,
-  fontSize: '11px',
+  fontSize: vars.typography.fontSize.xs,
   fontWeight: vars.typography.fontWeight.bold,
   color: vars.color.neutral.n400,
   textAlign: 'left',
@@ -64,6 +64,15 @@ export const td = style({
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
 });
+
+export const tdAnalysisType = style([
+  td,
+  {
+    fontSize: vars.typography.fontSize.xs,
+    fontWeight: vars.typography.fontWeight.semiBold,
+    letterSpacing: '-0.096px',
+  },
+]);
 
 export const riskDanger = style({ color: '#ef4444' });
 export const riskSafe = style({ color: '#10b981' });

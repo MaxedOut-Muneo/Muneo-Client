@@ -8,7 +8,7 @@ interface HistoryTableProps {
 
 const COLUMNS = ['번호', '날짜', '분석 유형', '공사 유형', '업체', '리스크', '상태'] as const;
 
-function getStatusClass(status: AnalysisStatus) {
+const getStatusClass = (status: AnalysisStatus) => {
   if (status === '완료') {
     return styles.statusComplete;
   }
@@ -16,9 +16,9 @@ function getStatusClass(status: AnalysisStatus) {
     return styles.statusInProgress;
   }
   return styles.statusPending;
-}
+};
 
-function RiskCell({ risk }: { risk: RiskStatus }) {
+const RiskCell = ({ risk }: { risk: RiskStatus }) => {
   if (risk.type === 'danger') {
     return <span className={styles.riskDanger}>{risk.label}</span>;
   }
@@ -26,9 +26,9 @@ function RiskCell({ risk }: { risk: RiskStatus }) {
     return <span className={styles.riskSafe}>{risk.label}</span>;
   }
   return <span className={styles.riskNone}>—</span>;
-}
+};
 
-export function HistoryTable({ rows, onRowClick }: HistoryTableProps) {
+export const HistoryTable = ({ rows, onRowClick }: HistoryTableProps) => {
   return (
     <div className={styles.card}>
       <table className={styles.table}>
@@ -73,7 +73,7 @@ export function HistoryTable({ rows, onRowClick }: HistoryTableProps) {
               >
                 <td className={styles.td}>{row.id}</td>
                 <td className={styles.td}>{row.date}</td>
-                <td className={styles.td}>{row.analysisType}</td>
+                <td className={styles.tdAnalysisType}>{row.analysisType}</td>
                 <td className={styles.td}>{row.constructionType}</td>
                 <td className={styles.td}>{row.vendor}</td>
                 <td className={styles.td}>
@@ -89,4 +89,4 @@ export function HistoryTable({ rows, onRowClick }: HistoryTableProps) {
       </table>
     </div>
   );
-}
+};

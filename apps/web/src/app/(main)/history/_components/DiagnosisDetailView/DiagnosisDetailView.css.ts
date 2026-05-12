@@ -87,20 +87,6 @@ export const summaryTitle = style({
   lineHeight: 'normal',
 });
 
-export const summaryBody = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '10px',
-});
-
-export const summarySubtitle = style({
-  fontFamily: vars.typography.fontFamily,
-  fontSize: vars.typography.fontSize.md,
-  fontWeight: vars.typography.fontWeight.bold,
-  color: vars.color.neutral.n500,
-  lineHeight: 'normal',
-});
-
 export const summaryBadges = style({
   display: 'flex',
   gap: '59px',
@@ -114,7 +100,7 @@ export const summaryBadge = style({
   alignItems: 'center',
   gap: '4px',
   fontFamily: vars.typography.fontFamily,
-  fontSize: vars.typography.fontSize.md,
+  fontSize: vars.typography.fontSize.sm,
   fontWeight: vars.typography.fontWeight.bold,
   lineHeight: 'normal',
   whiteSpace: 'nowrap',

@@ -1,7 +1,7 @@
 import { HistoryContent } from './_components/HistoryContent/HistoryContent';
 import * as styles from './page.css';
 
-export default function HistoryPage() {
+const HistoryPage = () => {
   return (
     <div className={styles.page}>
       <div className={styles.content}>
@@ -10,4 +10,6 @@ export default function HistoryPage() {
       </div>
     </div>
   );
-}
+};
+
+export default HistoryPage;

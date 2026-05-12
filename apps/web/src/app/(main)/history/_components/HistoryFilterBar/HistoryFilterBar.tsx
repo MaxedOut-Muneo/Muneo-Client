@@ -11,13 +11,21 @@ const ANALYSIS_TYPE_OPTIONS = [
 ];
 
 interface HistoryFilterBarProps {
+  initialAnalysisType?: string;
+  initialStartDate?: Date;
+  initialEndDate?: Date;
   onSearch: (analysisType: string, startDate: Date | undefined, endDate: Date | undefined) => void;
 }
 
-export function HistoryFilterBar({ onSearch }: HistoryFilterBarProps) {
-  const [analysisType, setAnalysisType] = useState<string>('all');
-  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
-  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
+export const HistoryFilterBar = ({
+  initialAnalysisType = 'all',
+  initialStartDate,
+  initialEndDate,
+  onSearch,
+}: HistoryFilterBarProps) => {
+  const [analysisType, setAnalysisType] = useState<string>(initialAnalysisType);
+  const [startDate, setStartDate] = useState<Date | undefined>(initialStartDate);
+  const [endDate, setEndDate] = useState<Date | undefined>(initialEndDate);
 
   return (
     <div className={styles.filterBar}>
@@ -48,4 +56,4 @@ export function HistoryFilterBar({ onSearch }: HistoryFilterBarProps) {
       </Button>
     </div>
   );
-}
+};
