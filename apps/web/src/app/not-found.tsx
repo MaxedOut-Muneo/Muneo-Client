@@ -1,6 +1,6 @@
 import { Button } from '@muneo/design-system';
 
-export default function NotFoundPage() {
+const NotFoundPage = () => {
   return (
     <div
       style={{
@@ -25,4 +25,6 @@ export default function NotFoundPage() {
       </Button>
     </div>
   );
-}
+};
+
+export default NotFoundPage;

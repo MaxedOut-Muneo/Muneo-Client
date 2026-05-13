@@ -30,8 +30,8 @@ export const titleAccent = style({
 });
 
 export const titleHint = style({
-  fontSize: vars.typography.fontSize.xxs,
-  fontWeight: vars.typography.fontWeight.regular,
+  fontSize: vars.typography.fontSize.xs,
+  fontWeight: vars.typography.fontWeight.medium,
   fontFamily: vars.typography.fontFamily,
   color: 'rgba(79, 37, 162, 0.75)',
   letterSpacing: '-0.12px',

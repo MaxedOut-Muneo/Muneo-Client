@@ -5,7 +5,7 @@ interface EstimateDetailViewProps {
   data: EstimateSummary;
 }
 
-export function EstimateDetailView({ data }: EstimateDetailViewProps) {
+export const EstimateDetailView = ({ data }: EstimateDetailViewProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -32,4 +32,4 @@ export function EstimateDetailView({ data }: EstimateDetailViewProps) {
       </div>
     </div>
   );
-}
+};

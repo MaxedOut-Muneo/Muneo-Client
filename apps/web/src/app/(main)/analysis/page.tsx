@@ -6,7 +6,7 @@ import { UploadPanel } from './_components/UploadPanel/UploadPanel';
 import { useAnalysisStore } from './_store/analysisStore';
 import * as styles from './page.css';
 
-function InputView() {
+const InputView = () => {
   return (
     <>
       <div className={styles.pageHeader}>
@@ -19,9 +19,9 @@ function InputView() {
       </div>
     </>
   );
-}
+};
 
-export default function AnalysisPage() {
+const AnalysisPage = () => {
   const view = useAnalysisStore((s) => s.view);
   const loading = useAnalysisStore((s) => s.loading);
   const error = useAnalysisStore((s) => s.error);
@@ -51,4 +51,6 @@ export default function AnalysisPage() {
       <div className={styles.content}>{view === 'input' ? <InputView /> : <DiagnosisReport />}</div>
     </div>
   );
-}
+};
+
+export default AnalysisPage;

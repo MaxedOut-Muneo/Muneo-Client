@@ -6,7 +6,7 @@ import { LoginSection } from '@/app/(auth)/_components/LoginSection';
 import { useModalBackdrop } from '@/hooks/useModalBackdrop';
 import * as styles from './page.css';
 
-export default function LoginModalPage() {
+const LoginModalPage = () => {
   const router = useRouter();
 
   const handleClose = useCallback(() => router.back(), [router]);
@@ -21,4 +21,6 @@ export default function LoginModalPage() {
       </div>
     </div>
   );
-}
+};
+
+export default LoginModalPage;

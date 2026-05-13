@@ -5,7 +5,7 @@ import { useAnalysisStore } from '../../_store/analysisStore';
 import { ProcessSection } from '../ProcessSection/ProcessSection';
 import * as styles from './DiagnosisReport.css';
 
-export function DiagnosisReport() {
+export const DiagnosisReport = () => {
   const result = useAnalysisStore((s) => s.diagnosisResult);
 
   if (!result) {
@@ -69,4 +69,4 @@ export function DiagnosisReport() {
       </div>
     </div>
   );
-}
+};

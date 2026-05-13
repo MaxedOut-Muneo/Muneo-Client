@@ -8,7 +8,12 @@ interface StepActionsProps {
   showResetIcon?: boolean;
 }
 
-export function StepActions({ onNext, onSecondary, secondaryLabel = '이전', showResetIcon = false }: StepActionsProps) {
+export const StepActions = ({
+  onNext,
+  onSecondary,
+  secondaryLabel = '이전',
+  showResetIcon = false,
+}: StepActionsProps) => {
   return (
     <div className={styles.container}>
       <Button variant="primary" size="md" style={{ width: '189px' }} onClick={onNext}>
@@ -26,4 +31,4 @@ export function StepActions({ onNext, onSecondary, secondaryLabel = '이전', sh
       </Button>
     </div>
   );
-}
+};

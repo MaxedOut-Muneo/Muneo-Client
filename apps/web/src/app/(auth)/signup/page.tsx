@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { SignupSection } from '../_components/SignupSection';
 import * as styles from './page.css';
 
-export default function SignupPage() {
+const SignupPage = () => {
   const router = useRouter();
 
   return (
@@ -12,4 +12,6 @@ export default function SignupPage() {
       <SignupSection onLogoClick={() => router.push('/')} onLogin={() => router.push('/login')} />
     </div>
   );
-}
+};
+
+export default SignupPage;

@@ -1,4 +1,4 @@
-import { DellSquareIcon, DoneRingRoundFillIcon, TriangleWarningIcon } from '@muneo/design-system';
+import { DellSquareIcon, DoneRingRoundFillIcon, SadIcon, vars } from '@muneo/design-system';
 import { type ComponentProps } from 'react';
 import { HistoryTable } from './_components/HistoryTable/HistoryTable';
 import { SummaryCard } from './_components/SummaryCard/SummaryCard';
@@ -7,7 +7,7 @@ import * as styles from './page.css';
 
 const SUMMARY_CARDS: Array<ComponentProps<typeof SummaryCard>> = [
   {
-    icon: <DellSquareIcon width={22} height={22} />,
+    icon: <DellSquareIcon width={22} height={22} style={{ color: vars.color.brand.secondary }} />,
     label: '그동안 생성한 가견적서',
     count: MOCK_SUMMARY_STATS.estimateCount,
   },
@@ -17,14 +17,14 @@ const SUMMARY_CARDS: Array<ComponentProps<typeof SummaryCard>> = [
     count: MOCK_SUMMARY_STATS.diagnosedCount,
   },
   {
-    icon: <TriangleWarningIcon width={22} height={22} />,
+    icon: <SadIcon width={22} height={22} />,
     label: '리스크 발생 견적',
     count: MOCK_SUMMARY_STATS.riskCount,
     danger: true,
   },
 ];
 
-export default function HomePage() {
+const HomePage = () => {
   return (
     <div className={styles.page}>
       <div className={styles.content}>
@@ -45,4 +45,6 @@ export default function HomePage() {
       </div>
     </div>
   );
-}
+};
+
+export default HomePage;

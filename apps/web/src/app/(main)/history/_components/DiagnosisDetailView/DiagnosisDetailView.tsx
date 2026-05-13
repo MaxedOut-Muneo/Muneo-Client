@@ -9,7 +9,7 @@ interface DiagnosisDetailViewProps {
   result: DiagnosisResult;
 }
 
-export function DiagnosisDetailView({ result }: DiagnosisDetailViewProps) {
+export const DiagnosisDetailView = ({ result }: DiagnosisDetailViewProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.reportHeader}>
@@ -30,6 +30,8 @@ export function DiagnosisDetailView({ result }: DiagnosisDetailViewProps) {
           icon={<TriangleWarningIcon width={24} height={24} />}
           label="누락항목"
           value={`${result.missingCount}건`}
+          description="필수 항목 미포함"
+          highlight
           className={styles.summaryCard}
         />
         <StatusCard
@@ -37,6 +39,8 @@ export function DiagnosisDetailView({ result }: DiagnosisDetailViewProps) {
           icon={<CircleWarningIcon width={24} height={24} />}
           label="발견한 리스크 항목"
           value={`${result.riskCount}건`}
+          description="모호 표현/중복 기재"
+          highlight
           className={styles.summaryCard}
         />
         <StatusCard
@@ -44,6 +48,8 @@ export function DiagnosisDetailView({ result }: DiagnosisDetailViewProps) {
           icon={<CircleWarningIcon width={24} height={24} />}
           label="정보 미비"
           value={`${result.insufficientCount}건`}
+          description="수량·단위·브랜드 누락"
+          highlight
           className={styles.summaryCard}
         />
       </div>
@@ -56,15 +62,12 @@ export function DiagnosisDetailView({ result }: DiagnosisDetailViewProps) {
 
       <div className={styles.summaryBox}>
         <span className={styles.summaryTitle}>진단 요약</span>
-        <div className={styles.summaryBody}>
-          <span className={styles.summarySubtitle}>전체 리스크 의심 항목</span>
-          <div className={styles.summaryBadges}>
-            <span className={`${styles.summaryBadge} ${styles.badgeDanger}`}>누락 {result.missingCount}</span>
-            <span className={`${styles.summaryBadge} ${styles.badgeWarning}`}>리스크 {result.riskCount}</span>
-            <span className={`${styles.summaryBadge} ${styles.badgeInfo}`}>미비 {result.insufficientCount}</span>
-          </div>
+        <div className={styles.summaryBadges}>
+          <span className={`${styles.summaryBadge} ${styles.badgeDanger}`}>누락 {result.missingCount}</span>
+          <span className={`${styles.summaryBadge} ${styles.badgeWarning}`}>불분명 {result.riskCount}</span>
+          <span className={`${styles.summaryBadge} ${styles.badgeInfo}`}>미비 {result.insufficientCount}</span>
         </div>
       </div>
     </div>
   );
-}
+};

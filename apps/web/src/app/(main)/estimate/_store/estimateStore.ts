@@ -1,7 +1,15 @@
 'use client';
 
 import { create } from 'zustand';
-import { BASIC_PROCESSES, type Step1Data, type Step2Data, type Step3Data, type Step4Data } from '../estimate.types';
+import {
+  BASIC_PROCESSES,
+  type EstimateStep,
+  type ProcessId,
+  type Step1Data,
+  type Step2Data,
+  type Step3Data,
+  type Step4Data,
+} from '../_types';
 
 const initialStep1: Step1Data = {
   region: null,
@@ -26,25 +34,28 @@ const initialStep3: Step3Data = {
 
 const initialStep4: Step4Data = {};
 
+const MIN_STEP: EstimateStep = 1;
+const MAX_STEP: EstimateStep = 5;
+
 interface EstimateStore {
-  currentStep: 1 | 2 | 3 | 4 | 5;
+  currentStep: EstimateStep;
   step1: Step1Data;
   step2: Step2Data;
   step3: Step3Data;
   step4: Step4Data;
-  goToStep: (step: 1 | 2 | 3 | 4 | 5) => void;
+  goToStep: (step: EstimateStep) => void;
   nextStep: () => void;
   prevStep: () => void;
   setStep1: (data: Partial<Step1Data>) => void;
   setStep2: (data: Partial<Step2Data>) => void;
   setStep3: (data: Partial<Step3Data>) => void;
   setStep4: <K extends keyof Step4Data>(processId: K, data: Partial<NonNullable<Step4Data[K]>>) => void;
-  toggleProcess: (processId: string) => void;
+  toggleProcess: (processId: ProcessId) => void;
   reset: () => void;
 }
 
 export const useEstimateStore = create<EstimateStore>((set, get) => ({
-  currentStep: 1,
+  currentStep: MIN_STEP,
   step1: initialStep1,
   step2: initialStep2,
   step3: initialStep3,
@@ -54,15 +65,15 @@ export const useEstimateStore = create<EstimateStore>((set, get) => ({
 
   nextStep: () => {
     const { currentStep } = get();
-    if (currentStep < 5) {
-      set({ currentStep: (currentStep + 1) as 1 | 2 | 3 | 4 | 5 });
+    if (currentStep < MAX_STEP) {
+      set({ currentStep: (currentStep + 1) as EstimateStep });
     }
   },
 
   prevStep: () => {
     const { currentStep } = get();
-    if (currentStep > 1) {
-      set({ currentStep: (currentStep - 1) as 1 | 2 | 3 | 4 | 5 });
+    if (currentStep > MIN_STEP) {
+      set({ currentStep: (currentStep - 1) as EstimateStep });
     }
   },
 
@@ -91,7 +102,7 @@ export const useEstimateStore = create<EstimateStore>((set, get) => ({
 
   reset: () =>
     set({
-      currentStep: 1,
+      currentStep: MIN_STEP,
       step1: initialStep1,
       step2: initialStep2,
       step3: initialStep3,

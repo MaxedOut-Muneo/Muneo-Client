@@ -1,13 +1,13 @@
-import { type ProcessInfo } from '../../estimate.types';
+import { type ProcessId, type ProcessInfo } from '../../_types';
 import * as styles from './ProcessCheckbox.css';
 
 interface ProcessCheckboxProps {
-  process: ProcessInfo;
+  process: ProcessInfo<ProcessId>;
   selected: boolean;
-  onToggle: (id: string) => void;
+  onToggle: (id: ProcessId) => void;
 }
 
-export function ProcessCheckbox({ process, selected, onToggle }: ProcessCheckboxProps) {
+export const ProcessCheckbox = ({ process, selected, onToggle }: ProcessCheckboxProps) => {
   return (
     <button
       type="button"
@@ -19,4 +19,4 @@ export function ProcessCheckbox({ process, selected, onToggle }: ProcessCheckbox
       <span className={styles.processDesc}>{process.description}</span>
     </button>
   );
-}
+};

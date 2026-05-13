@@ -4,7 +4,7 @@ import { ServicesSection } from './_components/ServicesSection/ServicesSection';
 import { UsageGuideSection } from './_components/UsageGuideSection/UsageGuideSection';
 import * as styles from './page.css';
 
-export default function Home() {
+const Home = () => {
   return (
     <main className={styles.main}>
       <HeroSection />
@@ -13,4 +13,6 @@ export default function Home() {
       <FaqSection />
     </main>
   );
-}
+};
+
+export default Home;

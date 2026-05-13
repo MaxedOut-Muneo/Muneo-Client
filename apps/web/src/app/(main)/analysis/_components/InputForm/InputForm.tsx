@@ -27,7 +27,7 @@ const ELEVATOR_OPTIONS: Array<{ value: ElevatorOption; label: string }> = [
   { value: '없음', label: '없음' },
 ];
 
-export function InputForm() {
+export const InputForm = () => {
   const { form, setForm } = useAnalysisStore();
 
   const handleNumberInput = (field: 'area' | 'roomCount' | 'floor', value: string) => {
@@ -124,4 +124,4 @@ export function InputForm() {
       </div>
     </div>
   );
-}
+};

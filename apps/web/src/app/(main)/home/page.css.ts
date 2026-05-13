@@ -11,7 +11,8 @@ export const content = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '20px',
-  maxWidth: '1080px',
+  maxWidth: '1280px',
+  margin: '0 auto',
 });
 
 export const greetingSection = style({
@@ -36,6 +37,7 @@ export const greetingName = style({
 export const greetingSubtitle = style({
   fontSize: vars.typography.fontSize.sm,
   fontWeight: vars.typography.fontWeight.regular,
+  fontFamily: vars.typography.fontFamily,
   color: vars.color.neutral.n500,
   letterSpacing: '-0.112px',
   opacity: 0.9,

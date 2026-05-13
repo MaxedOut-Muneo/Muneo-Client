@@ -31,6 +31,7 @@ export const buttonRecipe = recipe({
       },
       md: {
         ...typographyStyles.h4,
+        fontSize: vars.typography.fontSize.base,
         padding: `${vars.space.sm} ${vars.space.lg}`,
         gap: vars.space.sm,
       },

@@ -3,15 +3,11 @@
 import { SelectButton } from '@muneo/design-system';
 import { useId } from 'react';
 import { useEstimateStore } from '../../_store/estimateStore';
-import { type RoomCount, type Region, type SpaceType } from '../../estimate.types';
+import { REGIONS, ROOM_COUNTS, SPACE_TYPES } from '../../_types';
 import { StepActions } from '../StepActions/StepActions';
 import * as styles from './Step1BasicInfo.css';
 
-const REGIONS: Region[] = ['서울', '수도권', '지방'];
-const SPACE_TYPES: SpaceType[] = ['아파트', '빌라', '오피스텔', '단독 주택'];
-const ROOM_COUNTS: RoomCount[] = ['1개', '2개', '3개', '4개 이상'];
-
-export function Step1BasicInfo() {
+export const Step1BasicInfo = () => {
   const { step1, setStep1, nextStep, reset } = useEstimateStore();
   const areaInputId = useId();
 
@@ -96,4 +92,4 @@ export function Step1BasicInfo() {
       </div>
     </div>
   );
-}
+};

@@ -7,14 +7,14 @@ import * as styles from './UploadPanel.css';
 
 const ACCEPT = '.pdf,.jpg,.jpeg,.png,.csv,.xls,.xlsx';
 
-function formatSize(bytes: number): string {
+const formatSize = (bytes: number): string => {
   if (bytes < 1024 * 1024) {
     return `${(bytes / 1024).toFixed(1)}KB`;
   }
   return `${(bytes / (1024 * 1024)).toFixed(1)}MB`;
-}
+};
 
-export function UploadPanel() {
+export const UploadPanel = () => {
   const { files, loading, addFile, removeFile, submitAnalysis, reset } = useAnalysisStore();
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
@@ -128,4 +128,4 @@ export function UploadPanel() {
       </div>
     </div>
   );
-}
+};

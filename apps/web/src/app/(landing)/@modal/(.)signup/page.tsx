@@ -6,7 +6,7 @@ import { SignupSection } from '@/app/(auth)/_components/SignupSection';
 import { useModalBackdrop } from '@/hooks/useModalBackdrop';
 import * as styles from './page.css';
 
-export default function SignupModalPage() {
+const SignupModalPage = () => {
   const router = useRouter();
 
   const handleClose = useCallback(() => router.back(), [router]);
@@ -21,4 +21,6 @@ export default function SignupModalPage() {
       </div>
     </div>
   );
-}
+};
+
+export default SignupModalPage;

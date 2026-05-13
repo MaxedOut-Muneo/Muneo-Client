@@ -16,7 +16,7 @@ const VARIANT_CLASS: Record<Variant, string> = {
   info: styles.cardInfo,
 };
 
-export function StatusSummaryCard({ variant, icon, label, count, hint }: StatusSummaryCardProps) {
+export const StatusSummaryCard = ({ variant, icon, label, count, hint }: StatusSummaryCardProps) => {
   return (
     <div className={`${styles.card} ${VARIANT_CLASS[variant]}`}>
       <div className={styles.inner}>
@@ -29,4 +29,4 @@ export function StatusSummaryCard({ variant, icon, label, count, hint }: StatusS
       </div>
     </div>
   );
-}
+};

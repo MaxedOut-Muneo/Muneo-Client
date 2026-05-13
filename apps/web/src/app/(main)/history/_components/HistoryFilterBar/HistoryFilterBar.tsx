@@ -1,7 +1,7 @@
 'use client';
 
 import { Button, DatePicker, Dropdown } from '@muneo/design-system';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as styles from './HistoryFilterBar.css';
 
 const ANALYSIS_TYPE_OPTIONS = [
@@ -11,13 +11,33 @@ const ANALYSIS_TYPE_OPTIONS = [
 ];
 
 interface HistoryFilterBarProps {
+  initialAnalysisType?: string;
+  initialStartDate?: Date;
+  initialEndDate?: Date;
   onSearch: (analysisType: string, startDate: Date | undefined, endDate: Date | undefined) => void;
 }
 
-export function HistoryFilterBar({ onSearch }: HistoryFilterBarProps) {
-  const [analysisType, setAnalysisType] = useState<string>('all');
-  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
-  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
+export const HistoryFilterBar = ({
+  initialAnalysisType = 'all',
+  initialStartDate,
+  initialEndDate,
+  onSearch,
+}: HistoryFilterBarProps) => {
+  const [analysisType, setAnalysisType] = useState<string>(initialAnalysisType);
+  const [startDate, setStartDate] = useState<Date | undefined>(initialStartDate);
+  const [endDate, setEndDate] = useState<Date | undefined>(initialEndDate);
+
+  useEffect(() => {
+    setAnalysisType(initialAnalysisType);
+  }, [initialAnalysisType]);
+
+  useEffect(() => {
+    setStartDate(initialStartDate);
+  }, [initialStartDate]);
+
+  useEffect(() => {
+    setEndDate(initialEndDate);
+  }, [initialEndDate]);
 
   return (
     <div className={styles.filterBar}>
@@ -48,4 +68,4 @@ export function HistoryFilterBar({ onSearch }: HistoryFilterBarProps) {
       </Button>
     </div>
   );
-}
+};

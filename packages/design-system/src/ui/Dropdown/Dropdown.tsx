@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import CaretDownIcon from '../../assets/icons/CaretDownIcon';
+import CaretDownSmIcon from '../../assets/icons/CaretDownSmIcon';
 import { caret, caretOpen, optionItem, panel, trigger, wrapper } from './Dropdown.css';
 
 export interface DropdownOption<T> {
@@ -52,7 +52,7 @@ export const Dropdown = <T,>({
         aria-expanded={open}
       >
         <span>{selected?.label ?? placeholder}</span>
-        <CaretDownIcon className={`${caret}${open ? ` ${caretOpen}` : ''}`} width={24} height={24} />
+        <CaretDownSmIcon className={`${caret}${open ? ` ${caretOpen}` : ''}`} width={24} height={24} />
       </button>
       {open && (
         <ul className={panel} role="listbox">
