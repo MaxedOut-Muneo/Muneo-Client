@@ -1,5 +1,5 @@
 import { vars } from '@muneo/design-system';
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 
 export const wrapper = style({
   display: 'flex',
@@ -12,3 +12,19 @@ export const main = style({
   minWidth: 0,
   overflowX: 'hidden',
 });
+
+export const sidebar = style({
+  viewTransitionName: 'sidebar',
+});
+
+globalStyle(
+  [
+    '::view-transition-old(sidebar)',
+    '::view-transition-new(sidebar)',
+    '::view-transition-old(floating-chat)',
+    '::view-transition-new(floating-chat)',
+  ].join(', '),
+  {
+    animation: 'none',
+  }
+);
