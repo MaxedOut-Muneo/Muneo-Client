@@ -2,6 +2,7 @@
 
 import { SelectButton } from '@muneo/design-system';
 import { useId } from 'react';
+import { parsePositiveNumber } from '@/lib/parseNumber';
 import { useEstimateStore } from '../../_store/estimateStore';
 import { REGIONS, ROOM_COUNTS, SPACE_TYPES } from '../../_types';
 import { StepActions } from '../StepActions/StepActions';
@@ -59,14 +60,7 @@ export const Step1BasicInfo = () => {
                   min={0}
                   className={styles.areaInputNumber}
                   value={step1.area ?? ''}
-                  onChange={(e) => {
-                    if (e.target.value === '') {
-                      setStep1({ area: null });
-                      return;
-                    }
-                    const parsed = Number(e.target.value);
-                    setStep1({ area: Number.isFinite(parsed) && parsed > 0 ? parsed : null });
-                  }}
+                  onChange={(e) => setStep1({ area: parsePositiveNumber(e.target.value) })}
                 />
                 <span className={styles.areaUnit}>평</span>
               </div>
