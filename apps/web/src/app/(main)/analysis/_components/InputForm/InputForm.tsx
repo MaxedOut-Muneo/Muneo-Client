@@ -1,6 +1,7 @@
 'use client';
 
 import { Dropdown, TextField } from '@muneo/design-system';
+import { parsePositiveNumber } from '@/lib/parseNumber';
 import { useAnalysisStore } from '../../_store/analysisStore';
 import { type BuildingAge, type ElevatorOption, type Region, type SpaceType } from '../../_types/analysis.types';
 import * as styles from './InputForm.css';
@@ -31,12 +32,7 @@ export const InputForm = () => {
   const { form, setForm } = useAnalysisStore();
 
   const handleNumberInput = (field: 'area' | 'roomCount' | 'floor', value: string) => {
-    if (value === '') {
-      setForm({ [field]: null });
-      return;
-    }
-    const parsed = Number(value);
-    setForm({ [field]: Number.isFinite(parsed) && parsed > 0 ? parsed : null });
+    setForm({ [field]: parsePositiveNumber(value) });
   };
 
   return (
