@@ -17,14 +17,28 @@ describe('parseDateParam', () => {
     expect(parseDateParam(null)).toBeUndefined();
   });
 
-  it('유효한 날짜 문자열을 Date로 파싱한다', () => {
+  it('YYYY-MM-DD 문자열을 로컬 타임존 Date로 파싱한다', () => {
     const result = parseDateParam('2025-01-15');
     expect(result).toBeInstanceOf(Date);
     expect(result?.getFullYear()).toBe(2025);
+    expect(result?.getMonth()).toBe(0);
+    expect(result?.getDate()).toBe(15);
   });
 
   it('잘못된 날짜 문자열은 undefined를 반환한다', () => {
     expect(parseDateParam('invalid-date')).toBeUndefined();
+  });
+
+  it('YYYY-MM-DD 외 포맷은 undefined를 반환한다', () => {
+    expect(parseDateParam('2025/01/15')).toBeUndefined();
+    expect(parseDateParam('2025-1-1')).toBeUndefined();
+  });
+
+  it('parse → format 라운드트립이 원본 문자열을 유지한다 (타임존 무관)', () => {
+    const cases = ['2025-01-15', '2025-12-31', '2024-02-29'];
+    for (const value of cases) {
+      expect(formatDateParam(parseDateParam(value))).toBe(value);
+    }
   });
 });
 
