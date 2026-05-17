@@ -1,4 +1,5 @@
-import { ProfileCard, type ProfileUser } from './_components/ProfileCard/ProfileCard';
+import { ProfileCard } from './_components/ProfileCard/ProfileCard';
+import { type ProfileUser } from './_types/profile.types';
 import * as styles from './page.css';
 
 const MOCK_PROFILE: ProfileUser = {
