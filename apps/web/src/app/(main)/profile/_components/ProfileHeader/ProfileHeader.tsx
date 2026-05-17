@@ -9,7 +9,7 @@ interface ProfileHeaderProps {
 export const ProfileHeader = ({ initial, name, subtitle }: ProfileHeaderProps) => {
   return (
     <header className={styles.header}>
-      <div className={styles.avatar} aria-hidden>
+      <div className={styles.avatar} aria-hidden={true}>
         {initial}
       </div>
       <div className={styles.info}>
