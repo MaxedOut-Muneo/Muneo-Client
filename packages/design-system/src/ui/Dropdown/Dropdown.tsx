@@ -16,6 +16,7 @@ export interface DropdownProps<T> {
   placeholder?: string;
   className?: string;
   disabled?: boolean;
+  id?: string;
 }
 
 export const Dropdown = <T,>({
@@ -25,6 +26,7 @@ export const Dropdown = <T,>({
   placeholder = '선택',
   className,
   disabled,
+  id,
 }: DropdownProps<T>) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -45,6 +47,7 @@ export const Dropdown = <T,>({
     <div ref={ref} className={`${wrapper}${className ? ` ${className}` : ''}`}>
       <button
         type="button"
+        id={id}
         className={trigger}
         onClick={() => setOpen((prev) => !prev)}
         disabled={disabled}
