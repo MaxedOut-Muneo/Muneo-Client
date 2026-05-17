@@ -1,7 +1,13 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { applyFilters, formatDateParam, parseDateParam, type AppliedFilters } from '../../_lib/historyFilter';
+import {
+  applyFilters,
+  formatDateParam,
+  isAnalysisTypeFilter,
+  parseDateParam,
+  type AppliedFilters,
+} from '../../_lib/historyFilter';
 import { MOCK_HISTORY_ROWS } from '../../_mocks/history.mock';
 import { HistoryFilterBar } from '../HistoryFilterBar/HistoryFilterBar';
 import { HistoryTable } from '../HistoryTable/HistoryTable';
@@ -10,8 +16,9 @@ export const HistoryContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  const typeParam = searchParams.get('type');
   const appliedFilters: AppliedFilters = {
-    analysisType: searchParams.get('type') ?? 'all',
+    analysisType: isAnalysisTypeFilter(typeParam) ? typeParam : 'all',
     startDate: parseDateParam(searchParams.get('from')),
     endDate: parseDateParam(searchParams.get('to')),
   };

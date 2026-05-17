@@ -1,12 +1,18 @@
 import { type HistoryRow } from '../_types/history.types';
 
+export const ANALYSIS_TYPE_FILTERS = ['all', 'risk', 'estimate'] as const;
+export type AnalysisTypeFilter = (typeof ANALYSIS_TYPE_FILTERS)[number];
+
+export const isAnalysisTypeFilter = (value: string | null | undefined): value is AnalysisTypeFilter =>
+  value != null && (ANALYSIS_TYPE_FILTERS as readonly string[]).includes(value);
+
 export interface AppliedFilters {
-  analysisType: string;
+  analysisType: AnalysisTypeFilter;
   startDate: Date | undefined;
   endDate: Date | undefined;
 }
 
-const ANALYSIS_TYPE_MAP: Record<string, string> = {
+const ANALYSIS_TYPE_LABEL: Record<Exclude<AnalysisTypeFilter, 'all'>, string> = {
   risk: '리스크 진단',
   estimate: '가견적서 생성',
 };
@@ -15,7 +21,12 @@ export const parseDateParam = (value: string | null): Date | undefined => {
   if (!value) {
     return undefined;
   }
-  const date = new Date(value);
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) {
+    return undefined;
+  }
+  const [, year, month, day] = match;
+  const date = new Date(Number(year), Number(month) - 1, Number(day));
   return Number.isNaN(date.getTime()) ? undefined : date;
 };
 
@@ -31,7 +42,7 @@ export const formatDateParam = (date: Date | undefined): string | null => {
 
 export const applyFilters = (rows: HistoryRow[], filters: AppliedFilters): HistoryRow[] =>
   rows.filter((row) => {
-    if (filters.analysisType !== 'all' && row.analysisType !== ANALYSIS_TYPE_MAP[filters.analysisType]) {
+    if (filters.analysisType !== 'all' && row.analysisType !== ANALYSIS_TYPE_LABEL[filters.analysisType]) {
       return false;
     }
 
