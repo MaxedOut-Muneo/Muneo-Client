@@ -57,7 +57,7 @@ export const Step1BasicInfo = () => {
                 <input
                   id={areaInputId}
                   type="number"
-                  min={0}
+                  min={1}
                   className={styles.areaInputNumber}
                   value={step1.area ?? ''}
                   onChange={(e) => setStep1({ area: parsePositiveNumber(e.target.value) })}
