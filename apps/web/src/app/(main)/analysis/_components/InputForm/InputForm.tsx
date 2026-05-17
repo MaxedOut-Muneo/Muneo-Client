@@ -45,8 +45,11 @@ export const InputForm = () => {
       <div className={styles.fields}>
         <div className={styles.fieldRow}>
           <div className={styles.fieldGroup}>
-            <label className={styles.label}>공간유형</label>
+            <label htmlFor="spaceType" className={styles.label}>
+              공간유형
+            </label>
             <Dropdown
+              id="spaceType"
               options={SPACE_TYPE_OPTIONS}
               value={form.spaceType ?? undefined}
               onChange={(v) => setForm({ spaceType: v })}
@@ -91,8 +94,11 @@ export const InputForm = () => {
             />
           </div>
           <div className={styles.fieldGroup}>
-            <label className={styles.label}>엘리베이터</label>
+            <label htmlFor="elevator" className={styles.label}>
+              엘리베이터
+            </label>
             <Dropdown
+              id="elevator"
               options={ELEVATOR_OPTIONS}
               value={form.elevator ?? undefined}
               onChange={(v) => setForm({ elevator: v })}
@@ -103,8 +109,11 @@ export const InputForm = () => {
 
         <div className={styles.fieldRow}>
           <div className={styles.fieldGroup}>
-            <label className={styles.label}>지역</label>
+            <label htmlFor="region" className={styles.label}>
+              지역
+            </label>
             <Dropdown
+              id="region"
               options={REGION_OPTIONS}
               value={form.region ?? undefined}
               onChange={(v) => setForm({ region: v })}
@@ -112,8 +121,11 @@ export const InputForm = () => {
             />
           </div>
           <div className={styles.fieldGroup}>
-            <label className={styles.label}>건물 연식</label>
+            <label htmlFor="buildingAge" className={styles.label}>
+              건물 연식
+            </label>
             <Dropdown
+              id="buildingAge"
               options={BUILDING_AGE_OPTIONS}
               value={form.buildingAge ?? undefined}
               onChange={(v) => setForm({ buildingAge: v })}
