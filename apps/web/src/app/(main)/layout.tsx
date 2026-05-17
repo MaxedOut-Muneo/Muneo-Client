@@ -10,7 +10,7 @@ const NAV_TO_PATH: Record<SidebarNavId, string> = {
   estimate: '/estimate',
   risk: '/analysis',
   history: '/history',
-  settings: '/settings',
+  profile: '/profile',
 };
 
 const MOCK_USER = { name: '김민수', email: 'minsu@email.com' };
