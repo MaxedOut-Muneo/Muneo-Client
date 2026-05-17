@@ -1,8 +1,8 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
+import { applyFilters, formatDateParam, parseDateParam, type AppliedFilters } from '../../_lib/historyFilter';
 import { MOCK_HISTORY_ROWS } from '../../_mocks/history.mock';
-import { applyFilters, formatDateParam, parseDateParam, type AppliedFilters } from '../../_utils/historyFilter';
 import { HistoryFilterBar } from '../HistoryFilterBar/HistoryFilterBar';
 import { HistoryTable } from '../HistoryTable/HistoryTable';
 
