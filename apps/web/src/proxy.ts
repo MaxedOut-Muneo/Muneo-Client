@@ -5,7 +5,7 @@ const AUTH_PATHS = ['/login', '/signup'];
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const accessToken = request.cookies.get('access_token');
+  const accessToken = request.cookies.get('access_token')?.value;
 
   const isProtected = PROTECTED_PATHS.some((p) => pathname.startsWith(p));
   const isAuthRoute = AUTH_PATHS.some((p) => pathname.startsWith(p));
