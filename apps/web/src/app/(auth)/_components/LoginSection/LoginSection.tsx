@@ -48,6 +48,7 @@ export const LoginSection = ({ onLogoClick, onClose, onForgotPassword, onSignUp 
   });
 
   const handleKakaoLogin = () => {
+    if (!process.env.NEXT_PUBLIC_API_BASE_URL) {return;}
     window.location.href = `${process.env.NEXT_PUBLIC_API_BASE_URL}/oauth2/authorization/kakao`;
   };
 
