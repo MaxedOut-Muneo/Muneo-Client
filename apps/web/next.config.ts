@@ -9,10 +9,12 @@ const nextConfig: NextConfig = {
   transpilePackages: ['@muneo/design-system'],
   reactCompiler: true,
   async rewrites() {
+    const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL;
+    if (!apiBase) {return [];}
     return [
       {
         source: '/api/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/:path*`,
+        destination: `${apiBase}/api/:path*`,
       },
     ];
   },
