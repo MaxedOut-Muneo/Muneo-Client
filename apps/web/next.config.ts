@@ -10,7 +10,9 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   async rewrites() {
     const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL;
-    if (!apiBase) {return [];}
+    if (!apiBase) {
+      return [];
+    }
     return [
       {
         source: '/api/:path*',
