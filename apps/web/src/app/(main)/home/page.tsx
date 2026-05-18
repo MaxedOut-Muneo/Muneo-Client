@@ -18,12 +18,18 @@ const HomePage = () => {
 
   useEffect(() => {
     if (!user) {
+      setStats({ estimateCount: 0, diagnosedCount: 0, riskCount: 0 });
+      setRows([]);
       return;
     }
+
+    let mounted = true;
 
     const fetchData = async () => {
       try {
         const [estimates, risks] = await Promise.all([getEstimates(user.id), getRiskDetections(user.id)]);
+
+        if (!mounted) {return;}
 
         const estimateRows: HistoryRow[] = estimates.map((item) => ({
           id: item.id,
@@ -57,11 +63,15 @@ const HomePage = () => {
         setStats({ estimateCount: estimates.length, diagnosedCount: risks.length, riskCount });
         setRows(allRows);
       } catch (err) {
+        if (!mounted) {return;}
         console.error('홈 데이터 로딩 실패:', err);
       }
     };
 
     fetchData();
+    return () => {
+      mounted = false;
+    };
   }, [user]);
 
   const SUMMARY_CARDS = [
