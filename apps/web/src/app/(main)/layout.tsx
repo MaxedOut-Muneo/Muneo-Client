@@ -25,7 +25,9 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
     (Object.entries(NAV_TO_PATH).find(([, path]) => pathname.startsWith(path))?.[0] as SidebarNavId) ?? 'home';
 
   const handleLogout = async () => {
-    await logout().catch(() => {});
+    await logout().catch((err) => {
+      console.error('로그아웃 API 오류:', err);
+    });
     clearUser();
     window.location.href = '/';
   };
