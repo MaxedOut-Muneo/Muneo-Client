@@ -30,5 +30,6 @@ export const config = {
     '/settings/:path*',
     '/login',
     '/signup',
+    '/auth/callback/:path*',
   ],
 };
