@@ -23,3 +23,11 @@ export const loginSchema = z.object({
 });
 
 export type LoginFormValues = z.infer<typeof loginSchema>;
+
+export const socialSignupSchema = z.object({
+  name: nameField,
+  phone: phoneField,
+  birthDate: birthDateField,
+});
+
+export type SocialSignupFormValues = z.infer<typeof socialSignupSchema>;
