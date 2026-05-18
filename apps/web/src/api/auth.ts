@@ -1,4 +1,10 @@
-import { type AuthApiError, type AuthUser, type LoginRequest, type SignupRequest } from '@/types/auth';
+import {
+  type AuthApiError,
+  type AuthUser,
+  type LoginRequest,
+  type SignupRequest,
+  type SocialSignupRequest,
+} from '@/types/auth';
 import { client } from './client';
 
 interface ApiSuccessResponse<T> {
@@ -54,6 +60,25 @@ export const logout = async (): Promise<void> => {
 export const refresh = async (): Promise<AuthUser> => {
   try {
     const res = await client.post('api/v1/auth/refresh').json<ApiSuccessResponse<AuthUser>>();
+    return res.result;
+  } catch (e) {
+    throw toAuthApiError(e);
+  }
+};
+
+interface KakaoLoginUrlResult {
+  provider: string;
+  loginUrl: string;
+}
+
+export const getKakaoLoginUrl = async (): Promise<KakaoLoginUrlResult> => {
+  const res = await client.get('api/v1/auth/oauth/kakao').json<ApiSuccessResponse<KakaoLoginUrlResult>>();
+  return res.result;
+};
+
+export const socialSignup = async (data: SocialSignupRequest): Promise<AuthUser> => {
+  try {
+    const res = await client.post('api/v1/auth/social/signup', { json: data }).json<ApiSuccessResponse<AuthUser>>();
     return res.result;
   } catch (e) {
     throw toAuthApiError(e);
