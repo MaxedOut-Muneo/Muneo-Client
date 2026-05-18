@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, TextField } from '@muneo/design-system';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useId } from 'react';
+import { Suspense, useEffect, useId } from 'react';
 import { useForm } from 'react-hook-form';
 import { isAuthApiError, socialSignup } from '@/api/auth';
 import { AuthModalHeader } from '@/app/(auth)/_components/AuthModalHeader';
@@ -31,7 +31,7 @@ const FIELDS = [
   maxLength?: number;
 }>;
 
-const SocialSignupPage = () => {
+const SocialSignupContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const ticket = searchParams.get('ticket');
@@ -118,5 +118,11 @@ const SocialSignupPage = () => {
     </div>
   );
 };
+
+const SocialSignupPage = () => (
+  <Suspense>
+    <SocialSignupContent />
+  </Suspense>
+);
 
 export default SocialSignupPage;

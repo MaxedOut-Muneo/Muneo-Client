@@ -2,8 +2,9 @@
 
 import { Button } from '@muneo/design-system';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
-const SocialLoginErrorPage = () => {
+const ErrorContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const reason = searchParams.get('reason');
@@ -29,5 +30,11 @@ const SocialLoginErrorPage = () => {
     </div>
   );
 };
+
+const SocialLoginErrorPage = () => (
+  <Suspense>
+    <ErrorContent />
+  </Suspense>
+);
 
 export default SocialLoginErrorPage;
