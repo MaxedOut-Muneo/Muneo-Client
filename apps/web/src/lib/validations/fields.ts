@@ -27,7 +27,9 @@ export const birthDateField = z
     return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
   }, '존재하지 않는 날짜입니다.')
   .refine((val) => {
+    const [year, month, day] = val.split('-').map(Number);
+    const date = new Date(year, month - 1, day);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    return new Date(val) <= today;
+    return date <= today;
   }, '미래 날짜는 입력할 수 없습니다.');
