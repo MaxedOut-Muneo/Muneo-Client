@@ -43,7 +43,7 @@ export const SignupSection = ({ onLogoClick, onClose, onLogin }: SignupSectionPr
       setUser(user);
       router.push('/home');
     } catch (e) {
-      if (isAuthApiError(e) && e.code === 'VALIDATION_FAILED') {
+      if (isAuthApiError(e) && e.code === 'VALIDATION_FAILED' && typeof e.error === 'object' && e.error !== null) {
         const fieldErrors = e.error as Record<string, string>;
         const fieldMap: Record<string, keyof SignupFormValues> = {
           phoneNumber: 'phone',
@@ -54,8 +54,12 @@ export const SignupSection = ({ onLogoClick, onClose, onLogin }: SignupSectionPr
           birthDate: 'birthDate',
         };
         Object.entries(fieldErrors).forEach(([apiField, message]) => {
-          const formField = fieldMap[apiField] ?? apiField;
-          setError(formField as keyof SignupFormValues, { message });
+          const formField = fieldMap[apiField];
+          if (formField) {
+            setError(formField, { message });
+          } else {
+            setError('email', { message });
+          }
         });
       } else {
         setError('email', { message: '회원가입 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.' });
