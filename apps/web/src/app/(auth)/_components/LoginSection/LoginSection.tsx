@@ -12,12 +12,11 @@ import { LoginModal } from '../LoginModal';
 interface LoginSectionProps {
   onLogoClick?: () => void;
   onClose?: () => void;
-  onKakaoLogin?: () => void;
   onForgotPassword?: () => void;
   onSignUp?: () => void;
 }
 
-export const LoginSection = ({ onLogoClick, onClose, onKakaoLogin, onForgotPassword, onSignUp }: LoginSectionProps) => {
+export const LoginSection = ({ onLogoClick, onClose, onForgotPassword, onSignUp }: LoginSectionProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const setUser = useAuthStore((state) => state.setUser);
@@ -48,6 +47,10 @@ export const LoginSection = ({ onLogoClick, onClose, onKakaoLogin, onForgotPassw
     }
   });
 
+  const handleKakaoLogin = () => {
+    window.location.href = `${process.env.NEXT_PUBLIC_API_BASE_URL}/oauth2/authorization/kakao`;
+  };
+
   return (
     <LoginModal
       register={register}
@@ -56,7 +59,7 @@ export const LoginSection = ({ onLogoClick, onClose, onKakaoLogin, onForgotPassw
       onSubmit={onSubmit}
       onLogoClick={onLogoClick}
       onClose={onClose}
-      onKakaoLogin={onKakaoLogin}
+      onKakaoLogin={handleKakaoLogin}
       onForgotPassword={onForgotPassword}
       onSignUp={onSignUp}
     />
