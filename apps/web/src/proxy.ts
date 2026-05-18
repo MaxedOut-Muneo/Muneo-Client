@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from 'next/server';
 const PROTECTED_PATHS = ['/home', '/estimate', '/analysis', '/history', '/settings'];
 const AUTH_PATHS = ['/login', '/signup'];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const accessToken = request.cookies.get('access_token');
 
