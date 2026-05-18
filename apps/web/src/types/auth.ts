@@ -23,6 +23,13 @@ export interface LoginRequest {
   password: string;
 }
 
+export interface SocialSignupRequest {
+  ticket: string;
+  name: string;
+  phoneNumber: string;
+  birthDate: string;
+}
+
 export interface AuthApiError {
   code: string;
   error?: Record<string, string> | string;
