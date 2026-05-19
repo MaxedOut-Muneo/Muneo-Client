@@ -5,10 +5,8 @@ import { SidebarShell } from './_components/SidebarShell';
 import * as styles from './layout.css';
 
 const MainLayout = async ({ children }: { children: ReactNode }) => {
-  let user;
-  try {
-    user = await getServerMe();
-  } catch {
+  const user = await getServerMe().catch(() => null);
+  if (!user) {
     redirect('/login');
   }
 
