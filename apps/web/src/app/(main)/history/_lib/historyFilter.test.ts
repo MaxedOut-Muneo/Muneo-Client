@@ -34,6 +34,14 @@ describe('parseDateParam', () => {
     expect(parseDateParam('2025-1-1')).toBeUndefined();
   });
 
+  it('존재하지 않는 날짜는 undefined를 반환한다 (자동 보정 거부)', () => {
+    expect(parseDateParam('2025-02-31')).toBeUndefined();
+    expect(parseDateParam('2025-13-01')).toBeUndefined();
+    expect(parseDateParam('2025-04-31')).toBeUndefined();
+    expect(parseDateParam('2025-00-15')).toBeUndefined();
+    expect(parseDateParam('2025-01-00')).toBeUndefined();
+  });
+
   it('parse → format 라운드트립이 원본 문자열을 유지한다 (타임존 무관)', () => {
     const cases = ['2025-01-15', '2025-12-31', '2024-02-29'];
     for (const value of cases) {

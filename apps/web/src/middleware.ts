@@ -1,7 +1,10 @@
 import { NextResponse, type NextRequest } from 'next/server';
 
 const PROTECTED_PREFIXES = ['/home', '/estimate', '/analysis', '/history', '/profile'];
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? '';
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
+if (!API_BASE) {
+  throw new Error('NEXT_PUBLIC_API_BASE_URL is not set');
+}
 
 export const middleware = async (request: NextRequest) => {
   const { pathname } = request.nextUrl;
@@ -16,10 +19,15 @@ export const middleware = async (request: NextRequest) => {
     return NextResponse.next();
   }
 
-  const refreshRes = await fetch(`${API_BASE}/api/v1/users/refresh`, {
-    method: 'POST',
-    headers: { Cookie: request.headers.get('cookie') ?? '' },
-  });
+  let refreshRes: Response;
+  try {
+    refreshRes = await fetch(`${API_BASE}/api/v1/users/refresh`, {
+      method: 'POST',
+      headers: { Cookie: request.headers.get('cookie') ?? '' },
+    });
+  } catch {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
 
   if (!refreshRes.ok) {
     return NextResponse.redirect(new URL('/login', request.url));

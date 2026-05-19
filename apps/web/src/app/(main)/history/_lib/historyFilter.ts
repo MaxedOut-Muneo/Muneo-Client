@@ -25,9 +25,18 @@ export const parseDateParam = (value: string | null): Date | undefined => {
   if (!match) {
     return undefined;
   }
-  const [, year, month, day] = match;
-  const date = new Date(Number(year), Number(month) - 1, Number(day));
-  return Number.isNaN(date.getTime()) ? undefined : date;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const date = new Date(year, month - 1, day);
+  if (Number.isNaN(date.getTime())) {
+    return undefined;
+  }
+  // 자동 보정(2025-02-31 → 2025-03-03) 거부
+  if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
+    return undefined;
+  }
+  return date;
 };
 
 export const formatDateParam = (date: Date | undefined): string | null => {

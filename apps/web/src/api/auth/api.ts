@@ -40,8 +40,12 @@ export const refresh = async (): Promise<AuthUser> => {
 };
 
 export const getKakaoLoginUrl = async (): Promise<KakaoLoginUrl> => {
-  const res = await client.get('api/v1/auth/oauth/kakao').json<ApiSuccessResponse<KakaoLoginUrl>>();
-  return res.result;
+  try {
+    const res = await client.get('api/v1/auth/oauth/kakao').json<ApiSuccessResponse<KakaoLoginUrl>>();
+    return res.result;
+  } catch (e) {
+    throw toApiError(e);
+  }
 };
 
 export const socialSignup = async (data: SocialSignupRequest): Promise<AuthUser> => {

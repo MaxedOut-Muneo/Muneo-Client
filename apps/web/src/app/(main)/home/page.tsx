@@ -8,17 +8,25 @@ import * as styles from './page.css';
 
 const toDate = (isoStr: string) => isoStr.slice(0, 10);
 
+interface HistoryEntry {
+  createdAt: string;
+  row: HistoryRow;
+}
+
 const buildView = (estimates: EstimateItem[], risks: RiskItem[]) => {
-  const estimateRows: HistoryRow[] = estimates.map((item) => ({
-    id: item.id,
-    date: toDate(item.created_at),
-    analysisType: '가견적서 생성',
-    constructionType: `${item.input.공간유형} ${item.input.평수}평 (${item.input.공종.join(', ')})`,
-    vendor: null,
-    risk: { type: 'none' as const },
+  const estimateEntries: HistoryEntry[] = estimates.map((item) => ({
+    createdAt: item.created_at,
+    row: {
+      id: item.id,
+      date: toDate(item.created_at),
+      analysisType: '가견적서 생성',
+      constructionType: `${item.input.공간유형} ${item.input.평수}평 (${item.input.공종.join(', ')})`,
+      vendor: null,
+      risk: { type: 'none' as const },
+    },
   }));
 
-  const riskRows: HistoryRow[] = risks.map((item) => {
+  const riskEntries: HistoryEntry[] = risks.map((item) => {
     const { total_risk_items: totalRiskItems, chips } = item.result.report.summary;
     const risk: HistoryRow['risk'] =
       totalRiskItems === 0
@@ -26,16 +34,22 @@ const buildView = (estimates: EstimateItem[], risks: RiskItem[]) => {
         : { type: 'danger', label: chips.누락 > 0 ? `누락 ${chips.누락}건` : `위험 ${totalRiskItems}건` };
 
     return {
-      id: item.id,
-      date: toDate(item.created_at),
-      analysisType: '리스크 진단',
-      constructionType: `${item.input.spaceType} ${item.input.pyeong}평`,
-      vendor: item.input.companyName,
-      risk,
+      createdAt: item.created_at,
+      row: {
+        id: item.id,
+        date: toDate(item.created_at),
+        analysisType: '리스크 진단',
+        constructionType: `${item.input.spaceType} ${item.input.pyeong}평`,
+        vendor: item.input.companyName,
+        risk,
+      },
     };
   });
 
-  const rows = [...estimateRows, ...riskRows].sort((a, b) => b.date.localeCompare(a.date));
+  const rows = [...estimateEntries, ...riskEntries]
+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+    .map((entry) => entry.row);
+
   const stats: SummaryStats = {
     estimateCount: estimates.length,
     diagnosedCount: risks.length,

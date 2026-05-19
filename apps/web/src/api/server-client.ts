@@ -2,7 +2,10 @@ import 'server-only';
 import { cookies } from 'next/headers';
 import { toApiError } from './errors';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? '';
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+if (!BASE_URL) {
+  throw new Error('NEXT_PUBLIC_API_BASE_URL is not set');
+}
 
 interface ServerFetchOptions extends Omit<RequestInit, 'body'> {
   body?: unknown;
@@ -13,11 +16,13 @@ export const serverFetch = async <T>(path: string, options: ServerFetchOptions =
   const cookieHeader = cookieStore.toString();
   const { body, headers: customHeaders, ...rest } = options;
 
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-    ...(cookieHeader ? { Cookie: cookieHeader } : {}),
-    ...(customHeaders as Record<string, string> | undefined),
-  };
+  const headers = new Headers({ 'Content-Type': 'application/json' });
+  if (cookieHeader) {
+    headers.set('Cookie', cookieHeader);
+  }
+  if (customHeaders) {
+    new Headers(customHeaders).forEach((value, key) => headers.set(key, value));
+  }
 
   const res = await fetch(`${BASE_URL}/${path}`, {
     ...rest,

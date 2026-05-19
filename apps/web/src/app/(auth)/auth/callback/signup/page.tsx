@@ -3,11 +3,12 @@ import { SocialSignupSection } from '@/app/(auth)/_components/SocialSignupSectio
 import * as styles from './page.css';
 
 interface SocialSignupPageProps {
-  searchParams: Promise<{ ticket?: string }>;
+  searchParams: Promise<{ ticket?: string | string[] }>;
 }
 
 const SocialSignupPage = async ({ searchParams }: SocialSignupPageProps) => {
-  const { ticket } = await searchParams;
+  const params = await searchParams;
+  const ticket = Array.isArray(params.ticket) ? params.ticket[0] : params.ticket;
 
   if (!ticket) {
     redirect('/login');
