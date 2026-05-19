@@ -1,6 +1,26 @@
 import ky from 'ky';
 
-const apiBaseUrl = typeof window === 'undefined' ? process.env.NEXT_PUBLIC_API_BASE_URL : window.location.origin;
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+const REFRESH_PATH = 'api/v1/users/refresh';
+const PRE_AUTH_PATHS = ['api/v1/users/login', 'api/v1/users/signup', 'api/v1/auth/oauth', 'api/v1/auth/social/signup'];
+
+const isPreAuth = (url: string) => PRE_AUTH_PATHS.some((p) => url.includes(p));
+const isRefresh = (url: string) => url.includes(REFRESH_PATH);
+
+let refreshPromise: Promise<Response> | null = null;
+
+const triggerRefresh = () => {
+  if (!refreshPromise) {
+    refreshPromise = fetch(`${apiBaseUrl}/${REFRESH_PATH}`, {
+      method: 'POST',
+      credentials: 'include',
+    }).finally(() => {
+      refreshPromise = null;
+    });
+  }
+  return refreshPromise;
+};
 
 export const client = ky.create({
   prefixUrl: apiBaseUrl,
@@ -9,10 +29,28 @@ export const client = ky.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  retry: {
+    limit: 1,
+    methods: ['get', 'post', 'put', 'patch', 'delete', 'head'],
+    statusCodes: [401],
+  },
   hooks: {
+    beforeRetry: [
+      async ({ request, error }) => {
+        if (isPreAuth(request.url) || isRefresh(request.url)) {
+          throw error;
+        }
+        const refreshRes = await triggerRefresh();
+        if (!refreshRes.ok) {
+          if (typeof window !== 'undefined') {
+            window.location.href = '/login';
+          }
+          throw error;
+        }
+      },
+    ],
     afterResponse: [
       async (_request, _options, response) => {
-        // 공통 에러 처리 (401 리다이렉트 등) — 응답 body를 에러에 첨부해 호출자가 에러 코드 파싱 가능
         if (!response.ok) {
           const body = await response
             .clone()
