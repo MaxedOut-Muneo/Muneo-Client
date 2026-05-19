@@ -1,9 +1,12 @@
-import ky from 'ky';
+import ky, { type KyInstance } from 'ky';
 
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-if (!apiBaseUrl) {
-  throw new Error('NEXT_PUBLIC_API_BASE_URL is not set');
-}
+const getApiBaseUrl = () => {
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  if (!apiBaseUrl) {
+    throw new Error('NEXT_PUBLIC_API_BASE_URL is not set');
+  }
+  return apiBaseUrl;
+};
 
 const REFRESH_PATH = 'api/v1/users/refresh';
 const PRE_AUTH_PATHS = ['api/v1/users/login', 'api/v1/users/signup', 'api/v1/auth/oauth', 'api/v1/auth/social/signup'];
@@ -15,7 +18,7 @@ let refreshPromise: Promise<Response> | null = null;
 
 const triggerRefresh = () => {
   if (!refreshPromise) {
-    refreshPromise = fetch(`${apiBaseUrl}/${REFRESH_PATH}`, {
+    refreshPromise = fetch(`${getApiBaseUrl()}/${REFRESH_PATH}`, {
       method: 'POST',
       credentials: 'include',
     }).finally(() => {
@@ -25,45 +28,55 @@ const triggerRefresh = () => {
   return refreshPromise;
 };
 
-export const client = ky.create({
-  prefixUrl: apiBaseUrl,
-  timeout: 10000,
-  credentials: 'include',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  retry: {
-    limit: 1,
-    methods: ['get', 'post', 'put', 'patch', 'delete', 'head'],
-    statusCodes: [401],
-  },
-  hooks: {
-    beforeRetry: [
-      async ({ request, error }) => {
-        if (isPreAuth(request.url) || isRefresh(request.url)) {
-          throw error;
-        }
-        const refreshRes = await triggerRefresh();
-        if (!refreshRes.ok) {
-          if (typeof window !== 'undefined') {
-            window.location.href = '/login';
+const createClient = () =>
+  ky.create({
+    prefixUrl: getApiBaseUrl(),
+    timeout: 10000,
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    retry: {
+      limit: 1,
+      methods: ['get', 'post', 'put', 'patch', 'delete', 'head'],
+      statusCodes: [401],
+    },
+    hooks: {
+      beforeRetry: [
+        async ({ request, error }) => {
+          if (isPreAuth(request.url) || isRefresh(request.url)) {
+            throw error;
           }
-          throw error;
-        }
-      },
-    ],
-    afterResponse: [
-      async (_request, _options, response) => {
-        if (!response.ok) {
-          const body = await response
-            .clone()
-            .json()
-            .catch(() => null);
-          const error = new Error(`API Error: ${response.status}`);
-          Object.assign(error, { status: response.status, body });
-          throw error;
-        }
-      },
-    ],
+          const refreshRes = await triggerRefresh();
+          if (!refreshRes.ok) {
+            if (typeof window !== 'undefined') {
+              window.location.href = '/login';
+            }
+            throw error;
+          }
+        },
+      ],
+      afterResponse: [
+        async (_request, _options, response) => {
+          if (!response.ok) {
+            const body = await response
+              .clone()
+              .json()
+              .catch(() => null);
+            const error = new Error(`API Error: ${response.status}`);
+            Object.assign(error, { status: response.status, body });
+            throw error;
+          }
+        },
+      ],
+    },
+  });
+
+export const client = new Proxy((() => createClient()) as unknown as KyInstance, {
+  apply(_target, _thisArg, argArray) {
+    return Reflect.apply(createClient(), undefined, argArray);
+  },
+  get(_target, property) {
+    return Reflect.get(createClient(), property);
   },
 });
