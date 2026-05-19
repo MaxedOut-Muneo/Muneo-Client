@@ -9,6 +9,7 @@ import SearchIcon from '../../assets/icons/SearchIcon';
 import SettingFillIcon from '../../assets/icons/SettingFillIcon';
 import {
   avatar,
+  logoutButton,
   logoArea,
   navIcon,
   navIndicator,
@@ -36,6 +37,7 @@ export interface SidebarProps {
   activeItem?: SidebarNavId;
   onItemClick?: (id: SidebarNavId) => void;
   onItemHover?: (id: SidebarNavId) => void;
+  onLogout?: () => void;
   user?: SidebarUser;
   className?: string;
 }
@@ -54,7 +56,7 @@ const NAV_ITEMS: NavItemDef[] = [
   { id: 'profile', label: '내 정보', icon: <SettingFillIcon /> },
 ];
 
-export const Sidebar = ({ activeItem, onItemClick, onItemHover, user, className }: SidebarProps) => {
+export const Sidebar = ({ activeItem, onItemClick, onItemHover, onLogout, user, className }: SidebarProps) => {
   return (
     <aside className={`${sidebar}${className ? ` ${className}` : ''}`}>
       <div className={topSection}>
@@ -93,6 +95,24 @@ export const Sidebar = ({ activeItem, onItemClick, onItemHover, user, className 
             <p className={userNameStyle}>{user.name}</p>
             <p className={userEmailStyle}>{user.email}</p>
           </div>
+          {onLogout && (
+            <button type="button" className={logoutButton} onClick={onLogout} aria-label="로그아웃">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
+            </button>
+          )}
         </div>
       )}
     </aside>

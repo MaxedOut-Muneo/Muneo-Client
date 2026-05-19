@@ -1,7 +1,7 @@
 export type RiskStatus = { type: 'danger'; label: string } | { type: 'safe'; label: string } | { type: 'none' };
 
 export interface HistoryRow {
-  id: number;
+  id: string;
   date: string;
   analysisType: string;
   constructionType: string;
