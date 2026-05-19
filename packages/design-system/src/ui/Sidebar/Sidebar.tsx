@@ -26,7 +26,7 @@ import {
   userNameStyle,
 } from './Sidebar.css';
 
-export type SidebarNavId = 'home' | 'estimate' | 'risk' | 'history' | 'settings';
+export type SidebarNavId = 'home' | 'estimate' | 'risk' | 'history' | 'profile';
 
 export interface SidebarUser {
   name: string;
@@ -53,7 +53,7 @@ const NAV_ITEMS: NavItemDef[] = [
   { id: 'estimate', label: '가견적서 생성', icon: <DellSquareIcon /> },
   { id: 'risk', label: '리스크 진단', icon: <SearchIcon /> },
   { id: 'history', label: '분석 이력', icon: <ColumnUpFillIcon /> },
-  { id: 'settings', label: '내 정보', icon: <SettingFillIcon /> },
+  { id: 'profile', label: '내 정보', icon: <SettingFillIcon /> },
 ];
 
 export const Sidebar = ({ activeItem, onItemClick, onItemHover, onLogout, user, className }: SidebarProps) => {

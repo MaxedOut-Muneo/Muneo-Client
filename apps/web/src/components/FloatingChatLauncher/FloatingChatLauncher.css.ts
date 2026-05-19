@@ -38,6 +38,7 @@ export const floatingButton = style({
   color: vars.color.white,
   cursor: 'pointer',
   zIndex: 120,
+  viewTransitionName: 'floating-chat',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',

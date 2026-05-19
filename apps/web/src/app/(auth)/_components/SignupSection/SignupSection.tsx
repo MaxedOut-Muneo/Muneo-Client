@@ -4,9 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { isAuthApiError, signup } from '@/api/auth';
+import { signup } from '@/api/auth';
+import { isApiError } from '@/api/errors';
 import { signupSchema, type SignupFormValues } from '@/lib/validations/auth';
-import { useAuthStore } from '@/store/authStore';
 import { SignupModal } from '../SignupModal';
 
 interface SignupSectionProps {
@@ -15,10 +15,18 @@ interface SignupSectionProps {
   onLogin?: () => void;
 }
 
+const FIELD_MAP: Record<string, keyof SignupFormValues> = {
+  phoneNumber: 'phone',
+  email: 'email',
+  password: 'password',
+  passwordConfirm: 'passwordConfirm',
+  name: 'name',
+  birthDate: 'birthDate',
+};
+
 export const SignupSection = ({ onLogoClick, onClose, onLogin }: SignupSectionProps) => {
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const setUser = useAuthStore((state) => state.setUser);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -32,7 +40,7 @@ export const SignupSection = ({ onLogoClick, onClose, onLogin }: SignupSectionPr
   const onSubmit = handleSubmit(async (data) => {
     setIsLoading(true);
     try {
-      const user = await signup({
+      await signup({
         email: data.email,
         password: data.password,
         passwordConfirm: data.passwordConfirm,
@@ -40,21 +48,13 @@ export const SignupSection = ({ onLogoClick, onClose, onLogin }: SignupSectionPr
         phoneNumber: data.phone,
         birthDate: data.birthDate,
       });
-      setUser(user);
       router.push('/home');
+      router.refresh();
     } catch (e) {
-      if (isAuthApiError(e) && e.code === 'VALIDATION_FAILED' && typeof e.error === 'object' && e.error !== null) {
+      if (isApiError(e) && e.code === 'VALIDATION_FAILED' && typeof e.error === 'object' && e.error !== null) {
         const fieldErrors = e.error as Record<string, string>;
-        const fieldMap: Record<string, keyof SignupFormValues> = {
-          phoneNumber: 'phone',
-          email: 'email',
-          password: 'password',
-          passwordConfirm: 'passwordConfirm',
-          name: 'name',
-          birthDate: 'birthDate',
-        };
         Object.entries(fieldErrors).forEach(([apiField, message]) => {
-          const formField = fieldMap[apiField];
+          const formField = FIELD_MAP[apiField];
           if (formField) {
             setError(formField, { message });
           } else {

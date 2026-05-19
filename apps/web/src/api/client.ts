@@ -1,28 +1,82 @@
-import ky from 'ky';
+import ky, { type KyInstance } from 'ky';
 
-const apiBaseUrl = typeof window === 'undefined' ? process.env.NEXT_PUBLIC_API_BASE_URL : window.location.origin;
+const getApiBaseUrl = () => {
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  if (!apiBaseUrl) {
+    throw new Error('NEXT_PUBLIC_API_BASE_URL is not set');
+  }
+  return apiBaseUrl;
+};
 
-export const client = ky.create({
-  prefixUrl: apiBaseUrl,
-  timeout: 10000,
-  credentials: 'include',
-  headers: {
-    'Content-Type': 'application/json',
+const REFRESH_PATH = 'api/v1/users/refresh';
+const PRE_AUTH_PATHS = ['api/v1/users/login', 'api/v1/users/signup', 'api/v1/auth/oauth', 'api/v1/auth/social/signup'];
+
+const isPreAuth = (url: string) => PRE_AUTH_PATHS.some((p) => url.includes(p));
+const isRefresh = (url: string) => url.includes(REFRESH_PATH);
+
+let refreshPromise: Promise<Response> | null = null;
+
+const triggerRefresh = () => {
+  if (!refreshPromise) {
+    refreshPromise = fetch(`${getApiBaseUrl()}/${REFRESH_PATH}`, {
+      method: 'POST',
+      credentials: 'include',
+    }).finally(() => {
+      refreshPromise = null;
+    });
+  }
+  return refreshPromise;
+};
+
+const createClient = () =>
+  ky.create({
+    prefixUrl: getApiBaseUrl(),
+    timeout: 10000,
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    retry: {
+      limit: 1,
+      methods: ['get', 'post', 'put', 'patch', 'delete', 'head'],
+      statusCodes: [401],
+    },
+    hooks: {
+      beforeRetry: [
+        async ({ request, error }) => {
+          if (isPreAuth(request.url) || isRefresh(request.url)) {
+            throw error;
+          }
+          const refreshRes = await triggerRefresh();
+          if (!refreshRes.ok) {
+            if (typeof window !== 'undefined') {
+              window.location.href = '/login';
+            }
+            throw error;
+          }
+        },
+      ],
+      afterResponse: [
+        async (_request, _options, response) => {
+          if (!response.ok) {
+            const body = await response
+              .clone()
+              .json()
+              .catch(() => null);
+            const error = new Error(`API Error: ${response.status}`);
+            Object.assign(error, { status: response.status, body });
+            throw error;
+          }
+        },
+      ],
+    },
+  });
+
+export const client = new Proxy((() => createClient()) as unknown as KyInstance, {
+  apply(_target, _thisArg, argArray) {
+    return Reflect.apply(createClient(), undefined, argArray);
   },
-  hooks: {
-    afterResponse: [
-      async (_request, _options, response) => {
-        // 공통 에러 처리 (401 리다이렉트 등) — 응답 body를 에러에 첨부해 호출자가 에러 코드 파싱 가능
-        if (!response.ok) {
-          const body = await response
-            .clone()
-            .json()
-            .catch(() => null);
-          const error = new Error(`API Error: ${response.status}`);
-          Object.assign(error, { status: response.status, body });
-          throw error;
-        }
-      },
-    ],
+  get(_target, property) {
+    return Reflect.get(createClient(), property);
   },
 });

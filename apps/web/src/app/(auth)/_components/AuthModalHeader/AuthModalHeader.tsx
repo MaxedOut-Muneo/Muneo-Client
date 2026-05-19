@@ -1,6 +1,5 @@
-'use client';
-
 import { Logo } from '@muneo/design-system';
+import Link from 'next/link';
 import { TAGLINE } from '@/constants/app';
 import * as styles from '../authModal.css';
 
@@ -16,7 +15,9 @@ export const AuthModalHeader = ({ onLogoClick }: AuthModalHeaderProps) => (
         <Logo width={118} height={38} />
       </button>
     ) : (
-      <Logo width={118} height={38} />
+      <Link href="/" className={styles.logoButton} aria-label="홈으로 이동">
+        <Logo width={118} height={38} />
+      </Link>
     )}
   </div>
 );
