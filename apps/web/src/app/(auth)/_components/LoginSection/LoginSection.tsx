@@ -4,9 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { isAuthApiError, login } from '@/api/auth';
+import { getKakaoLoginUrl, login } from '@/api/auth';
+import { isApiError } from '@/api/errors';
 import { loginSchema, type LoginFormValues } from '@/lib/validations/auth';
-import { useAuthStore } from '@/store/authStore';
 import { LoginModal } from '../LoginModal';
 
 interface LoginSectionProps {
@@ -17,9 +17,8 @@ interface LoginSectionProps {
 }
 
 export const LoginSection = ({ onLogoClick, onClose, onForgotPassword, onSignUp }: LoginSectionProps) => {
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const setUser = useAuthStore((state) => state.setUser);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -33,11 +32,11 @@ export const LoginSection = ({ onLogoClick, onClose, onForgotPassword, onSignUp 
   const onSubmit = handleSubmit(async (data) => {
     setIsLoading(true);
     try {
-      const user = await login(data);
-      setUser(user);
+      await login(data);
       router.push('/home');
+      router.refresh();
     } catch (e) {
-      if (isAuthApiError(e) && e.code === 'INVALID_LOGIN_INFO') {
+      if (isApiError(e) && e.code === 'INVALID_LOGIN_INFO') {
         setError('password', { message: '이메일 또는 비밀번호가 올바르지 않습니다.' });
       } else {
         setError('password', { message: '로그인 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.' });
@@ -47,11 +46,13 @@ export const LoginSection = ({ onLogoClick, onClose, onForgotPassword, onSignUp 
     }
   });
 
-  const handleKakaoLogin = () => {
-    if (!process.env.NEXT_PUBLIC_API_BASE_URL) {
-      return;
+  const handleKakaoLogin = async () => {
+    try {
+      const { loginUrl } = await getKakaoLoginUrl();
+      window.location.href = loginUrl;
+    } catch (e) {
+      console.error('카카오 로그인 URL 조회 실패', e);
     }
-    window.location.href = `${process.env.NEXT_PUBLIC_API_BASE_URL}/oauth2/authorization/kakao`;
   };
 
   return (
