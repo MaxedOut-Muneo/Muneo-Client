@@ -1,24 +1,10 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
 import { LoginSection } from '../_components/LoginSection';
+import * as styles from './page.css';
 
-const LoginPage = () => {
-  const router = useRouter();
-
-  return (
-    <div
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#f3f4f6',
-      }}
-    >
-      <LoginSection onLogoClick={() => router.push('/')} onSignUp={() => router.push('/signup')} />
-    </div>
-  );
-};
+const LoginPage = () => (
+  <div className={styles.wrapper}>
+    <LoginSection />
+  </div>
+);
 
 export default LoginPage;

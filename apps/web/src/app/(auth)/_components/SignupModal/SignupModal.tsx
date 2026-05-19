@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, CloseRoundFill, TextField } from '@muneo/design-system';
+import Link from 'next/link';
 import { useId } from 'react';
 import { type FieldErrors, type UseFormRegister } from 'react-hook-form';
 import { type SignupFormValues } from '@/lib/validations/auth';
@@ -98,9 +99,15 @@ export const SignupModal = ({
           <div className={styles.footerRow}>
             <span className={styles.loginText}>이미 회원이신가요?</span>
             <div className={styles.footerDivider} />
-            <button type="button" className={styles.loginLink} onClick={onLogin}>
-              로그인
-            </button>
+            {onLogin ? (
+              <button type="button" className={styles.loginLink} onClick={onLogin}>
+                로그인
+              </button>
+            ) : (
+              <Link href="/login" className={styles.loginLink}>
+                로그인
+              </Link>
+            )}
           </div>
         </div>
       </form>

@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, CloseRoundFill, KakaoIcon, TextField } from '@muneo/design-system';
+import Link from 'next/link';
 import { useId } from 'react';
 import { type FieldErrors, type UseFormRegister } from 'react-hook-form';
 import { type LoginFormValues } from '@/lib/validations/auth';
@@ -90,9 +91,15 @@ export const LoginModal = ({
           <div className={styles.footerRow}>
             <span className={styles.signupText}>계정이 없으신가요?</span>
             <div className={styles.footerDivider} />
-            <button type="button" className={styles.signupLink} onClick={onSignUp}>
-              회원가입
-            </button>
+            {onSignUp ? (
+              <button type="button" className={styles.signupLink} onClick={onSignUp}>
+                회원가입
+              </button>
+            ) : (
+              <Link href="/signup" className={styles.signupLink}>
+                회원가입
+              </Link>
+            )}
           </div>
         </div>
       </form>
