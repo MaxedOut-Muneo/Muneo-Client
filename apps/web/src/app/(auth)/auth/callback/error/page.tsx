@@ -1,8 +1,5 @@
-'use client';
-
-import { Button } from '@muneo/design-system';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense } from 'react';
+import { Button, TriangleWarningIcon } from '@muneo/design-system';
+import * as styles from './page.css';
 
 const REASON_MESSAGES: Record<string, string> = {
   SOCIAL_LOGIN_FAILED: '카카오 로그인에 실패했습니다.',
@@ -11,37 +8,29 @@ const REASON_MESSAGES: Record<string, string> = {
 };
 const DEFAULT_MESSAGE = '카카오 로그인 중 오류가 발생했습니다.';
 
-const ErrorContent = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const reason = searchParams.get('reason');
+interface SocialLoginErrorPageProps {
+  searchParams: Promise<{ reason?: string }>;
+}
+
+const SocialLoginErrorPage = async ({ searchParams }: SocialLoginErrorPageProps) => {
+  const { reason } = await searchParams;
+  const message = (reason && REASON_MESSAGES[reason]) ?? DEFAULT_MESSAGE;
 
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '24px',
-        backgroundColor: '#f3f4f6',
-      }}
-    >
-      <p style={{ fontSize: '16px', color: '#374151', textAlign: 'center' }}>
-        {(reason && REASON_MESSAGES[reason]) ?? DEFAULT_MESSAGE}
-      </p>
-      <Button variant="primary" onClick={() => router.push('/login')}>
-        다시 로그인하기
-      </Button>
+    <div className={styles.wrapper}>
+      <TriangleWarningIcon width={48} height={48} className={styles.icon} />
+      <h2 className={styles.title}>오류가 발생했습니다</h2>
+      <p className={styles.description}>{message}</p>
+      <div className={styles.actions}>
+        <Button as="a" variant="primary" href="/login">
+          다시 로그인하기
+        </Button>
+        <Button as="a" variant="outlineSecondaryStrong" href="/">
+          홈으로
+        </Button>
+      </div>
     </div>
   );
 };
-
-const SocialLoginErrorPage = () => (
-  <Suspense>
-    <ErrorContent />
-  </Suspense>
-);
 
 export default SocialLoginErrorPage;
