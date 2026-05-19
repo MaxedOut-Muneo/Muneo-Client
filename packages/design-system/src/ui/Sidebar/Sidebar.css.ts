@@ -185,3 +185,23 @@ export const userEmailStyle = style({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
 });
+
+export const logoutButton = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '24px',
+  height: '24px',
+  marginLeft: 'auto',
+  flexShrink: 0,
+  background: 'none',
+  border: 'none',
+  borderRadius: '6px',
+  cursor: 'pointer',
+  color: vars.color.neutral.n400,
+  padding: 0,
+  ':hover': {
+    color: vars.color.neutral.n600,
+    backgroundColor: vars.color.neutral.n100,
+  },
+});
