@@ -2,7 +2,6 @@ import { redirect } from 'next/navigation';
 import { type ReactNode } from 'react';
 import { getServerMe } from '@/api/user';
 import { SidebarShell } from './_components/SidebarShell';
-import { UserProvider } from './_components/UserProvider';
 import * as styles from './layout.css';
 
 const MainLayout = async ({ children }: { children: ReactNode }) => {
@@ -14,12 +13,10 @@ const MainLayout = async ({ children }: { children: ReactNode }) => {
   }
 
   return (
-    <UserProvider user={user}>
-      <div className={styles.wrapper}>
-        <SidebarShell className={styles.sidebar} />
-        <main className={styles.main}>{children}</main>
-      </div>
-    </UserProvider>
+    <div className={styles.wrapper}>
+      <SidebarShell className={styles.sidebar} user={user} />
+      <main className={styles.main}>{children}</main>
+    </div>
   );
 };
 

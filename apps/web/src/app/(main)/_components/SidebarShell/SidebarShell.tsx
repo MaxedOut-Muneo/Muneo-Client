@@ -4,10 +4,11 @@ import { Sidebar, type SidebarNavId } from '@muneo/design-system';
 import { usePathname, useRouter } from 'next/navigation';
 import { logout } from '@/api/auth';
 import { useViewTransitionRouter } from '@/hooks/useViewTransitionRouter';
-import { useUser } from '../UserProvider';
+import { type AuthUser } from '@/types/auth';
 
 interface SidebarShellProps {
   className?: string;
+  user: AuthUser;
 }
 
 const NAV_TO_PATH = {
@@ -20,11 +21,10 @@ const NAV_TO_PATH = {
 
 const NAV_IDS = Object.keys(NAV_TO_PATH) as SidebarNavId[];
 
-export const SidebarShell = ({ className }: SidebarShellProps) => {
+export const SidebarShell = ({ className, user }: SidebarShellProps) => {
   const pathname = usePathname();
   const router = useRouter();
   const { push, prefetch } = useViewTransitionRouter();
-  const user = useUser();
 
   const activeItem =
     NAV_IDS.find((id) => {
