@@ -8,6 +8,7 @@ import * as styles from './HistoryTable.css';
 
 interface HistoryTableProps {
   rows: HistoryRow[];
+  onDelete?: (id: string) => void;
 }
 
 const COLUMNS = ['날짜', '분석 유형', '공사 유형', '리스크'] as const;
@@ -32,7 +33,7 @@ const AnalysisTypeBadge = ({ label }: { label: string }) => {
   return <span className={isRisk ? styles.analysisRisk : styles.analysisEstimate}>{label}</span>;
 };
 
-export const HistoryTable = ({ rows }: HistoryTableProps) => {
+export const HistoryTable = ({ rows, onDelete }: HistoryTableProps) => {
   const router = useRouter();
   return (
     <div className={styles.card}>
@@ -90,7 +91,29 @@ export const HistoryTable = ({ rows }: HistoryTableProps) => {
                 <RiskBadge risk={row.risk} />
               </td>
               <td className={styles.tdAction}>
-                <CaretDownSmIcon width={14} height={14} style={{ transform: 'rotate(-90deg)' }} />
+                {row.analysisType === '가견적서 생성' && onDelete ? (
+                  <button
+                    type="button"
+                    aria-label="삭제"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDelete(row.id);
+                    }}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: '4px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      color: '#9CA3AF',
+                    }}
+                  >
+                    ✕
+                  </button>
+                ) : (
+                  <CaretDownSmIcon width={14} height={14} style={{ transform: 'rotate(-90deg)' }} />
+                )}
               </td>
             </tr>
           ))}
