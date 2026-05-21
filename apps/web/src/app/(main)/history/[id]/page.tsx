@@ -1,30 +1,59 @@
+'use client';
+
 import { ArrowLeftMdIcon } from '@muneo/design-system';
-import { notFound } from 'next/navigation';
+import { notFound , useRouter } from 'next/navigation';
+import { use, useEffect, useState } from 'react';
+import { getEstimates, getRiskDetections, type EstimateItem, type RiskItem } from '@/api/history';
 import { TransitionLink } from '@/components/TransitionLink';
-import { DiagnosisDetailView } from '../_components/DiagnosisDetailView/DiagnosisDetailView';
+import { useAuthStore } from '@/store/authStore';
 import { EstimateDetailView } from '../_components/EstimateDetailView/EstimateDetailView';
-import { MOCK_DIAGNOSIS_DETAILS, MOCK_ESTIMATE_DETAILS } from '../_mocks/history-detail.mock';
-import { MOCK_HISTORY_ROWS } from '../_mocks/history.mock';
 import * as styles from './page.css';
 
-export default async function HistoryDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id: idStr } = await params;
-  const id = parseInt(idStr, 10);
-  const row = MOCK_HISTORY_ROWS.find((r) => r.id === id);
+type PageState =
+  | { kind: 'loading' }
+  | { kind: 'estimate'; item: EstimateItem }
+  | { kind: 'risk'; item: RiskItem }
+  | { kind: 'not-found' };
 
-  if (!row) {
-    notFound();
-  }
+export default function HistoryDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
+  const { user } = useAuthStore();
+  const router = useRouter();
+  const [state, setState] = useState<PageState>({ kind: 'loading' });
 
-  const diagnosisDetail = MOCK_DIAGNOSIS_DETAILS[id];
-  const estimateDetail = MOCK_ESTIMATE_DETAILS[id];
+  useEffect(() => {
+    if (!user) {
+      router.replace('/login');
+      return;
+    }
 
-  if (row.analysisType === '리스크 진단' && !diagnosisDetail) {
-    notFound();
-  }
-  if (row.analysisType !== '리스크 진단' && !estimateDetail) {
-    notFound();
-  }
+    let mounted = true;
+
+    Promise.all([getEstimates(user.id), getRiskDetections(user.id)])
+      .then(([estimates, risks]) => {
+        if (!mounted) {return;}
+        const estimate = estimates.find((e) => e.id === id);
+        if (estimate) {
+          setState({ kind: 'estimate', item: estimate });
+          return;
+        }
+        const risk = risks.find((r) => r.id === id);
+        if (risk) {
+          setState({ kind: 'risk', item: risk });
+          return;
+        }
+        setState({ kind: 'not-found' });
+      })
+      .catch(() => {
+        if (mounted) {setState({ kind: 'not-found' });}
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, [id, user, router]);
+
+  if (state.kind === 'not-found') {return notFound();}
 
   return (
     <div className={styles.page}>
@@ -33,12 +62,51 @@ export default async function HistoryDetailPage({ params }: { params: Promise<{ 
           <ArrowLeftMdIcon width={16} height={16} />
           분석 이력
         </TransitionLink>
+
         <div className={styles.content}>
-          {row.analysisType === '리스크 진단' ? (
-            <DiagnosisDetailView result={diagnosisDetail!} />
-          ) : (
-            <EstimateDetailView data={estimateDetail!} />
+          {state.kind === 'loading' && (
+            <div className={styles.loadingWrap}>
+              <p className={styles.loadingText}>불러오는 중...</p>
+            </div>
           )}
+          {state.kind === 'risk' && (
+            <div>
+              <h1 style={{ fontSize: '30px', fontWeight: 700, marginBottom: '8px' }}>리스크 진단 결과</h1>
+              <p style={{ color: '#6B7280', marginBottom: '24px' }}>
+                {state.item.input.companyName} · {state.item.input.spaceType} {state.item.input.pyeong}평
+              </p>
+              <div
+                style={{
+                  background: '#fff',
+                  border: '1px solid #E5E7EB',
+                  borderRadius: '12px',
+                  padding: '24px',
+                  display: 'flex',
+                  gap: '32px',
+                }}
+              >
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '28px', fontWeight: 700, color: '#EF4444' }}>
+                    {state.item.result.report.summary.chips.누락}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#6B7280', marginTop: '4px' }}>누락</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '28px', fontWeight: 700, color: '#F59E0B' }}>
+                    {state.item.result.report.summary.chips.중복}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#6B7280', marginTop: '4px' }}>중복</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '28px', fontWeight: 700, color: '#3B82F6' }}>
+                    {state.item.result.report.summary.chips.불분명}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#6B7280', marginTop: '4px' }}>불분명</div>
+                </div>
+              </div>
+            </div>
+          )}
+          {state.kind === 'estimate' && <EstimateDetailView item={state.item} />}
         </div>
       </div>
     </div>
