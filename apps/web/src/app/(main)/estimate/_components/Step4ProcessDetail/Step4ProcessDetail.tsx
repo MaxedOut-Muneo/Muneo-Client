@@ -7,20 +7,34 @@ import {
   BASIC_PROCESSES,
   CARPENTRY_EXTRAS,
   DEMOLITION_ITEMS,
+  FILM_AREAS,
+  FILM_GRADES,
+  FRONT_DOOR_FILMS,
+  FURNITURE_ITEMS,
+  MAKE_METHODS,
   OPTIONAL_PROCESSES,
   PAINTING_AREAS,
+  SASH_AREAS,
+  SASH_MIDDLE_DOOR_TYPES,
   SANITARY_WARES,
+  SHOE_CABINET_STYLES,
+  SURFACE_MATERIALS,
   TILE_LOCATIONS,
   WALLPAPER_ROOMS,
+  WARDROBE_SIZES,
+  WARDROBE_STYLES,
   type BathroomDetail,
   type CarpentryDetail,
   type DemolitionDetail,
   type ElectricalDetail,
+  type FilmDetail,
   type FinishingDetail,
   type FlooringDetail,
+  type FurnitureDetail,
   type KitchenDetail,
   type PaintingDetail,
   type PlumbingDetail,
+  type SashDetail,
   type TileDetail,
   type WallpaperDetail,
 } from '../../_types';
@@ -1015,6 +1029,306 @@ const FinishingSection = ({ data, onChange }: ProcessSectionProps<FinishingDetai
   );
 };
 
+// ─────────── 12. 창호 ───────────
+const SashSection = ({ data, onChange }: ProcessSectionProps<SashDetail>) => {
+  return (
+    <div className={styles.sectionBody}>
+      <Field label="교체 범위">
+        <div className={styles.buttonRow}>
+          {SASH_AREAS.map((area) => (
+            <SelectButton
+              key={area}
+              selected={(data.replacementAreas ?? []).includes(area)}
+              onClick={() => onChange({ replacementAreas: toggleItem(data.replacementAreas ?? [], area) })}
+            >
+              {area}
+            </SelectButton>
+          ))}
+        </div>
+      </Field>
+
+      <Field label="창호 종류">
+        <div className={styles.buttonRow}>
+          {(['이중창', '삼중창', '시스템창'] as const).map((opt) => (
+            <SelectButton key={opt} selected={data.windowType === opt} onClick={() => onChange({ windowType: opt })}>
+              {opt}
+            </SelectButton>
+          ))}
+        </div>
+      </Field>
+
+      <Field label="프레임 재질">
+        <div className={styles.buttonRow}>
+          {(['PVC', '알루미늄', '하이브리드(복합)'] as const).map((opt) => (
+            <SelectButton key={opt} selected={data.frameType === opt} onClick={() => onChange({ frameType: opt })}>
+              {opt}
+            </SelectButton>
+          ))}
+        </div>
+      </Field>
+
+      <Field label="유리 사양">
+        <div className={styles.buttonRow}>
+          {(['일반 복층유리', '로이(Low-E) 복층유리', '삼중유리'] as const).map((opt) => (
+            <SelectButton key={opt} selected={data.glassSpec === opt} onClick={() => onChange({ glassSpec: opt })}>
+              {opt}
+            </SelectButton>
+          ))}
+        </div>
+      </Field>
+
+      <Field label="방문 교체">
+        <div className={styles.buttonRow}>
+          {(['포함', '미포함'] as const).map((opt) => (
+            <SelectButton
+              key={opt}
+              selected={data.doorReplacement === opt}
+              onClick={() => onChange({ doorReplacement: opt })}
+            >
+              {opt}
+            </SelectButton>
+          ))}
+        </div>
+      </Field>
+
+      {data.doorReplacement === '포함' && (
+        <Field label="방문 개수" conditional>
+          <div className={styles.numberInput}>
+            <input
+              type="number"
+              min={1}
+              max={8}
+              className={styles.numberInputField}
+              value={data.doorCount ?? 1}
+              onChange={(e) => onChange({ doorCount: Number(e.target.value) || 1 })}
+            />
+            <span className={styles.numberInputUnit}>개</span>
+          </div>
+        </Field>
+      )}
+
+      <Field label="중문 설치">
+        <div className={styles.buttonRow}>
+          {(['있음', '없음'] as const).map((opt) => (
+            <SelectButton
+              key={opt}
+              selected={data.middleDoorInstall === opt}
+              onClick={() => onChange({ middleDoorInstall: opt })}
+            >
+              {opt}
+            </SelectButton>
+          ))}
+        </div>
+      </Field>
+
+      {data.middleDoorInstall === '있음' && (
+        <Field label="중문 타입" conditional>
+          <div className={styles.buttonRow}>
+            {SASH_MIDDLE_DOOR_TYPES.map((opt) => (
+              <SelectButton
+                key={opt}
+                selected={data.middleDoorType === opt}
+                onClick={() => onChange({ middleDoorType: opt })}
+              >
+                {opt}
+              </SelectButton>
+            ))}
+          </div>
+        </Field>
+      )}
+
+      <p className={styles.infoNote}>
+        창호는 외부 사다리차/크레인 작업이 필요할 수 있으며, 고층의 경우 양중비가 별도 발생합니다. 삼중창은 이중창 대비
+        약 40~60% 비쌉니다.
+      </p>
+    </div>
+  );
+};
+
+// ─────────── 13. 필름 ───────────
+const FilmSection = ({ data, onChange }: ProcessSectionProps<FilmDetail>) => {
+  const filmAreas = data.filmAreas ?? [];
+  return (
+    <div className={styles.sectionBody}>
+      <Field label="시공 부위">
+        <div className={styles.buttonRow}>
+          {FILM_AREAS.map((area) => (
+            <SelectButton
+              key={area}
+              selected={filmAreas.includes(area)}
+              onClick={() => onChange({ filmAreas: toggleItem(filmAreas, area) })}
+            >
+              {area}
+            </SelectButton>
+          ))}
+        </div>
+      </Field>
+
+      {filmAreas.includes('도어(방문)') && (
+        <Field label="도어 개수" conditional>
+          <div className={styles.numberInput}>
+            <input
+              type="number"
+              min={1}
+              max={8}
+              className={styles.numberInputField}
+              value={data.doorCount ?? 1}
+              onChange={(e) => onChange({ doorCount: Number(e.target.value) || 1 })}
+            />
+            <span className={styles.numberInputUnit}>개</span>
+          </div>
+        </Field>
+      )}
+
+      <Field label="필름 등급">
+        <div className={styles.buttonRow}>
+          {FILM_GRADES.map((opt) => (
+            <SelectButton key={opt} selected={data.filmGrade === opt} onClick={() => onChange({ filmGrade: opt })}>
+              {opt}
+            </SelectButton>
+          ))}
+        </div>
+      </Field>
+
+      {filmAreas.includes('현관문') && (
+        <Field label="현관문 리폼 범위" conditional>
+          <div className={styles.buttonRow}>
+            {FRONT_DOOR_FILMS.map((opt) => (
+              <SelectButton
+                key={opt}
+                selected={data.frontDoorFilm === opt}
+                onClick={() => onChange({ frontDoorFilm: opt })}
+              >
+                {opt}
+              </SelectButton>
+            ))}
+          </div>
+        </Field>
+      )}
+
+      <p className={styles.infoNote}>
+        필름은 기존 자재를 교체하지 않고 표면만 시공하는 방식으로, 도어·문틀 교체 대비 비용이 저렴합니다. 고급 필름(3M
+        등)은 일반 대비 약 2배입니다.
+      </p>
+    </div>
+  );
+};
+
+// ─────────── 14. 가구 ───────────
+const FurnitureSection = ({ data, onChange }: ProcessSectionProps<FurnitureDetail>) => {
+  const furnitureItems = data.furnitureItems ?? [];
+  const hasWardrobe = furnitureItems.includes('붙박이장');
+  const hasShoe = furnitureItems.includes('신발장');
+  return (
+    <div className={styles.sectionBody}>
+      <Field label="시공 항목">
+        <div className={styles.buttonRow}>
+          {FURNITURE_ITEMS.map((item) => (
+            <SelectButton
+              key={item}
+              selected={furnitureItems.includes(item)}
+              onClick={() => onChange({ furnitureItems: toggleItem(furnitureItems, item) })}
+            >
+              {item}
+            </SelectButton>
+          ))}
+        </div>
+      </Field>
+
+      {hasWardrobe && (
+        <>
+          <Field label="붙박이장 개수" conditional>
+            <div className={styles.numberInput}>
+              <input
+                type="number"
+                min={1}
+                max={3}
+                className={styles.numberInputField}
+                value={data.wardrobeCount ?? 1}
+                onChange={(e) => onChange({ wardrobeCount: Number(e.target.value) || 1 })}
+              />
+              <span className={styles.numberInputUnit}>개</span>
+            </div>
+          </Field>
+
+          <Field label="붙박이장 형태" conditional>
+            <div className={styles.buttonRow}>
+              {WARDROBE_STYLES.map((opt) => (
+                <SelectButton
+                  key={opt}
+                  selected={data.wardrobeStyle === opt}
+                  onClick={() => onChange({ wardrobeStyle: opt })}
+                >
+                  {opt}
+                </SelectButton>
+              ))}
+            </div>
+          </Field>
+
+          <Field label="붙박이장 크기" conditional>
+            <div className={styles.buttonRow}>
+              {WARDROBE_SIZES.map((opt) => (
+                <SelectButton
+                  key={opt}
+                  selected={data.wardrobeSize === opt}
+                  onClick={() => onChange({ wardrobeSize: opt })}
+                >
+                  {opt}
+                </SelectButton>
+              ))}
+            </div>
+          </Field>
+        </>
+      )}
+
+      {hasShoe && (
+        <Field label="신발장 형태" conditional>
+          <div className={styles.buttonRow}>
+            {SHOE_CABINET_STYLES.map((opt) => (
+              <SelectButton
+                key={opt}
+                selected={data.shoeCabinetStyle === opt}
+                onClick={() => onChange({ shoeCabinetStyle: opt })}
+              >
+                {opt}
+              </SelectButton>
+            ))}
+          </div>
+        </Field>
+      )}
+
+      <Field label="제작 방식">
+        <div className={styles.buttonRow}>
+          {MAKE_METHODS.map((opt) => (
+            <SelectButton key={opt} selected={data.makeMethod === opt} onClick={() => onChange({ makeMethod: opt })}>
+              {opt}
+            </SelectButton>
+          ))}
+        </div>
+      </Field>
+
+      <Field label="마감재">
+        <div className={styles.buttonRow}>
+          {SURFACE_MATERIALS.map((opt) => (
+            <SelectButton
+              key={opt}
+              selected={data.surfaceMaterial === opt}
+              onClick={() => onChange({ surfaceMaterial: opt })}
+            >
+              {opt}
+            </SelectButton>
+          ))}
+        </div>
+      </Field>
+
+      <p className={styles.infoNote}>
+        가구는 디자인·브랜드에 따라 편차가 매우 큽니다. 위 범위는 사제(일반) 기준이며, 브랜드 제품은 2~3배 차이가 날 수
+        있습니다.
+      </p>
+    </div>
+  );
+};
+
 // ─────────── 섹션 라우팅 맵 ───────────
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const SECTION_MAP: Record<string, React.ComponentType<ProcessSectionProps<any>>> = {
@@ -1029,6 +1343,9 @@ const SECTION_MAP: Record<string, React.ComponentType<ProcessSectionProps<any>>>
   kitchen: KitchenSection,
   painting: PaintingSection,
   finishing: FinishingSection,
+  sash: SashSection,
+  film: FilmSection,
+  furniture: FurnitureSection,
 };
 
 // ─────────── 메인 컴포넌트 ───────────
