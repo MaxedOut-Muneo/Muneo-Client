@@ -38,6 +38,7 @@ import {
   type TileDetail,
   type WallpaperDetail,
 } from '../../_types';
+import { ChatHint } from '../ChatHint/ChatHint';
 import { StepActions } from '../StepActions/StepActions';
 import * as styles from './Step4ProcessDetail.css';
 
@@ -109,6 +110,7 @@ const DemolitionSection = ({ data, onChange }: ProcessSectionProps<DemolitionDet
             </SelectButton>
           ))}
         </div>
+        <ChatHint visible={data.wasteDisposal === '모름'} message="철거 폐기물 처리는 업체 포함이 일반적인가요?" />
       </Field>
     </div>
   );
@@ -132,6 +134,7 @@ const PlumbingSection = ({ data, onChange }: ProcessSectionProps<PlumbingDetail>
             </SelectButton>
           ))}
         </div>
+        <ChatHint visible={data.waterproofNeed === '모름'} message="욕실 방수 재시공이 필요한지 어떻게 판단하나요?" />
       </Field>
 
       {data.waterproofNeed === '필요' && (
@@ -206,6 +209,7 @@ const PlumbingSection = ({ data, onChange }: ProcessSectionProps<PlumbingDetail>
             </SelectButton>
           ))}
         </div>
+        <ChatHint visible={data.boilerReplacement === '모름'} message="보일러 교체가 필요한지 어떻게 알 수 있나요?" />
       </Field>
 
       <p className={styles.infoNote}>
@@ -305,6 +309,10 @@ const ElectricalSection = ({ data, onChange }: ProcessSectionProps<ElectricalDet
             </SelectButton>
           ))}
         </div>
+        <ChatHint
+          visible={data.breakerReplacement === '모름'}
+          message="분전반 교체가 필요한지 판단 기준을 알고 싶어요"
+        />
       </Field>
 
       <Field label="감지기 교체">
@@ -492,6 +500,7 @@ const WallpaperSection = ({ data, onChange }: ProcessSectionProps<WallpaperDetai
             </SelectButton>
           ))}
         </div>
+        <ChatHint visible={data.underpaperWork === '모름'} message="도배 전 초배 작업이 필요한 경우는 언제인가요?" />
       </Field>
 
       <Field label="곰팡이·벽면 보수">
@@ -502,6 +511,10 @@ const WallpaperSection = ({ data, onChange }: ProcessSectionProps<WallpaperDetai
             </SelectButton>
           ))}
         </div>
+        <ChatHint
+          visible={data.moldRepair === '모름'}
+          message="도배 전 곰팡이나 벽면 보수가 필요한지 어떻게 확인하나요?"
+        />
       </Field>
 
       <p className={styles.infoNote}>
@@ -569,6 +582,10 @@ const FlooringSection = ({ data, onChange }: ProcessSectionProps<FlooringDetail>
             </SelectButton>
           ))}
         </div>
+        <ChatHint
+          visible={data.floorDemolition === '모름'}
+          message="기존 바닥을 철거해야 하는 상황은 어떤 경우인가요?"
+        />
       </Field>
 
       <Field label="바닥 평탄화(샌딩)">
@@ -583,6 +600,10 @@ const FlooringSection = ({ data, onChange }: ProcessSectionProps<FlooringDetail>
             </SelectButton>
           ))}
         </div>
+        <ChatHint
+          visible={data.floorSanding === '모름'}
+          message="바닥 평탄화(샌딩) 작업이 필요한지 어떻게 판단하나요?"
+        />
       </Field>
 
       <Field label="시공 패턴">
@@ -1008,6 +1029,7 @@ const FinishingSection = ({ data, onChange }: ProcessSectionProps<FinishingDetai
             </SelectButton>
           ))}
         </div>
+        <ChatHint visible={data.finishingWaste === '모름'} message="철거 폐기물 처리는 업체 포함이 일반적인가요?" />
       </Field>
 
       <Field label="실리콘 마감">
