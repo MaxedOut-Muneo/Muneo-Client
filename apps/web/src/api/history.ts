@@ -1,9 +1,11 @@
+import { type EstimateGenerateResponse } from '@/app/(main)/estimate/_types/api';
 import { client } from './client';
 
 interface EstimateInput {
   공종: string[];
   공간유형: string;
   평수: number;
+  지역?: string;
   [key: string]: unknown;
 }
 
@@ -30,7 +32,7 @@ export interface EstimateItem {
   user_id: string;
   created_at: string;
   input: EstimateInput;
-  result: unknown;
+  result: EstimateGenerateResponse;
 }
 
 export interface RiskItem {
