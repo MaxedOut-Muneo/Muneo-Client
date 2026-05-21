@@ -40,25 +40,15 @@ const HomePage = () => {
           analysisType: '가견적서 생성',
           constructionType: `${item.input.공간유형} ${item.input.평수}평 (${item.input.공종.join(', ')})`,
           vendor: null,
-          risk: { type: 'none' as const },
         }));
 
-        const riskRows: HistoryRow[] = risks.map((item) => {
-          const { total_risk_items: totalRiskItems, chips } = item.result.report.summary;
-          const risk: HistoryRow['risk'] =
-            totalRiskItems === 0
-              ? { type: 'safe', label: '이상 없음' }
-              : { type: 'danger', label: chips.누락 > 0 ? `누락 ${chips.누락}건` : `위험 ${totalRiskItems}건` };
-
-          return {
-            id: item.id,
-            date: toDate(item.created_at),
-            analysisType: '리스크 진단',
-            constructionType: `${item.input.spaceType} ${item.input.pyeong}평`,
-            vendor: item.input.companyName,
-            risk,
-          };
-        });
+        const riskRows: HistoryRow[] = risks.map((item) => ({
+          id: item.id,
+          date: toDate(item.created_at),
+          analysisType: '리스크 진단',
+          constructionType: `${item.input.spaceType} ${item.input.pyeong}평`,
+          vendor: item.input.companyName,
+        }));
 
         const allRows = [...estimateRows, ...riskRows].sort((a, b) => b.date.localeCompare(a.date));
         const riskCount = risks.filter((r) => r.result.report.summary.total_risk_items > 0).length;
