@@ -2,6 +2,7 @@
 
 import { DellSquareIcon, DoneRingRoundFillIcon, SadIcon, vars } from '@muneo/design-system';
 import { useEffect, useState } from 'react';
+import { deleteEstimate } from '@/api/estimate';
 import { getEstimates, getRiskDetections } from '@/api/history';
 import { useAuthStore } from '@/store/authStore';
 import { HistoryTable } from './_components/HistoryTable/HistoryTable';
@@ -78,6 +79,19 @@ const HomePage = () => {
     };
   }, [user]);
 
+  const handleDeleteEstimate = async (id: string) => {
+    if (!user) {
+      return;
+    }
+    try {
+      await deleteEstimate(id, user.id);
+      setRows((prev) => prev.filter((r) => r.id !== id));
+      setStats((prev) => ({ ...prev, estimateCount: Math.max(0, prev.estimateCount - 1) }));
+    } catch (err) {
+      console.error('가견적서 삭제 실패:', err);
+    }
+  };
+
   const SUMMARY_CARDS = [
     {
       icon: <DellSquareIcon width={22} height={22} style={{ color: vars.color.brand.secondary }} />,
@@ -113,7 +127,7 @@ const HomePage = () => {
           ))}
         </div>
 
-        <HistoryTable rows={rows} />
+        <HistoryTable rows={rows} onDelete={handleDeleteEstimate} />
       </div>
     </div>
   );
