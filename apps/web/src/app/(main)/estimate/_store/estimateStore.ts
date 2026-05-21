@@ -10,6 +10,7 @@ import {
   type Step3Data,
   type Step4Data,
 } from '../_types';
+import { type EstimateGenerateResponse } from '../_types/api';
 
 const initialStep1: Step1Data = {
   region: null,
@@ -43,6 +44,10 @@ interface EstimateStore {
   step2: Step2Data;
   step3: Step3Data;
   step4: Step4Data;
+  isGenerating: boolean;
+  generateError: string | null;
+  estimateResult: EstimateGenerateResponse | null;
+  savedEstimateId: string | null;
   goToStep: (step: EstimateStep) => void;
   nextStep: () => void;
   prevStep: () => void;
@@ -51,6 +56,9 @@ interface EstimateStore {
   setStep3: (data: Partial<Step3Data>) => void;
   setStep4: <K extends keyof Step4Data>(processId: K, data: Partial<NonNullable<Step4Data[K]>>) => void;
   toggleProcess: (processId: ProcessId) => void;
+  setGeneratingState: (isGenerating: boolean, error?: string | null) => void;
+  setEstimateResult: (result: EstimateGenerateResponse | null) => void;
+  setSavedEstimateId: (id: string | null) => void;
   reset: () => void;
 }
 
@@ -60,6 +68,10 @@ export const useEstimateStore = create<EstimateStore>((set, get) => ({
   step2: initialStep2,
   step3: initialStep3,
   step4: initialStep4,
+  isGenerating: false,
+  generateError: null,
+  estimateResult: null,
+  savedEstimateId: null,
 
   goToStep: (step) => set({ currentStep: step }),
 
@@ -100,6 +112,12 @@ export const useEstimateStore = create<EstimateStore>((set, get) => ({
       return { step2: { ...state.step2, selectedProcesses: next } };
     }),
 
+  setGeneratingState: (isGenerating, error = null) => set({ isGenerating, generateError: error }),
+
+  setEstimateResult: (result) => set({ estimateResult: result }),
+
+  setSavedEstimateId: (id) => set({ savedEstimateId: id }),
+
   reset: () =>
     set({
       currentStep: MIN_STEP,
@@ -107,5 +125,9 @@ export const useEstimateStore = create<EstimateStore>((set, get) => ({
       step2: initialStep2,
       step3: initialStep3,
       step4: initialStep4,
+      isGenerating: false,
+      generateError: null,
+      estimateResult: null,
+      savedEstimateId: null,
     }),
 }));
