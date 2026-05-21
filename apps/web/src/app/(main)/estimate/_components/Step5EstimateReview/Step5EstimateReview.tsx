@@ -2,52 +2,42 @@
 
 import { ArrowLeftMdIcon, Button, CaretDownSmIcon } from '@muneo/design-system';
 import { useState } from 'react';
+import { saveEstimate } from '@/api/estimate';
+import { useAuthStore } from '@/store/authStore';
 import { useEstimateStore } from '../../_store/estimateStore';
-import { type ProcessId } from '../../_types';
+import { type EstimateGenerateResponse, type EstimateLineItem } from '../../_types/api';
+import { mapToApiPayload } from '../../_utils/mapToApiPayload';
 import * as styles from './Step5EstimateReview.css';
 
-interface EstimateItem {
+const formatWon = (amount: number): string => {
+  const man = Math.round(amount / 10000);
+  return `${man.toLocaleString('ko-KR')}만원`;
+};
+
+const formatRange = (min: number, max: number): string => `${formatWon(min)} ~ ${formatWon(max)}`;
+
+// ─────────── 아코디언 아이템 ───────────
+
+interface DisplayItem {
   name: string;
   range: string;
   refCount: number;
 }
 
-interface ProcessEstimate {
-  id: ProcessId;
-  name: string;
+interface ProcessEstimateDisplay {
+  processName: string;
   totalRange: string;
-  items: EstimateItem[];
-  footnote?: string;
+  items: DisplayItem[];
 }
 
-const MOCK_ESTIMATES: ProcessEstimate[] = [
-  {
-    id: 'demolition',
-    name: '철거',
-    totalRange: '150만 ~ 220만원',
-    items: [
-      { name: '일반 철거 (몰딩/걸레받이/도어/문틀)', range: '80만 ~ 120만', refCount: 11 },
-      { name: '마루 철거 및 샌딩', range: '30만 ~ 50만', refCount: 4 },
-      { name: '폐기물 처리', range: '20만 ~ 35만', refCount: 10 },
-    ],
-    footnote: '32평 전체 철거 기준, 건물연식 20년 이상 할증 반영',
-  },
-  { id: 'wallpaper', name: '도배', totalRange: '150만 ~ 220만원', items: [] },
-  { id: 'bathroom', name: '욕실', totalRange: '150만 ~ 220만원', items: [] },
-  { id: 'kitchen', name: '주방', totalRange: '150만 ~ 220만원', items: [] },
-  { id: 'carpentry', name: '목공', totalRange: '150만 ~ 220만원', items: [] },
-  { id: 'furniture', name: '가구', totalRange: '150만 ~ 220만원', items: [] },
-];
+const buildDisplayItems = (lineItems: EstimateLineItem[]): DisplayItem[] =>
+  lineItems.map((item) => ({
+    name: item.description,
+    range: formatRange(item.amount_range.최소, item.amount_range.최대),
+    refCount: item.등장_사례_수,
+  }));
 
-const MOCK_PROCESS_TOTALS = [
-  { name: '철거', range: '150만 ~ 220만' },
-  { name: '도배', range: '150만 ~ 220만' },
-  { name: '바닥', range: '150만 ~ 220만' },
-  { name: '욕실', range: '150만 ~ 220만' },
-  { name: '설비', range: '150만 ~ 220만' },
-];
-
-const AccordionItem = ({ estimate }: { estimate: ProcessEstimate }) => {
+const AccordionItem = ({ estimate }: { estimate: ProcessEstimateDisplay }) => {
   const [isOpen, setIsOpen] = useState(estimate.items.length > 0);
 
   return (
@@ -57,7 +47,7 @@ const AccordionItem = ({ estimate }: { estimate: ProcessEstimate }) => {
           <span className={`${styles.accordionArrow}${isOpen ? ` ${styles.accordionArrowOpen}` : ''}`}>
             <CaretDownSmIcon width={24} height={24} />
           </span>
-          <span className={styles.accordionTitle}>{estimate.name} 공사</span>
+          <span className={styles.accordionTitle}>{estimate.processName} 공사</span>
         </div>
         <span className={styles.accordionAmount}>{estimate.totalRange}</span>
       </button>
@@ -84,13 +74,6 @@ const AccordionItem = ({ estimate }: { estimate: ProcessEstimate }) => {
                 <div className={styles.accordionItemDivider} />
               </div>
             ))}
-
-            {estimate.footnote && (
-              <div className={styles.footnotes}>
-                <span className={styles.footnoteGray}>ⓘ {estimate.footnote}</span>
-                <span className={styles.footnoteOrange}>⚠ 일부 항목 참조 5건 미만 — 범위가 넓을 수 있음</span>
-              </div>
-            )}
           </div>
         ) : (
           <p className={styles.emptyNote}>상세 항목 준비 중입니다.</p>
@@ -102,21 +85,37 @@ const AccordionItem = ({ estimate }: { estimate: ProcessEstimate }) => {
 
 // ─────────── 총 견적 배너 ───────────
 
-const TotalBanner = () => {
+interface TotalBannerProps {
+  result: EstimateGenerateResponse;
+}
+
+const TotalBanner = ({ result }: TotalBannerProps) => {
+  const { 최소, 최대 } = result.총_견적_범위;
   return (
     <div className={styles.totalBanner}>
       <div className={styles.bannerLeft}>
         <span className={styles.bannerSubtitle}>총 예상 견적 범위 (부가세 별도)</span>
-        <span className={styles.bannerAmount}>2,680만원 ~ 3,890만원</span>
+        <span className={styles.bannerAmount}>{formatRange(최소, 최대)}</span>
       </div>
-      <span className={styles.bannerRef}>12건 참고</span>
+      <span className={styles.bannerRef}>{result.참고_사례_수}건 참고</span>
     </div>
   );
 };
 
 // ─────────── 공정별 합산 테이블 ───────────
 
-const ProcessTotalTable = () => {
+interface ProcessTotalTableProps {
+  result: EstimateGenerateResponse;
+}
+
+const ProcessTotalTable = ({ result }: ProcessTotalTableProps) => {
+  const rows = Object.entries(result.공종별_단가_범위).map(([processName, range]) => ({
+    name: processName,
+    range: formatRange(range.최소, range.최대),
+  }));
+
+  const { 최소, 최대 } = result.총_견적_범위;
+
   return (
     <div className={styles.processTotal}>
       <span className={styles.processTotalTitle}>공정별 합산</span>
@@ -126,7 +125,7 @@ const ProcessTotalTable = () => {
             <span className={styles.tableHeaderCell}>공정</span>
             <span className={styles.tableHeaderCell}>범위</span>
           </div>
-          {MOCK_PROCESS_TOTALS.map((row) => (
+          {rows.map((row) => (
             <div key={row.name} className={styles.tableRow}>
               <div className={styles.tableRowContent}>
                 <span>{row.name}</span>
@@ -141,7 +140,7 @@ const ProcessTotalTable = () => {
           <div className={styles.totalDivider} />
           <div className={styles.totalContent}>
             <span className={styles.totalLabel}>보정 후 합계</span>
-            <span className={styles.totalValue}>2,680만 ~ 3,890만</span>
+            <span className={styles.totalValue}>{formatRange(최소, 최대)}</span>
           </div>
         </div>
       </div>
@@ -163,6 +162,8 @@ interface SummaryPanelProps {
   demolitionLabel: string;
   modeLabel: string;
   processCount: number;
+  corrections: string[];
+  result: EstimateGenerateResponse;
   onEdit: () => void;
 }
 
@@ -178,6 +179,8 @@ const SummaryPanel = ({
   demolitionLabel,
   modeLabel,
   processCount,
+  corrections,
+  result,
   onEdit,
 }: SummaryPanelProps) => {
   const rows = [
@@ -211,14 +214,16 @@ const SummaryPanel = ({
         <div className={styles.correctionBox}>
           <span className={styles.correctionTitle}>적용된 보정</span>
           <div className={styles.correctionItems}>
-            <span className={styles.correctionItem}>서울 인건비 보정 +12%</span>
-            <span className={styles.correctionItem}>건물연식 20년 이상 +15%</span>
-            <span className={styles.correctionItem}>자재등급 중급 (기본값)</span>
+            {corrections.map((c) => (
+              <span key={c} className={styles.correctionItem}>
+                {c}
+              </span>
+            ))}
           </div>
         </div>
       </div>
 
-      <ProcessTotalTable />
+      <ProcessTotalTable result={result} />
     </div>
   );
 };
@@ -226,10 +231,14 @@ const SummaryPanel = ({
 // ─────────── 면책 & 액션 섹션 ───────────
 
 interface DisclaimerSectionProps {
+  isSaved: boolean;
+  isSaving: boolean;
+  saveError: string | null;
   onEdit: () => void;
+  onSave: () => void;
 }
 
-const DisclaimerSection = ({ onEdit }: DisclaimerSectionProps) => {
+const DisclaimerSection = ({ isSaved, isSaving, saveError, onEdit, onSave }: DisclaimerSectionProps) => {
   return (
     <div className={styles.disclaimerSection}>
       <div className={styles.disclaimerBox}>
@@ -242,6 +251,8 @@ const DisclaimerSection = ({ onEdit }: DisclaimerSectionProps) => {
         <span className={styles.infoText}>ⓘ 해당 가견적을 업체 견적서와 비교하여 항목별 금액 적정성을 판단하세요.</span>
       </div>
 
+      {saveError && <p style={{ color: '#EF4444', fontSize: '13px', marginBottom: '8px' }}>{saveError}</p>}
+
       <div className={styles.actionRow}>
         <Button variant="outlineSecondary" size="md" onClick={onEdit}>
           <ArrowLeftMdIcon width={20} height={20} />
@@ -249,6 +260,9 @@ const DisclaimerSection = ({ onEdit }: DisclaimerSectionProps) => {
         </Button>
         <Button variant="outline" size="md" style={{ color: '#6B7280', borderRadius: '12px' }}>
           PDF 다운로드
+        </Button>
+        <Button variant="primary" size="md" onClick={onSave} disabled={isSaved || isSaving}>
+          {isSaved ? '저장됨 ✓' : isSaving ? '저장 중...' : '저장하기'}
         </Button>
       </div>
     </div>
@@ -258,7 +272,15 @@ const DisclaimerSection = ({ onEdit }: DisclaimerSectionProps) => {
 // ─────────── 메인: 가 견적 결과 ───────────
 
 export const EstimateResult = () => {
-  const { step1, step2, step3, goToStep } = useEstimateStore();
+  const { step1, step2, step3, step4, estimateResult, savedEstimateId, setSavedEstimateId, goToStep } =
+    useEstimateStore();
+  const { user } = useAuthStore();
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+
+  if (!estimateResult) {
+    return null;
+  }
 
   const regionLabel = step1.region ?? '-';
   const spaceLabel = step1.spaceType ?? '-';
@@ -271,7 +293,33 @@ export const EstimateResult = () => {
   const processCount = step2.selectedProcesses.length;
   const modeLabel = step2.mode === 'full' ? '전체 리모델링' : '부분 시공';
   const demolitionLabel = step2.selectedProcesses.includes('demolition') ? '있음' : '없음';
-  const filteredEstimates = MOCK_ESTIMATES.filter((e) => step2.selectedProcesses.includes(e.id));
+
+  const accordionItems: ProcessEstimateDisplay[] = estimateResult.선택_공종.map((processName) => {
+    const rangeData = estimateResult.공종별_단가_범위[processName];
+    const lineItems = estimateResult.공종별_항목_명세[processName] ?? [];
+    return {
+      processName,
+      totalRange: rangeData ? formatRange(rangeData.최소, rangeData.최대) : '-',
+      items: buildDisplayItems(lineItems),
+    };
+  });
+
+  const handleSave = async () => {
+    if (!user) {
+      return;
+    }
+    setIsSaving(true);
+    setSaveError(null);
+    try {
+      const payload = mapToApiPayload(step1, step2, step3, step4);
+      const { id } = await saveEstimate({ input: payload, result: estimateResult }, user.id);
+      setSavedEstimateId(id);
+    } catch {
+      setSaveError('저장에 실패했습니다. 다시 시도해 주세요.');
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -288,22 +336,30 @@ export const EstimateResult = () => {
           demolitionLabel={demolitionLabel}
           modeLabel={modeLabel}
           processCount={processCount}
+          corrections={estimateResult.보정_적용}
+          result={estimateResult}
           onEdit={() => goToStep(1)}
         />
 
         <div className={styles.rightPanel}>
-          <TotalBanner />
+          <TotalBanner result={estimateResult} />
 
           <div className={styles.detailSection}>
             <span className={styles.detailTitle}>공정별 세부 견적</span>
             <div className={styles.accordionList}>
-              {filteredEstimates.map((estimate) => (
-                <AccordionItem key={estimate.id} estimate={estimate} />
+              {accordionItems.map((estimate) => (
+                <AccordionItem key={estimate.processName} estimate={estimate} />
               ))}
             </div>
           </div>
 
-          <DisclaimerSection onEdit={() => goToStep(4)} />
+          <DisclaimerSection
+            isSaved={savedEstimateId !== null}
+            isSaving={isSaving}
+            saveError={saveError}
+            onEdit={() => goToStep(4)}
+            onSave={handleSave}
+          />
         </div>
       </div>
     </div>
