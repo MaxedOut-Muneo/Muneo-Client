@@ -1,6 +1,7 @@
 'use client';
 
 import { ArrowLeftMdIcon, Button, CaretDownSmIcon } from '@muneo/design-system';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { saveEstimate } from '@/api/estimate';
 import { useAuthStore } from '@/store/authStore';
@@ -272,9 +273,9 @@ const DisclaimerSection = ({ isSaved, isSaving, saveError, onEdit, onSave }: Dis
 // ─────────── 메인: 가 견적 결과 ───────────
 
 export const EstimateResult = () => {
-  const { step1, step2, step3, step4, estimateResult, savedEstimateId, setSavedEstimateId, goToStep } =
-    useEstimateStore();
+  const { step1, step2, step3, step4, estimateResult, goToStep, reset } = useEstimateStore();
   const { user } = useAuthStore();
+  const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
 
@@ -312,8 +313,9 @@ export const EstimateResult = () => {
     setSaveError(null);
     try {
       const payload = mapToApiPayload(step1, step2, step3, step4);
-      const { id } = await saveEstimate({ input: payload, result: estimateResult }, user.id);
-      setSavedEstimateId(id);
+      await saveEstimate({ input: payload, result: estimateResult }, user.id);
+      reset();
+      router.push('/home');
     } catch {
       setSaveError('저장에 실패했습니다. 다시 시도해 주세요.');
     } finally {
@@ -354,7 +356,7 @@ export const EstimateResult = () => {
           </div>
 
           <DisclaimerSection
-            isSaved={savedEstimateId !== null}
+            isSaved={false}
             isSaving={isSaving}
             saveError={saveError}
             onEdit={() => goToStep(4)}
