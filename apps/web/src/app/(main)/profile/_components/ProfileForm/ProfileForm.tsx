@@ -1,7 +1,8 @@
 'use client';
 
 import { Button, KakaoIcon, TextField } from '@muneo/design-system';
-import { useState, type ChangeEvent, type ComponentType, type FormEvent, type SVGProps } from 'react';
+import { type ComponentType, type ReactNode, type SVGProps } from 'react';
+import { useProfileForm } from '../../_hooks/useProfileForm';
 import { type ProfileUser, type SocialProvider } from '../../_types/profile.types';
 import * as styles from './ProfileForm.css';
 
@@ -30,37 +31,17 @@ const SELF_FIELDS = [
 ] as const satisfies readonly FieldId[];
 const SOCIAL_FIELDS = ['name', 'birth', 'phone'] as const satisfies readonly FieldId[];
 
-type ProfileFormValues = Record<FieldId, string>;
-
-const INITIAL_VALUES: ProfileFormValues = {
-  email: '',
-  name: '',
-  birth: '',
-  phone: '',
-  password: '',
-  passwordConfirm: '',
-};
-
 interface ProfileFormProps {
   user: ProfileUser;
+  leftAction?: ReactNode;
 }
 
-export const ProfileForm = ({ user }: ProfileFormProps) => {
-  const [values, setValues] = useState<ProfileFormValues>(INITIAL_VALUES);
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = event.target;
-    setValues((prev) => ({ ...prev, [id as FieldId]: value }));
-  };
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-  };
-
+export const ProfileForm = ({ user, leftAction }: ProfileFormProps) => {
+  const { register, errors, isSubmitting, onSubmit } = useProfileForm(user);
   const visibleFields = user.signupType === 'self' ? SELF_FIELDS : SOCIAL_FIELDS;
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit} noValidate>
+    <form className={styles.form} onSubmit={onSubmit} noValidate>
       <div className={styles.fields}>
         {user.signupType === 'social' && <SocialEmailField provider={user.provider} />}
         {visibleFields.map((id) => (
@@ -70,14 +51,19 @@ export const ProfileForm = ({ user }: ProfileFormProps) => {
             label={FIELD_CONFIG[id].label}
             placeholder={FIELD_CONFIG[id].placeholder}
             type={FIELD_CONFIG[id].type}
-            value={values[id]}
-            onChange={handleChange}
+            disabled={id === 'email'}
+            error={errors[id]?.message}
+            {...register(id)}
           />
         ))}
       </div>
-      <Button type="submit" variant="gradient" className={styles.submitButton}>
-        저장하기
-      </Button>
+      {errors.root && <p className={styles.errorMessage}>{errors.root.message}</p>}
+      <div className={styles.actionsRow}>
+        <div>{leftAction}</div>
+        <Button type="submit" variant="gradient" className={styles.submitButton} disabled={isSubmitting}>
+          {isSubmitting ? '저장 중...' : '저장하기'}
+        </Button>
+      </div>
     </form>
   );
 };

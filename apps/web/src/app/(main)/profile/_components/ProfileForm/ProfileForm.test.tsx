@@ -9,6 +9,9 @@ const SELF_USER: ProfileUser = {
   initial: '김',
   name: '김민수',
   role: '일반 사용자',
+  email: 'kim@example.com',
+  phone: '010-0000-0000',
+  birth: '1990-01-01',
 };
 
 const KAKAO_USER: ProfileUser = {
@@ -17,6 +20,9 @@ const KAKAO_USER: ProfileUser = {
   initial: '김',
   name: '김민수',
   role: '일반 사용자',
+  email: 'kim@example.com',
+  phone: '010-0000-0000',
+  birth: '1990-01-01',
 };
 
 describe('ProfileForm', () => {
@@ -36,12 +42,23 @@ describe('ProfileForm', () => {
       expect(screen.queryByText('카카오 로그인')).not.toBeInTheDocument();
     });
 
+    it('user의 이메일이 초기 값으로 채워진다', () => {
+      render(<ProfileForm user={SELF_USER} />);
+      expect((screen.getByLabelText('이메일') as HTMLInputElement).value).toBe(SELF_USER.email);
+    });
+
+    it('이메일 필드는 disabled 상태이다', () => {
+      render(<ProfileForm user={SELF_USER} />);
+      expect(screen.getByLabelText('이메일')).toBeDisabled();
+    });
+
     it('입력 변경 시 value 상태가 업데이트된다', async () => {
       const user = userEvent.setup();
       render(<ProfileForm user={SELF_USER} />);
-      const emailInput = screen.getByLabelText('이메일');
-      await user.type(emailInput, 'test@email.com');
-      expect((emailInput as HTMLInputElement).value).toBe('test@email.com');
+      const nameInput = screen.getByLabelText('이름');
+      await user.clear(nameInput);
+      await user.type(nameInput, '이영희');
+      expect((nameInput as HTMLInputElement).value).toBe('이영희');
     });
   });
 
