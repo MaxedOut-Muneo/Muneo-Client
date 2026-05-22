@@ -6,12 +6,8 @@ import {
 } from '@/app/(main)/estimate/_types/api';
 import { client } from './client';
 
-export const generateEstimate = async (payload: EstimateGenerateRequest): Promise<EstimateGenerateResponse> => {
-  console.log('[generateEstimate] 요청 payload:', payload);
-  const response = await client.post('api/v1/estimates/generate', { json: payload }).json<EstimateGenerateResponse>();
-  console.log('[generateEstimate] 응답 data:', response);
-  return response;
-};
+export const generateEstimate = (payload: EstimateGenerateRequest): Promise<EstimateGenerateResponse> =>
+  client.post('api/v1/estimates/generate', { json: payload }).json<EstimateGenerateResponse>();
 
 export const saveEstimate = (payload: EstimateSaveRequest, userId: number): Promise<EstimateSaveResponse> =>
   client
