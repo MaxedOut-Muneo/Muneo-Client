@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { getKakaoLoginUrl, login } from '@/api/auth';
 import { isApiError } from '@/api/errors';
 import { loginSchema, type LoginFormValues } from '@/lib/validations/auth';
+import { useAuthStore } from '@/store/authStore';
 import { LoginModal } from '../LoginModal';
 
 interface LoginSectionProps {
@@ -18,6 +19,7 @@ interface LoginSectionProps {
 
 export const LoginSection = ({ onLogoClick, onClose, onForgotPassword, onSignUp }: LoginSectionProps) => {
   const router = useRouter();
+  const { setUser } = useAuthStore();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -32,9 +34,9 @@ export const LoginSection = ({ onLogoClick, onClose, onForgotPassword, onSignUp 
   const onSubmit = handleSubmit(async (data) => {
     setIsLoading(true);
     try {
-      await login(data);
+      const user = await login(data);
+      setUser(user);
       router.push('/home');
-      router.refresh();
     } catch (e) {
       if (isApiError(e) && e.code === 'INVALID_LOGIN_INFO') {
         setError('password', { message: '이메일 또는 비밀번호가 올바르지 않습니다.' });
