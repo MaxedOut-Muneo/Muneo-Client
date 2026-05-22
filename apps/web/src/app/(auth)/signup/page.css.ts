@@ -3,7 +3,7 @@ import { style } from '@vanilla-extract/css';
 export const wrapper = style({
   minHeight: '100vh',
   display: 'flex',
-  alignItems: 'flex-start',
+  alignItems: 'safe center',
   justifyContent: 'center',
   overflowY: 'auto',
   scrollbarWidth: 'none',
