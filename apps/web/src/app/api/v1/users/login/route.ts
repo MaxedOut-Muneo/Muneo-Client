@@ -11,11 +11,18 @@ export async function POST(request: NextRequest) {
     body,
   });
 
-  const data = await backendRes.json();
-  const response = NextResponse.json(data, { status: backendRes.status });
+  const contentType = backendRes.headers.get('content-type') ?? '';
+  const isJson = contentType.includes('application/json');
+  const rawBody = await backendRes.text();
+
+  const response = isJson
+    ? NextResponse.json(JSON.parse(rawBody), { status: backendRes.status })
+    : new NextResponse(rawBody, {
+        status: backendRes.status,
+        headers: { 'content-type': contentType || 'text/plain' },
+      });
 
   for (const cookie of backendRes.headers.getSetCookie()) {
-    // Domain 속성 제거: localhost에서도 쿠키가 설정되도록 함
     response.headers.append('Set-Cookie', cookie.replace(/;\s*domain=[^;]*/gi, ''));
   }
 
