@@ -5,8 +5,17 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { isApiError } from '@/api/errors';
 import { updateMeLocal, updateMeSocial } from '@/api/user';
+import { applyValidationErrors } from '@/lib/forms/applyValidationErrors';
 import { profileUpdateSchema, type ProfileUpdateFormValues } from '@/lib/validations/profile';
 import { type ProfileUser } from '../_types/profile.types';
+
+const FIELD_MAP: Partial<Record<string, keyof ProfileUpdateFormValues>> = {
+  name: 'name',
+  phoneNumber: 'phone',
+  birthDate: 'birth',
+  newPassword: 'password',
+  newPasswordConfirm: 'passwordConfirm',
+};
 
 export const useProfileForm = (user: ProfileUser) => {
   const router = useRouter();
@@ -20,7 +29,6 @@ export const useProfileForm = (user: ProfileUser) => {
   } = useForm<ProfileUpdateFormValues>({
     resolver: zodResolver(profileUpdateSchema),
     defaultValues: {
-      email: user.email,
       name: user.name,
       birth: user.birth,
       phone: user.phone,
@@ -34,7 +42,7 @@ export const useProfileForm = (user: ProfileUser) => {
       const updated =
         user.signupType === 'self'
           ? await updateMeLocal({
-              email: data.email,
+              email: user.email,
               name: data.name,
               phoneNumber: data.phone,
               birthDate: data.birth,
@@ -46,7 +54,6 @@ export const useProfileForm = (user: ProfileUser) => {
               birthDate: data.birth,
             });
       reset({
-        email: updated.email,
         name: updated.name,
         birth: updated.birthDate,
         phone: updated.phoneNumber,
@@ -55,6 +62,9 @@ export const useProfileForm = (user: ProfileUser) => {
       });
       router.refresh();
     } catch (e) {
+      if (applyValidationErrors(setError, e, FIELD_MAP)) {
+        return;
+      }
       if (isApiError(e)) {
         setError('root', { message: e.message });
       } else {

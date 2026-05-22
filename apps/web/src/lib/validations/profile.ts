@@ -5,14 +5,13 @@ const optionalPasswordField = z.union([z.literal(''), passwordField]);
 
 export const profileUpdateSchema = z
   .object({
-    email: z.string(),
     name: nameField,
     birth: birthDateField,
     phone: phoneField,
     password: optionalPasswordField,
     passwordConfirm: z.string(),
   })
-  .refine((data) => !data.password || data.password === data.passwordConfirm, {
+  .refine((data) => data.password === data.passwordConfirm, {
     message: '비밀번호가 일치하지 않습니다.',
     path: ['passwordConfirm'],
   });

@@ -11,7 +11,6 @@ const SOCIAL_PROVIDER_CONFIG = {
 } as const satisfies Record<SocialProvider, { label: string; Icon: ComponentType<SVGProps<SVGSVGElement>> }>;
 
 const FIELD_CONFIG = {
-  email: { label: '이메일', placeholder: 'name@email.com', type: 'email' },
   name: { label: '이름', placeholder: '김민수', type: 'text' },
   birth: { label: '생년월일', placeholder: 'YYYY-MM-DD', type: 'text' },
   phone: { label: '연락처', placeholder: '010-0000-0000', type: 'text' },
@@ -21,14 +20,7 @@ const FIELD_CONFIG = {
 
 type FieldId = keyof typeof FIELD_CONFIG;
 
-const SELF_FIELDS = [
-  'email',
-  'name',
-  'birth',
-  'phone',
-  'password',
-  'passwordConfirm',
-] as const satisfies readonly FieldId[];
+const SELF_FIELDS = ['name', 'birth', 'phone', 'password', 'passwordConfirm'] as const satisfies readonly FieldId[];
 const SOCIAL_FIELDS = ['name', 'birth', 'phone'] as const satisfies readonly FieldId[];
 
 interface ProfileFormProps {
@@ -43,7 +35,11 @@ export const ProfileForm = ({ user, leftAction }: ProfileFormProps) => {
   return (
     <form className={styles.form} onSubmit={onSubmit} noValidate>
       <div className={styles.fields}>
-        {user.signupType === 'social' && <SocialEmailField provider={user.provider} />}
+        {user.signupType === 'social' ? (
+          <SocialEmailField provider={user.provider} />
+        ) : (
+          <TextField id="email" label="이메일" type="email" value={user.email} disabled readOnly />
+        )}
         {visibleFields.map((id) => (
           <TextField
             key={id}
@@ -51,7 +47,6 @@ export const ProfileForm = ({ user, leftAction }: ProfileFormProps) => {
             label={FIELD_CONFIG[id].label}
             placeholder={FIELD_CONFIG[id].placeholder}
             type={FIELD_CONFIG[id].type}
-            disabled={id === 'email'}
             error={errors[id]?.message}
             {...register(id)}
           />
