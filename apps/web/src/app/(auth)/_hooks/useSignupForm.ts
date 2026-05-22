@@ -4,12 +4,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { isApiError } from '@/api/errors';
 import { signup } from '@/api/user';
 import { useViewTransitionRouter } from '@/hooks/useViewTransitionRouter';
+import { applyValidationErrors } from '@/lib/forms/applyValidationErrors';
 import { signupSchema, type SignupFormValues } from '@/lib/validations/auth';
 
-const FIELD_MAP: Record<string, keyof SignupFormValues> = {
+const FIELD_MAP: Partial<Record<string, keyof SignupFormValues>> = {
   phoneNumber: 'phone',
   email: 'email',
   password: 'password',
@@ -46,17 +46,7 @@ export const useSignupForm = () => {
       push('/home');
       router.refresh();
     } catch (e) {
-      if (isApiError(e) && e.code === 'VALIDATION_FAILED' && typeof e.error === 'object' && e.error !== null) {
-        const fieldErrors = e.error as Record<string, string>;
-        Object.entries(fieldErrors).forEach(([apiField, message]) => {
-          const formField = FIELD_MAP[apiField];
-          if (formField) {
-            setError(formField, { message });
-          } else {
-            setError('email', { message });
-          }
-        });
-      } else {
+      if (!applyValidationErrors(setError, e, FIELD_MAP, 'email')) {
         setError('email', { message: '회원가입 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.' });
       }
     } finally {

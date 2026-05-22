@@ -7,9 +7,10 @@ import { useForm } from 'react-hook-form';
 import { socialSignup } from '@/api/auth';
 import { isApiError } from '@/api/errors';
 import { useViewTransitionRouter } from '@/hooks/useViewTransitionRouter';
+import { applyValidationErrors } from '@/lib/forms/applyValidationErrors';
 import { socialSignupSchema, type SocialSignupFormValues } from '@/lib/validations/auth';
 
-const API_FIELD_MAP: Record<string, keyof SocialSignupFormValues> = {
+const API_FIELD_MAP: Partial<Record<string, keyof SocialSignupFormValues>> = {
   name: 'name',
   phoneNumber: 'phone',
   birthDate: 'birthDate',
@@ -41,20 +42,12 @@ export const useSocialSignupForm = (ticket: string) => {
       push('/home');
       router.refresh();
     } catch (e) {
-      if (isApiError(e)) {
-        if (e.code === 'SOCIAL_SIGNUP_TICKET_EXPIRED') {
-          router.replace('/login');
-          return;
-        }
-        if (e.code === 'VALIDATION_FAILED' && typeof e.error === 'object' && e.error !== null) {
-          Object.entries(e.error as Record<string, string>).forEach(([apiField, message]) => {
-            const formField = API_FIELD_MAP[apiField];
-            if (formField) {
-              setError(formField, { message });
-            }
-          });
-          return;
-        }
+      if (isApiError(e) && e.code === 'SOCIAL_SIGNUP_TICKET_EXPIRED') {
+        router.replace('/login');
+        return;
+      }
+      if (applyValidationErrors(setError, e, API_FIELD_MAP)) {
+        return;
       }
       setError('name', { message: '회원가입 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.' });
     } finally {
