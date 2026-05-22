@@ -1,6 +1,6 @@
 'use client';
 
-import { type ReactNode, useId } from 'react';
+import { type ReactNode, useEffect, useId, useRef } from 'react';
 import { Button } from '../Button';
 import { Portal } from '../Portal';
 import * as styles from './Modal.css';
@@ -16,6 +16,9 @@ export interface ModalProps {
   className?: string;
 }
 
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 export const Modal = ({
   isOpen,
   title,
@@ -28,6 +31,47 @@ export const Modal = ({
 }: ModalProps) => {
   const titleId = useId();
   const subtitleId = useId();
+  const dialogRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+    const dialog = dialogRef.current;
+    if (!dialog) {
+      return;
+    }
+
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    const focusables = dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
+    focusables[0]?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onCancel();
+        return;
+      }
+      if (event.key !== 'Tab' || focusables.length === 0) {
+        return;
+      }
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      previouslyFocused?.focus?.();
+    };
+  }, [isOpen, onCancel]);
 
   if (!isOpen) {
     return null;
@@ -37,6 +81,7 @@ export const Modal = ({
     <Portal>
       <div className={styles.backdrop} role="presentation">
         <section
+          ref={dialogRef}
           role="dialog"
           aria-modal="true"
           aria-labelledby={titleId}
