@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { type ReactNode } from 'react';
-import { getServerMe } from '@/api/user';
+import { getServerMe } from '@/api/user/server';
 import { SidebarShell } from './_components/SidebarShell';
 import * as styles from './layout.css';
 
