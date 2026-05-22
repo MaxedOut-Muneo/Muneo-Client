@@ -1,6 +1,10 @@
 import ky, { type KyInstance } from 'ky';
 
 const getApiBaseUrl = () => {
+  if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
+    return window.location.origin;
+  }
+
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   if (!apiBaseUrl) {
     throw new Error('NEXT_PUBLIC_API_BASE_URL is not set');
