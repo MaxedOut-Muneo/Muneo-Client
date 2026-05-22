@@ -24,7 +24,7 @@ export const header = style({
 });
 
 export const headerScrolled = style({
-  backgroundColor: 'rgba(255, 255, 255, 0.82)',
+  backgroundColor: 'rgba(255, 255, 255, 0.95)',
   backdropFilter: 'blur(16px)',
   WebkitBackdropFilter: 'blur(16px)',
   boxShadow: '0 1px 0 rgba(0, 0, 0, 0.06)',
