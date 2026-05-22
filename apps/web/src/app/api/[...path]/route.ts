@@ -1,12 +1,5 @@
 import { type NextRequest, NextResponse } from 'next/server';
-
-const getApiBaseUrl = () => {
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-  if (!apiBaseUrl) {
-    throw new Error('NEXT_PUBLIC_API_BASE_URL is not set');
-  }
-  return apiBaseUrl.replace(/\/$/, '');
-};
+import { getApiBaseUrl } from '@/api/baseUrl';
 
 const getForwardUrl = (path: string[], search: string) => {
   const encodedPath = path.map((segment) => encodeURIComponent(segment)).join('/');
