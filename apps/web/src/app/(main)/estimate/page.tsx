@@ -39,11 +39,16 @@ const EstimatePage = () => {
       return;
     }
 
+    const MIN_LOADING_MS = 10000;
+
     const fetchEstimate = async () => {
       setGeneratingState(true, null);
       try {
         const payload = mapToApiPayload(step1, step2, step3, step4);
-        const result = await generateEstimate(payload);
+        const [result] = await Promise.all([
+          generateEstimate(payload),
+          new Promise<void>((resolve) => setTimeout(resolve, MIN_LOADING_MS)),
+        ]);
         setEstimateResult(result);
         setGeneratingState(false, null);
       } catch {
@@ -70,7 +75,14 @@ const EstimatePage = () => {
       <div className={styles.page}>
         <div className={styles.content}>
           <StepIndicator currentStep={currentStep} />
-          <EstimateLoadingScreen />
+          <EstimateLoadingScreen
+            region={step1.region}
+            processCount={step2.selectedProcesses.length}
+            onCancel={() => {
+              setGeneratingState(false, null);
+              goToStep(4);
+            }}
+          />
         </div>
       </div>
     );
