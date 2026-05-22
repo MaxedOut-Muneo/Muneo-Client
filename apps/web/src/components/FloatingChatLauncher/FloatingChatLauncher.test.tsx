@@ -1,11 +1,15 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
+import { useChatStore } from '@/store/chatStore';
 import { FloatingChatLauncher } from './FloatingChatLauncher';
 
 const EXIT_BUFFER_MS = 400;
 
 describe('FloatingChatLauncher', () => {
+  beforeEach(() => {
+    useChatStore.setState({ isOpen: false, pendingMessage: '' });
+  });
   it('초기 상태에서 트리거 버튼을 렌더한다', () => {
     render(<FloatingChatLauncher />);
     expect(screen.getByLabelText('AI 상담 챗 열기')).toBeInTheDocument();
