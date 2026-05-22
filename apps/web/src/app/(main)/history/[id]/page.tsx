@@ -1,12 +1,12 @@
 'use client';
 
 import { ArrowLeftMdIcon } from '@muneo/design-system';
-import { notFound , useRouter } from 'next/navigation';
+import { notFound, useRouter } from 'next/navigation';
 import { use, useEffect, useState } from 'react';
 import { getEstimates, getRiskDetections, type EstimateItem, type RiskItem } from '@/api/history';
 import { TransitionLink } from '@/components/TransitionLink';
 import { useAuthStore } from '@/store/authStore';
-import { EstimateDetailView } from '../_components/EstimateDetailView/EstimateDetailView';
+import { EstimateResultView } from '../../estimate/_components/EstimateResultView/EstimateResultView';
 import * as styles from './page.css';
 
 type PageState =
@@ -31,7 +31,9 @@ export default function HistoryDetailPage({ params }: { params: Promise<{ id: st
 
     Promise.all([getEstimates(user.id), getRiskDetections(user.id)])
       .then(([estimates, risks]) => {
-        if (!mounted) {return;}
+        if (!mounted) {
+          return;
+        }
         const estimate = estimates.find((e) => e.id === id);
         if (estimate) {
           setState({ kind: 'estimate', item: estimate });
@@ -45,7 +47,9 @@ export default function HistoryDetailPage({ params }: { params: Promise<{ id: st
         setState({ kind: 'not-found' });
       })
       .catch(() => {
-        if (mounted) {setState({ kind: 'not-found' });}
+        if (mounted) {
+          setState({ kind: 'not-found' });
+        }
       });
 
     return () => {
@@ -53,7 +57,9 @@ export default function HistoryDetailPage({ params }: { params: Promise<{ id: st
     };
   }, [id, user, router]);
 
-  if (state.kind === 'not-found') {return notFound();}
+  if (state.kind === 'not-found') {
+    return notFound();
+  }
 
   return (
     <div className={styles.page}>
@@ -106,7 +112,7 @@ export default function HistoryDetailPage({ params }: { params: Promise<{ id: st
               </div>
             </div>
           )}
-          {state.kind === 'estimate' && <EstimateDetailView item={state.item} />}
+          {state.kind === 'estimate' && <EstimateResultView input={state.item.input} result={state.item.result} />}
         </div>
       </div>
     </div>

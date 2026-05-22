@@ -1,13 +1,5 @@
-import { type EstimateGenerateResponse } from '@/app/(main)/estimate/_types/api';
+import { type EstimateGenerateRequest, type EstimateGenerateResponse } from '@/app/(main)/estimate/_types/api';
 import { client } from './client';
-
-interface EstimateInput {
-  공종: string[];
-  공간유형: string;
-  평수: number;
-  지역?: string;
-  [key: string]: unknown;
-}
 
 interface RiskSummary {
   total_risk_items: number;
@@ -31,7 +23,7 @@ export interface EstimateItem {
   id: string;
   user_id: string;
   created_at: string;
-  input: EstimateInput;
+  input: EstimateGenerateRequest;
   result: EstimateGenerateResponse;
 }
 
