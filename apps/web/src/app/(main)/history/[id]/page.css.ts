@@ -39,3 +39,15 @@ export const content = style({
   flexDirection: 'column',
   gap: '20px',
 });
+
+export const loadingWrap = style({
+  display: 'flex',
+  justifyContent: 'center',
+  paddingTop: '80px',
+});
+
+export const loadingText = style({
+  fontFamily: vars.typography.fontFamily,
+  fontSize: vars.typography.fontSize.md,
+  color: vars.color.neutral.n500,
+});

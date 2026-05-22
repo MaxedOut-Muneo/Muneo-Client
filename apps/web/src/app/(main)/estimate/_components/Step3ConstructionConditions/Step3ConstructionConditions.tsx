@@ -3,6 +3,7 @@
 import { SelectButton } from '@muneo/design-system';
 import { useEstimateStore } from '../../_store/estimateStore';
 import { BUILDING_AGES, CONSTRUCTION_TIMINGS, ELEVATOR_OPTIONS, OCCUPANCIES, TRUCK_ACCESSES } from '../../_types';
+import { ChatHint } from '../ChatHint/ChatHint';
 import { StepActions } from '../StepActions/StepActions';
 import * as styles from './Step3ConstructionConditions.css';
 
@@ -101,6 +102,10 @@ export const Step3ConstructionConditions = () => {
                     </SelectButton>
                   ))}
                 </div>
+                <ChatHint
+                  visible={step3.truckAccess === '모름'}
+                  message="공사 현장에 2.5톤 트럭 접근이 가능한지 어떻게 확인하나요?"
+                />
               </div>
 
               <div className={styles.field}>

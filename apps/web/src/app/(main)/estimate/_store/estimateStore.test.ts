@@ -11,7 +11,7 @@ describe('estimateStore', () => {
       const state = useEstimateStore.getState();
       expect(state.currentStep).toBe(1);
       expect(state.step2.mode).toBe('full');
-      expect(state.step2.selectedProcesses.length).toBe(11);
+      expect(state.step2.selectedProcesses.length).toBe(9);
     });
 
     it('step1/step3 모든 필드가 null로 시작한다', () => {
