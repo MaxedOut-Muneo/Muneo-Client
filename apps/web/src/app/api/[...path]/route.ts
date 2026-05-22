@@ -13,7 +13,9 @@ async function proxy(request: NextRequest, params: { path: string[] }): Promise<
   const headers = new Headers();
   for (const key of FORWARD_REQ_HEADERS) {
     const value = request.headers.get(key);
-    if (value) {headers.set(key, value);}
+    if (value) {
+      headers.set(key, value);
+    }
   }
 
   const body = ['GET', 'HEAD'].includes(request.method) ? undefined : await request.text();
@@ -27,7 +29,9 @@ async function proxy(request: NextRequest, params: { path: string[] }): Promise<
   const resHeaders = new Headers();
   for (const key of FORWARD_RES_HEADERS) {
     const value = backendRes.headers.get(key);
-    if (value) {resHeaders.set(key, value);}
+    if (value) {
+      resHeaders.set(key, value);
+    }
   }
   for (const cookie of backendRes.headers.getSetCookie()) {
     resHeaders.append('Set-Cookie', cookie.replace(/;\s*domain=[^;]*/gi, ''));

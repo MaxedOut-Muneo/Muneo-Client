@@ -14,7 +14,9 @@ export const ChatHint = ({ visible, message }: ChatHintProps) => {
   const { open } = useChatStore();
   const isExiting = mounted && !visible;
 
-  if (!mounted) {return null;}
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div className={`${styles.wrap}${isExiting ? ` ${styles.wrapExit}` : ''}`}>
