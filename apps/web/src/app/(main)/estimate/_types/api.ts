@@ -19,6 +19,10 @@ interface BathroomSubRequest {
   타일등급: string;
 }
 
+interface KitchenSubRequest {
+  싱크대형태: string;
+}
+
 export interface EstimateGenerateRequest {
   공종: string[];
   시공범위: string;
@@ -37,6 +41,7 @@ export interface EstimateGenerateRequest {
   도배?: WallpaperSubRequest;
   마루?: FlooringSubRequest;
   욕실?: BathroomSubRequest;
+  주방?: KitchenSubRequest;
 }
 
 interface AmountRange {

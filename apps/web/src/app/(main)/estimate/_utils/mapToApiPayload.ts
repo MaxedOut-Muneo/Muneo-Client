@@ -6,17 +6,15 @@ import { type Step4Data } from '../_types/step4';
 
 const PROCESS_ID_TO_KO: Record<string, string> = {
   demolition: '철거',
-  plumbing: '설비',
-  electrical: '전기',
+  electrical: '전기/조명',
   carpentry: '목공',
   wallpaper: '도배',
   flooring: '마루',
-  tile: '타일',
   bathroom: '욕실',
   kitchen: '주방',
   painting: '도장',
-  finishing: '마감',
-  sash: '샷시',
+  finishing: '마감/공과잡비',
+  sash: '창호',
   film: '필름',
   furniture: '가구',
 };
@@ -48,12 +46,20 @@ export const mapToApiPayload = (
   step4: Step4Data
 ): EstimateGenerateRequest => {
   const { selectedProcesses, mode } = step2;
-  const koProcessNames = selectedProcesses.map((id) => PROCESS_ID_TO_KO[id] ?? id);
+  const koProcessNames = selectedProcesses
+    .filter((id) => PROCESS_ID_TO_KO[id] !== undefined)
+    .map((id) => {
+      if (id === 'flooring') {
+        return step4.flooring?.floorMaterial === '장판' ? '장판' : '마루';
+      }
+      return PROCESS_ID_TO_KO[id];
+    });
 
   const hasDemolition = selectedProcesses.includes('demolition');
   const hasWallpaper = selectedProcesses.includes('wallpaper');
   const hasFlooring = selectedProcesses.includes('flooring');
   const hasBathroom = selectedProcesses.includes('bathroom');
+  const hasKitchen = selectedProcesses.includes('kitchen');
 
   const payload: EstimateGenerateRequest = {
     공종: koProcessNames,
@@ -96,6 +102,10 @@ export const mapToApiPayload = (
       범위: fl.flooringScope ?? '',
       철거여부: fl.floorDemolition === '필요' ? '있음' : fl.floorDemolition === '불필요' ? '없음' : '모름',
     };
+  }
+
+  if (hasKitchen && step4.kitchen?.sinkShape) {
+    payload.주방 = { 싱크대형태: step4.kitchen.sinkShape };
   }
 
   if (hasBathroom && step4.bathroom) {

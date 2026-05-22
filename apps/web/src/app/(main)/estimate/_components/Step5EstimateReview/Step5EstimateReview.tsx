@@ -17,6 +17,16 @@ const formatWon = (amount: number): string => {
 
 const formatRange = (min: number, max: number): string => `${formatWon(min)} ~ ${formatWon(max)}`;
 
+const SELECTION_ONLY_PROCESS_NAMES: Partial<Record<string, string>> = {
+  electrical: '전기/조명',
+  carpentry: '목공',
+  painting: '도장',
+  finishing: '마감/공과잡비',
+  sash: '창호',
+  film: '필름',
+  furniture: '가구',
+};
+
 // ─────────── 아코디언 아이템 ───────────
 
 interface DisplayItem {
@@ -295,6 +305,10 @@ export const EstimateResult = () => {
   const modeLabel = step2.mode === 'full' ? '전체 리모델링' : '부분 시공';
   const demolitionLabel = step2.selectedProcesses.includes('demolition') ? '있음' : '없음';
 
+  const selectionOnlyNames = step2.selectedProcesses
+    .map((id) => SELECTION_ONLY_PROCESS_NAMES[id])
+    .filter((name): name is string => name !== undefined);
+
   const accordionItems: ProcessEstimateDisplay[] = estimateResult.선택_공종.map((processName) => {
     const rangeData = estimateResult.공종별_단가_범위[processName];
     const lineItems = estimateResult.공종별_항목_명세[processName] ?? [];
@@ -345,6 +359,14 @@ export const EstimateResult = () => {
 
         <div className={styles.rightPanel}>
           <TotalBanner result={estimateResult} />
+
+          {selectionOnlyNames.length > 0 && (
+            <div className={styles.selectionOnlyNotice}>
+              <span className={styles.selectionOnlyText}>
+                ℹ 공종 선택만 반영된 항목: {selectionOnlyNames.join(', ')} — 세부 단가는 현장 방문 후 확인하세요.
+              </span>
+            </div>
+          )}
 
           <div className={styles.detailSection}>
             <span className={styles.detailTitle}>공정별 세부 견적</span>

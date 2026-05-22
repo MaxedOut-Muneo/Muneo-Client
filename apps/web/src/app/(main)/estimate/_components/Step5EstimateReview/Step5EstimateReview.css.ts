@@ -8,6 +8,22 @@ export const container = style({
   width: '100%',
 });
 
+export const selectionOnlyNotice = style({
+  display: 'flex',
+  alignItems: 'flex-start',
+  gap: '8px',
+  padding: '10px 14px',
+  borderRadius: '8px',
+  backgroundColor: vars.color.neutral.n100,
+  marginBottom: '12px',
+});
+
+export const selectionOnlyText = style({
+  fontSize: vars.typography.fontSize.xs,
+  color: vars.color.neutral.n500,
+  lineHeight: vars.typography.lineHeight.lg,
+});
+
 export const card = style({
   backgroundColor: vars.color.white,
   borderRadius: '12px',
