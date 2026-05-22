@@ -1,12 +1,6 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { getKakaoLoginUrl, login } from '@/api/auth';
-import { isApiError } from '@/api/errors';
-import { loginSchema, type LoginFormValues } from '@/lib/validations/auth';
+import { useLoginForm } from '../../_hooks/useLoginForm';
 import { LoginModal } from '../LoginModal';
 
 interface LoginSectionProps {
@@ -17,54 +11,25 @@ interface LoginSectionProps {
 }
 
 export const LoginSection = ({ onLogoClick, onClose, onForgotPassword, onSignUp }: LoginSectionProps) => {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const { register, errors, isLoading, isKakaoLoading, onSubmit, handleKakaoLogin } = useLoginForm();
 
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors },
-  } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
-  });
-
-  const onSubmit = handleSubmit(async (data) => {
-    setIsLoading(true);
-    try {
-      await login(data);
-      router.push('/home');
-      router.refresh();
-    } catch (e) {
-      if (isApiError(e) && e.code === 'INVALID_LOGIN_INFO') {
-        setError('password', { message: '이메일 또는 비밀번호가 올바르지 않습니다.' });
-      } else {
-        setError('password', { message: '로그인 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.' });
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  });
-
-  const handleKakaoLogin = async () => {
-    try {
-      const { loginUrl } = await getKakaoLoginUrl();
-      window.location.href = loginUrl;
-    } catch (e) {
-      console.error('카카오 로그인 URL 조회 실패', e);
-    }
-  };
+  const handleForgotPassword =
+    onForgotPassword ??
+    (() => {
+      window.alert('준비중인 기능입니다.');
+    });
 
   return (
     <LoginModal
       register={register}
       errors={errors}
       isLoading={isLoading}
+      isKakaoLoading={isKakaoLoading}
       onSubmit={onSubmit}
       onLogoClick={onLogoClick}
       onClose={onClose}
       onKakaoLogin={handleKakaoLogin}
-      onForgotPassword={onForgotPassword}
+      onForgotPassword={handleForgotPassword}
       onSignUp={onSignUp}
     />
   );
