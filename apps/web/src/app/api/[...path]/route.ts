@@ -2,10 +2,13 @@ import { type NextRequest, NextResponse } from 'next/server';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? '';
 
-const FORWARD_REQ_HEADERS = ['content-type', 'cookie', 'x-user-id', 'authorization'];
+const FORWARD_REQ_HEADERS = ['content-type', 'cookie', 'authorization'];
 const FORWARD_RES_HEADERS = ['content-type', 'cache-control'];
 
 async function proxy(request: NextRequest, params: { path: string[] }): Promise<NextResponse> {
+  if (!API_BASE) {
+    return new NextResponse('API_BASE_URL is not configured', { status: 500 });
+  }
   const path = params.path.join('/');
   const search = request.nextUrl.search;
   const url = `${API_BASE}/api/${path}${search}`;
