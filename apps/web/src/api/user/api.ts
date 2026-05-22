@@ -1,66 +1,22 @@
 import { type AuthUser } from '@/types/auth';
 import { client } from '../client';
-import { toApiError } from '../errors';
-import { type ApiSuccessResponse } from '../types';
+import { requestResult, requestVoid } from '../request';
 import { type LoginRequest, type SignupRequest, type UpdateMeLocalRequest, type UpdateMeSocialRequest } from './types';
 
-export const signup = async (data: SignupRequest): Promise<AuthUser> => {
-  try {
-    const res = await client.post('api/v1/users/signup', { json: data }).json<ApiSuccessResponse<AuthUser>>();
-    return res.result;
-  } catch (e) {
-    throw toApiError(e);
-  }
-};
+export const signup = (data: SignupRequest) =>
+  requestResult<AuthUser>(() => client.post('api/v1/users/signup', { json: data }).json());
 
-export const login = async (data: LoginRequest): Promise<AuthUser> => {
-  try {
-    const res = await client.post('api/v1/users/login', { json: data }).json<ApiSuccessResponse<AuthUser>>();
-    return res.result;
-  } catch (e) {
-    throw toApiError(e);
-  }
-};
+export const login = (data: LoginRequest) =>
+  requestResult<AuthUser>(() => client.post('api/v1/users/login', { json: data }).json());
 
-export const logout = async (): Promise<void> => {
-  try {
-    await client.post('api/v1/users/logout');
-  } catch (e) {
-    throw toApiError(e);
-  }
-};
+export const logout = () => requestVoid(() => client.post('api/v1/users/logout'));
 
-export const refresh = async (): Promise<AuthUser> => {
-  try {
-    const res = await client.post('api/v1/users/refresh').json<ApiSuccessResponse<AuthUser>>();
-    return res.result;
-  } catch (e) {
-    throw toApiError(e);
-  }
-};
+export const refresh = () => requestResult<AuthUser>(() => client.post('api/v1/users/refresh').json());
 
-export const updateMeLocal = async (data: UpdateMeLocalRequest): Promise<AuthUser> => {
-  try {
-    const res = await client.patch('api/v1/users/me/local', { json: data }).json<ApiSuccessResponse<AuthUser>>();
-    return res.result;
-  } catch (e) {
-    throw toApiError(e);
-  }
-};
+export const updateMeLocal = (data: UpdateMeLocalRequest) =>
+  requestResult<AuthUser>(() => client.patch('api/v1/users/me/local', { json: data }).json());
 
-export const updateMeSocial = async (data: UpdateMeSocialRequest): Promise<AuthUser> => {
-  try {
-    const res = await client.patch('api/v1/users/me/social', { json: data }).json<ApiSuccessResponse<AuthUser>>();
-    return res.result;
-  } catch (e) {
-    throw toApiError(e);
-  }
-};
+export const updateMeSocial = (data: UpdateMeSocialRequest) =>
+  requestResult<AuthUser>(() => client.patch('api/v1/users/me/social', { json: data }).json());
 
-export const deleteMe = async (): Promise<void> => {
-  try {
-    await client.delete('api/v1/users/me');
-  } catch (e) {
-    throw toApiError(e);
-  }
-};
+export const deleteMe = () => requestVoid(() => client.delete('api/v1/users/me'));
