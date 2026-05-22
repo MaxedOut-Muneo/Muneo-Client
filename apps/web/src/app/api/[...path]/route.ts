@@ -15,9 +15,10 @@ const getForwardHeaders = (request: NextRequest) => {
   headers.delete('accept-encoding');
   headers.delete('origin');
   headers.delete('referer');
+  headers.delete('forwarded');
 
   for (const key of [...headers.keys()]) {
-    if (key.startsWith('sec-')) {
+    if (key.startsWith('sec-') || key.startsWith('x-forwarded-') || key.startsWith('x-real-')) {
       headers.delete(key);
     }
   }
@@ -69,12 +70,18 @@ const proxy = async (request: NextRequest, { params }: { params: Promise<{ path:
   const { path } = await params;
   const method = request.method.toUpperCase();
   const hasBody = method !== 'GET' && method !== 'HEAD';
-  const upstream = await fetch(getForwardUrl(path, request.nextUrl.search), {
-    method,
-    headers: getForwardHeaders(request),
-    body: hasBody ? await request.arrayBuffer() : undefined,
-    redirect: 'manual',
-  });
+  let upstream: Response;
+  try {
+    upstream = await fetch(getForwardUrl(path, request.nextUrl.search), {
+      method,
+      headers: getForwardHeaders(request),
+      body: hasBody ? await request.arrayBuffer() : undefined,
+      redirect: 'manual',
+    });
+  } catch (e) {
+    console.error('[api proxy] upstream fetch failed', e);
+    return NextResponse.json({ code: 'BAD_GATEWAY', message: '업스트림 API 호출에 실패했습니다.' }, { status: 502 });
+  }
 
   const headers = new Headers(upstream.headers);
   headers.delete('set-cookie');
