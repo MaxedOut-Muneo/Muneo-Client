@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import { isApiError } from '@/api/errors';
 import { getServerMe } from '@/api/user/server';
 import { type AuthUser } from '@/types/auth';
 import { ProfileCard } from './_components/ProfileCard/ProfileCard';
@@ -27,9 +28,14 @@ const toProfileUser = (user: AuthUser): ProfileUser => {
 };
 
 const ProfilePage = async () => {
-  const user = await getServerMe().catch(() => null);
-  if (!user) {
-    redirect('/login');
+  let user: AuthUser;
+  try {
+    user = await getServerMe();
+  } catch (e) {
+    if (isApiError(e) && e.status === 401) {
+      redirect('/login');
+    }
+    throw e;
   }
 
   return (
