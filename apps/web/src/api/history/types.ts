@@ -1,5 +1,4 @@
 import { type EstimateGenerateRequest, type EstimateGenerateResponse } from '@/app/(main)/estimate/_types/api';
-import { client } from './client';
 
 interface RiskSummary {
   total_risk_items: number;
@@ -34,9 +33,3 @@ export interface RiskItem {
   input: RiskInput;
   result: RiskResult;
 }
-
-export const getEstimates = (userId: number): Promise<EstimateItem[]> =>
-  client.get('api/v1/estimates', { headers: { 'x-user-id': String(userId) } }).json<EstimateItem[]>();
-
-export const getRiskDetections = (userId: number): Promise<RiskItem[]> =>
-  client.get('api/v1/risk-detector', { headers: { 'x-user-id': String(userId) } }).json<RiskItem[]>();
