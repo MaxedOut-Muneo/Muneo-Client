@@ -1,7 +1,6 @@
 'use client';
 
 import { Button, CloseRoundFill, KakaoIcon, TextField } from '@muneo/design-system';
-import Link from 'next/link';
 import { useId } from 'react';
 import { type FieldErrors, type UseFormRegister } from 'react-hook-form';
 import { type LoginFormValues } from '@/lib/validations/auth';
@@ -13,6 +12,7 @@ export interface LoginModalProps {
   register: UseFormRegister<LoginFormValues>;
   errors: FieldErrors<LoginFormValues>;
   isLoading?: boolean;
+  isKakaoLoading?: boolean;
   onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
   onKakaoLogin?: () => void;
   onForgotPassword?: () => void;
@@ -26,6 +26,7 @@ export const LoginModal = ({
   register,
   errors,
   isLoading,
+  isKakaoLoading,
   onSubmit,
   onKakaoLogin,
   onForgotPassword,
@@ -35,6 +36,7 @@ export const LoginModal = ({
 }: LoginModalProps) => {
   const emailId = useId();
   const passwordId = useId();
+  const isBusy = Boolean(isLoading || isKakaoLoading);
 
   return (
     <div className={[styles.modal, className].filter(Boolean).join(' ')}>
@@ -66,14 +68,14 @@ export const LoginModal = ({
               error={errors.password?.message}
               {...register('password')}
             />
-            <button type="button" className={styles.forgotPassword} onClick={onForgotPassword}>
+            <button type="button" className={styles.forgotPassword} onClick={onForgotPassword} disabled={isBusy}>
               비밀번호 찾기
             </button>
           </div>
         </div>
 
         <div className={styles.actionSection}>
-          <Button type="submit" variant="primary" className={styles.fullWidth} disabled={isLoading}>
+          <Button type="submit" variant="primary" className={styles.fullWidth} disabled={isBusy}>
             로그인
           </Button>
 
@@ -83,22 +85,32 @@ export const LoginModal = ({
             <hr className={styles.dividerLine} />
           </div>
 
-          <button type="button" className={styles.kakaoButton} onClick={onKakaoLogin}>
+          <button type="button" className={styles.kakaoButton} onClick={onKakaoLogin} disabled={isBusy}>
             <KakaoIcon className={styles.kakaoIcon} />
-            <span className={styles.kakaoText}>카카오 로그인</span>
+            <span className={styles.kakaoText}>{isKakaoLoading ? '이동 중...' : '카카오 로그인'}</span>
           </button>
 
           <div className={styles.footerRow}>
             <span className={styles.signupText}>계정이 없으신가요?</span>
             <div className={styles.footerDivider} />
             {onSignUp ? (
-              <button type="button" className={styles.signupLink} onClick={onSignUp}>
+              <button type="button" className={styles.signupLink} onClick={onSignUp} disabled={isBusy}>
                 회원가입
               </button>
             ) : (
-              <Link href="/signup" className={styles.signupLink}>
+              <a
+                href="/signup"
+                className={styles.signupLink}
+                aria-disabled={isBusy}
+                tabIndex={isBusy ? -1 : undefined}
+                onClick={(e) => {
+                  if (isBusy) {
+                    e.preventDefault();
+                  }
+                }}
+              >
                 회원가입
-              </Link>
+              </a>
             )}
           </div>
         </div>
