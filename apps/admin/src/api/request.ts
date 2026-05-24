@@ -16,6 +16,9 @@ export class ApiError extends Error {
 }
 
 const toApiError = (error: unknown): ApiError => {
+  if (error instanceof ApiError) {
+    return error;
+  }
   if (error instanceof AxiosError) {
     const data = error.response?.data as ApiEnvelope | undefined;
     if (data?.message) {
