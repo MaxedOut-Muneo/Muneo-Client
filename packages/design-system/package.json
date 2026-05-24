@@ -14,6 +14,7 @@
   },
   "scripts": {
     "lint": "eslint .",
+    "type-check": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "build:icons": "tsx scripts/build-icons.ts",

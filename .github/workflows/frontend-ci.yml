@@ -62,7 +62,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        app: [web, admin]
+        include:
+          - app: web
+            filter: web
+          - app: admin
+            filter: admin
+          - app: design-system
+            filter: '@muneo/design-system'
 
     steps:
       - name: Checkout code
@@ -90,22 +96,22 @@ jobs:
       - name: Type check
         id: type-check
         continue-on-error: true
-        run: pnpm turbo type-check --filter=${{ matrix.app }}
+        run: pnpm turbo type-check --filter=${{ matrix.filter }}
 
       - name: Lint check
         id: lint
         continue-on-error: true
-        run: pnpm turbo lint --filter=${{ matrix.app }}
+        run: pnpm turbo lint --filter=${{ matrix.filter }}
 
       - name: Run tests
         id: test
         continue-on-error: true
-        run: pnpm turbo test --filter=${{ matrix.app }}
+        run: pnpm turbo test --filter=${{ matrix.filter }}
 
       - name: Build
         id: build
         continue-on-error: true
-        run: pnpm turbo build --filter=${{ matrix.app }}
+        run: pnpm turbo build --filter=${{ matrix.filter }}
 
       - name: Write CI result
         if: always()
@@ -203,27 +209,40 @@ jobs:
               return JSON.parse(fs.readFileSync(filePath, 'utf8'));
             };
 
-            const icon = (status) => status === 'success' ? '✅' : status === 'skipped' ? '⏭️' : '❌';
-            const label = (status) => status === 'success' ? '통과' : status === 'skipped' ? '스킵' : '실패';
+            const icon = (status) => {
+              if (status === 'success') return '✅';
+              if (status === 'skipped') return '⏭️';
+              if (status === 'not-applicable') return '➖';
+              return '❌';
+            };
+            const label = (status) => {
+              if (status === 'success') return '통과';
+              if (status === 'skipped') return '스킵';
+              if (status === 'not-applicable') return '해당 없음';
+              return '실패';
+            };
 
             const formatResult = getStepResult(formatJob, 'Format check');
             const webResult = readAppResult('web');
             const adminResult = readAppResult('admin');
+            const dsResult = readAppResult('design-system');
+            // 디자인 시스템은 라이브러리라 build 단계가 의도적으로 없음
+            dsResult.build = 'not-applicable';
 
             const rows = [
-              ['Type', webResult.typeCheck, adminResult.typeCheck],
-              ['Prettier', formatResult, formatResult],
-              ['Lint', webResult.lint, adminResult.lint],
-              ['tests', webResult.test, adminResult.test],
-              ['Build', webResult.build, adminResult.build],
+              ['Type', webResult.typeCheck, adminResult.typeCheck, dsResult.typeCheck],
+              ['Prettier', formatResult, formatResult, formatResult],
+              ['Lint', webResult.lint, adminResult.lint, dsResult.lint],
+              ['tests', webResult.test, adminResult.test, dsResult.test],
+              ['Build', webResult.build, adminResult.build, dsResult.build],
             ];
 
             let comment = '## 🔍 CI 검증 결과\n\n';
-            comment += '| 검증 항목 | web | admin |\n';
-            comment += '|-----------|-----|-------|\n';
+            comment += '| 검증 항목 | web | admin | design-system |\n';
+            comment += '|-----------|-----|-------|---------------|\n';
 
-            for (const [name, webStatus, adminStatus] of rows) {
-              comment += `| **${name}** | ${icon(webStatus)} ${label(webStatus)} | ${icon(adminStatus)} ${label(adminStatus)} |\n`;
+            for (const [name, webStatus, adminStatus, dsStatus] of rows) {
+              comment += `| **${name}** | ${icon(webStatus)} ${label(webStatus)} | ${icon(adminStatus)} ${label(adminStatus)} | ${icon(dsStatus)} ${label(dsStatus)} |\n`;
             }
 
             try {
