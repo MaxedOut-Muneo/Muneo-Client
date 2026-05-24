@@ -2,7 +2,7 @@
 
 import { Sidebar, type SidebarNavId } from '@muneo/design-system';
 import { usePathname, useRouter } from 'next/navigation';
-import { logout } from '@/api/auth';
+import { logout } from '@/api/user';
 import { useViewTransitionRouter } from '@/hooks/useViewTransitionRouter';
 import { type AuthUser } from '@/types/auth';
 

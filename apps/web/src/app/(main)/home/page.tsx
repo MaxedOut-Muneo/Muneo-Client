@@ -1,6 +1,6 @@
 import { DellSquareIcon, DoneRingRoundFillIcon, SadIcon, vars } from '@muneo/design-system';
 import { getServerEstimates, getServerRiskDetections, type EstimateItem, type RiskItem } from '@/api/history';
-import { getServerMe } from '@/api/user';
+import { getServerMe } from '@/api/user/server';
 import { HistoryTable } from './_components/HistoryTable/HistoryTable';
 import { SummaryCard } from './_components/SummaryCard/SummaryCard';
 import { type HistoryRow, type SummaryStats } from './_types/home.types';

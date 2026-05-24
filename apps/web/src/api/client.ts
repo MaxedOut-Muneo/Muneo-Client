@@ -1,12 +1,5 @@
 import ky, { type KyInstance } from 'ky';
-
-const getApiBaseUrl = () => {
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-  if (!apiBaseUrl) {
-    throw new Error('NEXT_PUBLIC_API_BASE_URL is not set');
-  }
-  return apiBaseUrl;
-};
+import { getClientApiBaseUrl } from './baseUrl';
 
 const REFRESH_PATH = 'api/v1/users/refresh';
 const PRE_AUTH_PATHS = ['api/v1/users/login', 'api/v1/users/signup', 'api/v1/auth/oauth', 'api/v1/auth/social/signup'];
@@ -18,7 +11,7 @@ let refreshPromise: Promise<Response> | null = null;
 
 const triggerRefresh = () => {
   if (!refreshPromise) {
-    refreshPromise = fetch(`${getApiBaseUrl()}/${REFRESH_PATH}`, {
+    refreshPromise = fetch(`${getClientApiBaseUrl()}/${REFRESH_PATH}`, {
       method: 'POST',
       credentials: 'include',
     }).finally(() => {
@@ -30,7 +23,7 @@ const triggerRefresh = () => {
 
 const createClient = () =>
   ky.create({
-    prefixUrl: getApiBaseUrl(),
+    prefixUrl: getClientApiBaseUrl(),
     timeout: 10000,
     credentials: 'include',
     headers: {

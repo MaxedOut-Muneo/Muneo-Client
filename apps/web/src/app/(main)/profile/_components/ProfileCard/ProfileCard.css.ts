@@ -16,3 +16,20 @@ export const inner = style({
   gap: vars.space.lg,
   width: '440px',
 });
+
+export const withdrawButton = style({
+  background: 'none',
+  border: 'none',
+  padding: '4px 8px',
+  cursor: 'pointer',
+  fontFamily: vars.typography.fontFamily,
+  fontSize: '13px',
+  color: vars.color.neutral.n400,
+  textDecoration: 'underline',
+  textUnderlineOffset: '3px',
+  selectors: {
+    '&:hover': {
+      color: '#ef4444',
+    },
+  },
+});
