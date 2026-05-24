@@ -1,5 +1,4 @@
 import { type NextRequest, NextResponse } from 'next/server';
-
 import { getApiBaseUrl } from '@/api/baseUrl';
 
 const getForwardUrl = (path: string[], search: string) => {
