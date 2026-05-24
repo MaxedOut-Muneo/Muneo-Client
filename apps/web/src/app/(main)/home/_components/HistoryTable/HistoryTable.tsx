@@ -3,28 +3,19 @@
 import { CaretDownSmIcon } from '@muneo/design-system';
 import { useRouter } from 'next/navigation';
 import { TransitionLink } from '@/components/TransitionLink';
-import { type HistoryRow, type RiskStatus } from '../../_types/home.types';
+import { type HistoryRow } from '../../_types/home.types';
 import * as styles from './HistoryTable.css';
 
 interface HistoryTableProps {
   rows: HistoryRow[];
+  onDelete?: (id: string) => void;
 }
 
-const COLUMNS = ['날짜', '분석 유형', '공사 유형', '리스크'] as const;
+const COLUMNS = ['날짜', '분석 유형', '공사 유형'] as const;
 
 const formatDate = (dateStr: string) => {
   const [, month, day] = dateStr.split('-');
   return `${parseInt(month)}월 ${parseInt(day)}일`;
-};
-
-const RiskBadge = ({ risk }: { risk: RiskStatus }) => {
-  if (risk.type === 'danger') {
-    return <span className={styles.riskDanger}>{risk.label}</span>;
-  }
-  if (risk.type === 'safe') {
-    return <span className={styles.riskSafe}>{risk.label}</span>;
-  }
-  return <span className={styles.riskNone}>—</span>;
 };
 
 const AnalysisTypeBadge = ({ label }: { label: string }) => {
@@ -32,7 +23,7 @@ const AnalysisTypeBadge = ({ label }: { label: string }) => {
   return <span className={isRisk ? styles.analysisRisk : styles.analysisEstimate}>{label}</span>;
 };
 
-export const HistoryTable = ({ rows }: HistoryTableProps) => {
+export const HistoryTable = ({ rows, onDelete }: HistoryTableProps) => {
   const router = useRouter();
   return (
     <div className={styles.card}>
@@ -51,7 +42,6 @@ export const HistoryTable = ({ rows }: HistoryTableProps) => {
           <col className={styles.colDate} />
           <col className={styles.colType} />
           <col className={styles.colConstruction} />
-          <col className={styles.colRisk} />
           <col className={styles.colAction} />
         </colgroup>
         <thead className={styles.thead}>
@@ -86,11 +76,30 @@ export const HistoryTable = ({ rows }: HistoryTableProps) => {
                 <AnalysisTypeBadge label={row.analysisType} />
               </td>
               <td className={styles.tdConstruction}>{row.constructionType}</td>
-              <td className={styles.tdRisk}>
-                <RiskBadge risk={row.risk} />
-              </td>
               <td className={styles.tdAction}>
-                <CaretDownSmIcon width={14} height={14} style={{ transform: 'rotate(-90deg)' }} />
+                {row.analysisType === '가견적서 생성' && onDelete ? (
+                  <button
+                    type="button"
+                    aria-label="삭제"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDelete(row.id);
+                    }}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: '4px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      color: '#9CA3AF',
+                    }}
+                  >
+                    ✕
+                  </button>
+                ) : (
+                  <CaretDownSmIcon width={14} height={14} style={{ transform: 'rotate(-90deg)' }} />
+                )}
               </td>
             </tr>
           ))}

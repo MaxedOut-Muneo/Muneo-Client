@@ -1,8 +1,9 @@
 'use client';
 
 import { ChatBubble, ChatInput, CloseIconMdIcon, FloatingChat, FloatingMuneo, Logo2 } from '@muneo/design-system';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDelayedUnmount } from '@/hooks/useDelayedUnmount';
+import { useChatStore } from '@/store/chatStore';
 import {
   buttonContent,
   chatWrapper,
@@ -36,13 +37,19 @@ const createMessageId = (): string =>
     : `u-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
 
 export const FloatingChatLauncher = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, pendingMessage, open, close } = useChatStore();
   const chatMounted = useDelayedUnmount(isOpen, EXIT_DURATION);
   const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
   const [input, setInput] = useState('');
 
-  const toggle = () => setIsOpen((prev) => !prev);
-  const close = () => setIsOpen(false);
+  const toggle = () => (isOpen ? close() : open());
+
+  useEffect(() => {
+    if (isOpen && pendingMessage) {
+      setInput(pendingMessage);
+      useChatStore.setState({ pendingMessage: '' });
+    }
+  }, [isOpen, pendingMessage]);
 
   const handleSubmit = () => {
     const trimmed = input.trim();

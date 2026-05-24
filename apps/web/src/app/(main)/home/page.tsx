@@ -22,29 +22,19 @@ const buildView = (estimates: EstimateItem[], risks: RiskItem[]) => {
       analysisType: '가견적서 생성',
       constructionType: `${item.input.공간유형} ${item.input.평수}평 (${item.input.공종.join(', ')})`,
       vendor: null,
-      risk: { type: 'none' as const },
     },
   }));
 
-  const riskEntries: HistoryEntry[] = risks.map((item) => {
-    const { total_risk_items: totalRiskItems, chips } = item.result.report.summary;
-    const risk: HistoryRow['risk'] =
-      totalRiskItems === 0
-        ? { type: 'safe', label: '이상 없음' }
-        : { type: 'danger', label: chips.누락 > 0 ? `누락 ${chips.누락}건` : `위험 ${totalRiskItems}건` };
-
-    return {
-      createdAt: item.created_at,
-      row: {
-        id: item.id,
-        date: toDate(item.created_at),
-        analysisType: '리스크 진단',
-        constructionType: `${item.input.spaceType} ${item.input.pyeong}평`,
-        vendor: item.input.companyName,
-        risk,
-      },
-    };
-  });
+  const riskEntries: HistoryEntry[] = risks.map((item) => ({
+    createdAt: item.created_at,
+    row: {
+      id: item.id,
+      date: toDate(item.created_at),
+      analysisType: '리스크 진단',
+      constructionType: `${item.input.spaceType} ${item.input.pyeong}평`,
+      vendor: item.input.companyName,
+    },
+  }));
 
   const rows = [...estimateEntries, ...riskEntries]
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt))

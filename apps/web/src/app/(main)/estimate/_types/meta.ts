@@ -17,12 +17,10 @@ export interface ProcessInfo<TId extends string = string> {
 
 export const BASIC_PROCESSES = [
   { id: 'demolition', name: '철거', description: '기존 자재/가구 해체\n및 폐기' },
-  { id: 'plumbing', name: '설비', description: '배관, 방수, 확장 난방 배관 이설' },
   { id: 'electrical', name: '전기/조명', description: '콘센트 스위치 교체\n조명설치, 배선 증설' },
   { id: 'carpentry', name: '목공', description: '몰딩, 걸레받이\n문/문틀 교체, 천장' },
   { id: 'wallpaper', name: '도배', description: '벽면/천장 벽지 시공\n(실크/합지/천연)' },
-  { id: 'flooring', name: '바닥', description: '강마루, 강화마루\n장판 들 바닥재' },
-  { id: 'tile', name: '타일', description: '현관, 주방 벽면\n베란다 타일 (욕실 제외)' },
+  { id: 'flooring', name: '바닥', description: '강마루, 강화마루\n장판 등 바닥재' },
   { id: 'bathroom', name: '욕실', description: '타일, 도기, 수전\n방수, 천장 환풍기' },
   { id: 'kitchen', name: '주방', description: '싱크대, 상판\n후드, 수전' },
   { id: 'painting', name: '도장', description: '베란다 탄성코드\n세라믹/페인트' },

@@ -1,46 +1,84 @@
 import { ArrowLeftMdIcon } from '@muneo/design-system';
 import { notFound } from 'next/navigation';
+import { getServerEstimates, getServerRiskDetections } from '@/api/history';
+import { getServerMe } from '@/api/user';
 import { TransitionLink } from '@/components/TransitionLink';
-import { DiagnosisDetailView } from '../_components/DiagnosisDetailView/DiagnosisDetailView';
-import { EstimateDetailView } from '../_components/EstimateDetailView/EstimateDetailView';
-import { MOCK_DIAGNOSIS_DETAILS, MOCK_ESTIMATE_DETAILS } from '../_mocks/history-detail.mock';
-import { MOCK_HISTORY_ROWS } from '../_mocks/history.mock';
+import { EstimateResultView } from '../../estimate/_components/EstimateResultView/EstimateResultView';
 import * as styles from './page.css';
 
 export default async function HistoryDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id: idStr } = await params;
-  const id = parseInt(idStr, 10);
-  const row = MOCK_HISTORY_ROWS.find((r) => r.id === id);
+  const { id } = await params;
+  const user = await getServerMe();
 
-  if (!row) {
-    notFound();
-  }
+  const [estimates, risks] = await Promise.all([getServerEstimates(user.id), getServerRiskDetections(user.id)]);
 
-  const diagnosisDetail = MOCK_DIAGNOSIS_DETAILS[id];
-  const estimateDetail = MOCK_ESTIMATE_DETAILS[id];
-
-  if (row.analysisType === '리스크 진단' && !diagnosisDetail) {
-    notFound();
-  }
-  if (row.analysisType !== '리스크 진단' && !estimateDetail) {
-    notFound();
-  }
-
-  return (
-    <div className={styles.page}>
-      <div className={styles.container}>
-        <TransitionLink href="/history" className={styles.backButton}>
-          <ArrowLeftMdIcon width={16} height={16} />
-          분석 이력
-        </TransitionLink>
-        <div className={styles.content}>
-          {row.analysisType === '리스크 진단' ? (
-            <DiagnosisDetailView result={diagnosisDetail!} />
-          ) : (
-            <EstimateDetailView data={estimateDetail!} />
-          )}
+  const estimate = estimates.find((e) => e.id === id);
+  if (estimate) {
+    return (
+      <div className={styles.page}>
+        <div className={styles.container}>
+          <TransitionLink href="/history" className={styles.backButton}>
+            <ArrowLeftMdIcon width={16} height={16} />
+            분석 이력
+          </TransitionLink>
+          <div className={styles.content}>
+            <EstimateResultView input={estimate.input} result={estimate.result} />
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  const risk = risks.find((r) => r.id === id);
+  if (risk) {
+    return (
+      <div className={styles.page}>
+        <div className={styles.container}>
+          <TransitionLink href="/history" className={styles.backButton}>
+            <ArrowLeftMdIcon width={16} height={16} />
+            분석 이력
+          </TransitionLink>
+          <div className={styles.content}>
+            <div>
+              <h1 style={{ fontSize: '30px', fontWeight: 700, marginBottom: '8px' }}>리스크 진단 결과</h1>
+              <p style={{ color: '#6B7280', marginBottom: '24px' }}>
+                {risk.input.companyName} · {risk.input.spaceType} {risk.input.pyeong}평
+              </p>
+              <div
+                style={{
+                  background: '#fff',
+                  border: '1px solid #E5E7EB',
+                  borderRadius: '12px',
+                  padding: '24px',
+                  display: 'flex',
+                  gap: '32px',
+                }}
+              >
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '28px', fontWeight: 700, color: '#EF4444' }}>
+                    {risk.result.report.summary.chips.누락}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#6B7280', marginTop: '4px' }}>누락</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '28px', fontWeight: 700, color: '#F59E0B' }}>
+                    {risk.result.report.summary.chips.중복}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#6B7280', marginTop: '4px' }}>중복</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '28px', fontWeight: 700, color: '#3B82F6' }}>
+                    {risk.result.report.summary.chips.불분명}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#6B7280', marginTop: '4px' }}>불분명</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return notFound();
 }
