@@ -1,5 +1,5 @@
 import { vars } from '@muneo/design-system';
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 
 export const card = style({
   padding: vars.space.lg,
@@ -21,12 +21,10 @@ export const field = style({
   display: 'flex',
   flexDirection: 'column',
   gap: vars.space.xs,
-  selectors: {
-    '& input, & button': {
-      fontSize: '13px',
-    },
-  },
 });
+
+globalStyle(`${field} input`, { fontSize: '13px' });
+globalStyle(`${field} button`, { fontSize: '13px' });
 
 export const label = style({
   fontSize: '13px',
