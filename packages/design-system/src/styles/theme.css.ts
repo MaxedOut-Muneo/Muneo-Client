@@ -1,6 +1,73 @@
 import { createTheme } from '@vanilla-extract/css';
 import { vars } from './tokens.css';
 
+const typography = {
+  fontFamily:
+    "var(--font-pretendard, 'Pretendard Variable'), Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif",
+  fontFamilyDisplay: "var(--font-paperlogy, 'Paperlogy'), sans-serif",
+  fontSize: {
+    xxs: '10px',
+    xs: '12px',
+    sm: '14px',
+    base: '15px',
+    md: '16px',
+    lg: '20px',
+    xl: '24px',
+    '2xl': '28px',
+    '3xl': '32px',
+    '4xl': '40px',
+  },
+  fontWeight: {
+    regular: '400',
+    medium: '500',
+    semiBold: '600',
+    bold: '700',
+    extraBold: '800',
+  },
+  lineHeight: {
+    sm: '16px',
+    md: '20px',
+    lg: '24px',
+    xl: '28px',
+    '2xl': '36px',
+    '3xl': '48px',
+  },
+  letterSpacing: {
+    sm: '-0.16px',
+    md: '0px',
+    lg: '0.16px',
+  },
+};
+
+const space = {
+  xs: '4px',
+  sm: '8px',
+  md: '12px',
+  lg: '16px',
+  xl: '20px',
+  '2xl': '24px',
+  '3xl': '40px',
+};
+
+const radius = {
+  sm: '8px',
+  base: '10px',
+  md: '16px',
+  lg: '24px',
+  xl: '40px',
+};
+
+const semantic = {
+  success: '#10B981',
+  successBg: '#ECFDF5',
+  danger: '#EF4444',
+  dangerBg: '#FEF2F2',
+  warning: '#F59E0B',
+  warningBg: '#FFF7ED',
+  info: '#3B82F6',
+  infoBg: '#EFF6FF',
+};
+
 export const lightTheme = createTheme(vars, {
   color: {
     white: '#FFFFFF',
@@ -12,16 +79,7 @@ export const lightTheme = createTheme(vars, {
       secondary: '#8455DF',
       secondaryBg: '#F0EBFD',
     },
-    semantic: {
-      success: '#10B981',
-      successBg: '#ECFDF5',
-      danger: '#EF4444',
-      dangerBg: '#FEF2F2',
-      warning: '#F59E0B',
-      warningBg: '#FFF7ED',
-      info: '#3B82F6',
-      infoBg: '#EFF6FF',
-    },
+    semantic,
     neutral: {
       n900: '#111827',
       n700: '#374151',
@@ -34,60 +92,42 @@ export const lightTheme = createTheme(vars, {
       nSurface: '#F8F9FC',
     },
   },
-  typography: {
-    fontFamily:
-      "var(--font-pretendard, 'Pretendard Variable'), Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif",
-    fontFamilyDisplay: "var(--font-paperlogy, 'Paperlogy'), sans-serif",
-    fontSize: {
-      xxs: '10px',
-      xs: '12px',
-      sm: '14px',
-      base: '15px',
-      md: '16px',
-      lg: '20px',
-      xl: '24px',
-      '2xl': '28px',
-      '3xl': '32px',
-      '4xl': '40px',
-    },
-    fontWeight: {
-      regular: '400',
-      medium: '500',
-      semiBold: '600',
-      bold: '700',
-      extraBold: '800',
-    },
-    lineHeight: {
-      sm: '16px',
-      md: '20px',
-      lg: '24px',
-      xl: '28px',
-      '2xl': '36px',
-      '3xl': '48px',
-    },
-    letterSpacing: {
-      sm: '-0.16px',
-      md: '0px',
-      lg: '0.16px',
-    },
-  },
-  space: {
-    xs: '4px',
-    sm: '8px',
-    md: '12px',
-    lg: '16px',
-    xl: '20px',
-    '2xl': '24px',
-    '3xl': '40px',
-  },
-  radius: {
-    sm: '8px',
-    base: '10px',
-    md: '16px',
-    lg: '24px',
-    xl: '40px',
-  },
+  typography,
+  space,
+  radius,
   layout: {
     sidebarWidth: '224px',
+  },
+});
+
+export const adminTheme = createTheme(vars, {
+  color: {
+    white: '#FFFFFF',
+    black: '#0F172A',
+    brand: {
+      primary: '#0F62FE',
+      primaryLight: '#4589FF',
+      primaryBg: '#EDF4FF',
+      secondary: '#475569',
+      secondaryBg: '#F1F5F9',
+    },
+    semantic,
+    neutral: {
+      n900: '#0F172A',
+      n700: '#334155',
+      n600: '#475569',
+      n500: '#64748B',
+      n400: '#94A3B8',
+      n300: '#CBD5E1',
+      n200: '#E2E8F0',
+      n100: '#F1F5F9',
+      nSurface: '#F8FAFC',
+    },
+  },
+  typography,
+  space,
+  radius,
+  layout: {
+    sidebarWidth: '240px',
   },
 });

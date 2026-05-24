@@ -22,11 +22,25 @@ async function isDirectory(p: string) {
   return (await stat(p)).isDirectory();
 }
 
-async function componentIndex(dir: string): Promise<string> {
+async function componentExports(dir: string): Promise<string[]> {
   const entries = (await readdir(dir)).sort();
-  const lines = entries
-    .filter((e) => /\.tsx?$/.test(e) && !/\.css\.ts$/.test(e) && !/^index\.tsx?$/.test(e))
+  return entries
+    .filter(
+      (e) =>
+        /\.tsx?$/.test(e) &&
+        !/\.css\.ts$/.test(e) &&
+        !/\.stories\.tsx?$/.test(e) &&
+        !/\.test\.tsx?$/.test(e) &&
+        !/\.spec\.tsx?$/.test(e) &&
+        !/^index\.tsx?$/.test(e)
+    )
     .map((e) => `export * from './${basename(e, extname(e))}';`);
+}
+
+function componentIndexContent(lines: string[]): string {
+  if (lines.length === 0) {
+    return `${HEADER}\n\nexport {};\n`;
+  }
   return `${HEADER}\n\n${lines.join('\n')}\n`;
 }
 
@@ -48,12 +62,16 @@ async function main() {
 
   type IndexEntry = { path: string; content: string };
   const targets: IndexEntry[] = [];
+  const nonEmpty: string[] = [];
 
   for (const name of componentDirs) {
-    const content = await componentIndex(join(UI_DIR, name));
-    targets.push({ path: join(UI_DIR, name, 'index.ts'), content });
+    const lines = await componentExports(join(UI_DIR, name));
+    targets.push({ path: join(UI_DIR, name, 'index.ts'), content: componentIndexContent(lines) });
+    if (lines.length > 0) {
+      nonEmpty.push(name);
+    }
   }
-  targets.push({ path: join(UI_DIR, 'index.ts'), content: uiIndex(componentDirs) });
+  targets.push({ path: join(UI_DIR, 'index.ts'), content: uiIndex(nonEmpty) });
 
   if (CHECK) {
     const outdated: string[] = [];
