@@ -95,14 +95,7 @@ export const useAnalysisStore = create<AnalysisStore>((set, get) => ({
         return;
       }
 
-      console.group('━━━ [견적서 진단] 분석 시작 ━━━');
-      console.log('[공사 정보 폼]', { ...form });
-      console.log(
-        '[업로드 파일 목록]',
-        files.map((f) => ({ name: f.name, size: f.size, type: f.file.type }))
-      );
-
-      // 1. 요청 데이터 구성 (saveRisk 재사용)
+      // 1. 요청 데이터 구성
       const requestBody: RiskAnalyzeRequestBody = {
         space_type: form.spaceType,
         pyeong: form.pyeong,
@@ -113,14 +106,6 @@ export const useAnalysisStore = create<AnalysisStore>((set, get) => ({
         building_age: form.buildingAge,
         company_name: form.companyName,
       };
-
-      console.group('[STEP 1] analyzeRisk 요청 데이터');
-      console.log('[폼 필드]', requestBody);
-      console.log(
-        '[files 필드]',
-        files.map((f) => ({ name: f.name, type: f.file.type, size: f.file.size }))
-      );
-      console.groupEnd();
 
       // 2. multipart FormData 구성 — 각 필드를 개별 form 파라미터로 전송
       const formData = new FormData();
@@ -134,42 +119,27 @@ export const useAnalysisStore = create<AnalysisStore>((set, get) => ({
       formData.append('company_name', requestBody.company_name);
       files.forEach((f) => formData.append('files', f.file, f.name));
 
-      // 3. 분석 요청
+      // 3. 분석 요청 — 이전 요청이 진행 중이면 먼저 중단
+      _abortController?.abort();
       _abortController = new AbortController();
       const { report } = await analyzeRisk(formData, _abortController.signal);
 
-      console.group('[STEP 2] analyzeRisk 응답 상세');
-      console.log('[report.title]', report.title);
-      console.log('[report.subtitle_fields]', report.subtitle_fields);
-      console.log('[report.construction_info]', report.construction_info);
-      console.log('[report.summary]', report.summary);
-      console.log('[report.cards]', report.cards);
-      console.log('[report.process_sections]', report.process_sections);
-      console.groupEnd();
-
       // 4. 결과 저장
-      const saved = await saveRisk({ input: requestBody, result: { report } }, userId);
-
-      console.log('[STEP 3] saveRisk 완료 →', saved);
+      await saveRisk({ input: requestBody, result: { report } }, userId);
 
       // 5. UI 상태 업데이트
       const diagnosisResult = mapApiReportToDiagnosisResult(report);
-      console.log('[STEP 4] 매핑된 DiagnosisResult]', diagnosisResult);
-      console.groupEnd(); // ━━━ 분석 시작
-
       set({ diagnosisResult, view: 'report', loading: false });
     } catch (err) {
       if (err instanceof Error && err.name === 'AbortError') {
         return;
       }
-      const clientErr = err as Error & { status?: number; body?: unknown };
-      console.error('[견적서 진단] 오류 발생');
-      console.error('  message:', clientErr.message);
-      console.error('  status:', clientErr.status);
-      console.error('  body:', clientErr.body);
-      console.error('  stack:', clientErr.stack);
-      console.groupEnd();
+      if (process.env.NODE_ENV === 'development') {
+        console.error('[견적서 진단] 오류:', err);
+      }
       set({ error: '분석 중 오류가 발생했습니다.', loading: false });
+    } finally {
+      _abortController = null;
     }
   },
   cancelAnalysis: () => {
