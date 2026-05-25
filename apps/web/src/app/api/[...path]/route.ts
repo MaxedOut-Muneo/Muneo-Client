@@ -1,5 +1,7 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
+export const maxDuration = 300; // 5분 — AI 분석 응답 대기
+
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? '';
 
 const FORWARD_REQ_HEADERS = ['content-type', 'cookie', 'authorization'];
@@ -21,7 +23,8 @@ async function proxy(request: NextRequest, params: { path: string[] }): Promise<
     }
   }
 
-  const body = ['GET', 'HEAD'].includes(request.method) ? undefined : await request.text();
+  // arrayBuffer로 읽어야 multipart/form-data 등 바이너리 바디가 손상되지 않음
+  const body = ['GET', 'HEAD'].includes(request.method) ? undefined : await request.arrayBuffer();
 
   const backendRes = await fetch(url, {
     method: request.method,

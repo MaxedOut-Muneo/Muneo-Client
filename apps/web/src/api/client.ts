@@ -1,6 +1,10 @@
 import ky, { type KyInstance } from 'ky';
 
 const getApiBaseUrl = () => {
+  // 브라우저에서는 Next.js 프록시 경유 — 쿠키를 현재 origin에 설정하기 위해
+  if (typeof window !== 'undefined') {
+    return window.location.origin;
+  }
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   if (!apiBaseUrl) {
     throw new Error('NEXT_PUBLIC_API_BASE_URL is not set');
