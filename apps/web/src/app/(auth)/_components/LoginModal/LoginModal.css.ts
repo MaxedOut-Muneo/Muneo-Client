@@ -40,6 +40,12 @@ export const forgotPassword = style({
   color: vars.color.brand.secondary,
   opacity: 0.9,
   letterSpacing: '-0.104px',
+  selectors: {
+    '&:disabled': {
+      cursor: 'not-allowed',
+      opacity: 0.4,
+    },
+  },
 });
 
 export const actionSection = style({
@@ -87,8 +93,12 @@ export const kakaoButton = style({
   cursor: 'pointer',
   width: '100%',
   selectors: {
-    '&:hover': {
+    '&:hover:not(:disabled)': {
       filter: 'brightness(0.95)',
+    },
+    '&:disabled': {
+      cursor: 'not-allowed',
+      opacity: 0.6,
     },
   },
 });
@@ -127,4 +137,12 @@ export const signupLink = style({
   opacity: 0.9,
   letterSpacing: '-0.104px',
   whiteSpace: 'nowrap',
+  textDecoration: 'none',
+  selectors: {
+    '&:disabled, &[aria-disabled="true"]': {
+      cursor: 'not-allowed',
+      opacity: 0.4,
+      pointerEvents: 'none',
+    },
+  },
 });

@@ -4,8 +4,14 @@ import { style } from '@vanilla-extract/css';
 export const form = style({
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'flex-end',
   gap: '36px',
+  width: '100%',
+});
+
+export const actionsRow = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
   width: '100%',
 });
 
@@ -18,6 +24,14 @@ export const fields = style({
 
 export const submitButton = style({
   width: '200px',
+});
+
+export const errorMessage = style({
+  alignSelf: 'flex-start',
+  fontFamily: vars.typography.fontFamily,
+  fontSize: '13px',
+  color: '#ef4444',
+  margin: 0,
 });
 
 export const socialField = style({

@@ -1,7 +1,7 @@
 import { ArrowLeftMdIcon } from '@muneo/design-system';
 import { notFound } from 'next/navigation';
 import { getServerEstimates, getServerRiskDetections } from '@/api/history';
-import { getServerMe } from '@/api/user';
+import { getServerMe } from '@/api/user/server';
 import { TransitionLink } from '@/components/TransitionLink';
 import { EstimateResultView } from '../../estimate/_components/EstimateResultView/EstimateResultView';
 import * as styles from './page.css';

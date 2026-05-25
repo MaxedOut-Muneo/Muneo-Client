@@ -1,14 +1,7 @@
 import 'server-only';
 import { cookies } from 'next/headers';
+import { getApiBaseUrl } from './baseUrl';
 import { toApiError } from './errors';
-
-const getBaseUrl = () => {
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-  if (!baseUrl) {
-    throw new Error('NEXT_PUBLIC_API_BASE_URL is not set');
-  }
-  return baseUrl;
-};
 
 interface ServerFetchOptions extends Omit<RequestInit, 'body'> {
   body?: unknown;
@@ -27,7 +20,7 @@ export const serverFetch = async <T>(path: string, options: ServerFetchOptions =
     new Headers(customHeaders).forEach((value, key) => headers.set(key, value));
   }
 
-  const res = await fetch(`${getBaseUrl()}/${path}`, {
+  const res = await fetch(`${getApiBaseUrl()}/${path}`, {
     ...rest,
     headers,
     body: body !== undefined ? JSON.stringify(body) : undefined,

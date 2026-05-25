@@ -1,17 +1,3 @@
-export interface SignupRequest {
-  email: string;
-  password: string;
-  passwordConfirm: string;
-  name: string;
-  phoneNumber: string;
-  birthDate: string;
-}
-
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
-
 export interface SocialSignupRequest {
   ticket: string;
   name: string;

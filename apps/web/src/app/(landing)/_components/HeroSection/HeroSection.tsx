@@ -1,4 +1,5 @@
 import { Button, FileUploadIcon, OctagonCheckIcon, StatusCard, TriangleWarningIcon } from '@muneo/design-system';
+import { TransitionLink } from '@/components/TransitionLink';
 import * as styles from './HeroSection.css';
 
 const RECENT_ANALYSES = [
@@ -26,7 +27,13 @@ export const HeroSection = () => {
                 <p className={styles.descriptionText}>계약 전에 문어가 찾아드릴게요</p>
               </div>
               <div className={styles.ctaWrapper}>
-                <Button variant="gradient" className={styles.ctaButton}>
+                <Button
+                  as={TransitionLink}
+                  href="/login"
+                  viewTransition
+                  variant="gradient"
+                  className={styles.ctaButton}
+                >
                   무료로 시작하기
                 </Button>
               </div>
