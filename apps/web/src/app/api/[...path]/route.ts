@@ -18,7 +18,6 @@ const getForwardHeaders = (request: NextRequest) => {
   headers.delete('origin');
   headers.delete('referer');
   headers.delete('forwarded');
-  headers.delete('x-user-id');
 
   for (const key of [...headers.keys()]) {
     if (key.startsWith('sec-') || key.startsWith('x-forwarded-') || key.startsWith('x-real-')) {
