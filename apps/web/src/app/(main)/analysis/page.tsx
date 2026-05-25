@@ -1,5 +1,6 @@
 'use client';
 
+import { AnalysisLoadingScreen } from './_components/AnalysisLoadingScreen/AnalysisLoadingScreen';
 import { DiagnosisReport } from './_components/DiagnosisReport/DiagnosisReport';
 import { InputForm } from './_components/InputForm/InputForm';
 import { UploadPanel } from './_components/UploadPanel/UploadPanel';
@@ -25,13 +26,14 @@ const AnalysisPage = () => {
   const view = useAnalysisStore((s) => s.view);
   const loading = useAnalysisStore((s) => s.loading);
   const error = useAnalysisStore((s) => s.error);
+  const form = useAnalysisStore((s) => s.form);
+  const files = useAnalysisStore((s) => s.files);
+  const cancelAnalysis = useAnalysisStore((s) => s.cancelAnalysis);
 
   if (loading) {
     return (
       <div className={styles.page}>
-        <div className={styles.loadingState}>
-          <p className={styles.loadingText}>분석 중입니다...</p>
-        </div>
+        <AnalysisLoadingScreen companyName={form.companyName} fileCount={files.length} onCancel={cancelAnalysis} />
       </div>
     );
   }
