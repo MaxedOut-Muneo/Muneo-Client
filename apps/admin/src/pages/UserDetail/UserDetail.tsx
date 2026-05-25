@@ -6,9 +6,9 @@ import { UserDangerZone } from './components/UserDangerZone';
 import { UserEditForm } from './components/UserEditForm';
 import { UserRoleSection } from './components/UserRoleSection';
 import { useUserDetail } from './hooks/useUserDetail';
-import * as styles from './UserDetailPage.css';
+import * as styles from './UserDetail.css';
 
-export const UserDetailPage = () => {
+export const UserDetail = () => {
   const {
     userId,
     detail,

@@ -2,7 +2,7 @@ import { Button, Dropdown } from '@muneo/design-system';
 import { USER_ROLES, type UserRole } from '@/api';
 import { Card } from '@/components/Card';
 import { ROLE_LABEL } from '@/lib/formatters';
-import * as styles from '../UserDetailPage.css';
+import * as styles from '../UserDetail.css';
 
 interface UserRoleSectionProps {
   currentRole: UserRole;
