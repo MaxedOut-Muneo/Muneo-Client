@@ -1,6 +1,6 @@
 import { Button, TextField } from '@muneo/design-system';
 import { useLoginForm } from '../hooks/useLoginForm';
-import * as styles from '../LoginPage.css';
+import * as styles from '../Login.css';
 
 export const LoginForm = () => {
   const { email, password, setEmail, setPassword, fieldErrors, submitError, isPending, submit } = useLoginForm();

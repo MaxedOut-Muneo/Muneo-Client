@@ -1,7 +1,7 @@
 import { LoginForm } from './components/LoginForm';
-import * as styles from './LoginPage.css';
+import * as styles from './Login.css';
 
-export const LoginPage = () => (
+export const Login = () => (
   <div className={styles.wrapper}>
     <div className={styles.card}>
       <div>
