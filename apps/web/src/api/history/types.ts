@@ -1,14 +1,12 @@
+import { type RiskReport } from '@/app/(main)/analysis/_types/analysis.types';
 import { type EstimateGenerateRequest, type EstimateGenerateResponse } from '@/app/(main)/estimate/_types/api';
 
-interface RiskSummary {
-  total_risk_items: number;
-  chips: { 누락: number; 중복: number; 불분명: number };
-}
-
-interface RiskResult {
-  report: {
-    summary: RiskSummary;
-  };
+export interface EstimateItem {
+  id: string;
+  user_id: string;
+  created_at: string;
+  input: EstimateGenerateRequest;
+  result: EstimateGenerateResponse;
 }
 
 interface RiskInput {
@@ -18,12 +16,8 @@ interface RiskInput {
   [key: string]: unknown;
 }
 
-export interface EstimateItem {
-  id: string;
-  user_id: string;
-  created_at: string;
-  input: EstimateGenerateRequest;
-  result: EstimateGenerateResponse;
+interface RiskResult {
+  report: RiskReport;
 }
 
 export interface RiskItem {
