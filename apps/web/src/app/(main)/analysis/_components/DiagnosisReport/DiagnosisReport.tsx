@@ -37,14 +37,14 @@ export const DiagnosisReport = () => {
         <StatusCard
           variant="warning"
           icon={<CircleWarningIcon width={24} height={24} />}
-          label="발견한 리스크 항목"
+          label="불분명 항목"
           value={`${result.riskCount}건`}
           className={styles.summaryCard}
         />
         <StatusCard
           variant="info"
           icon={<CircleWarningIcon width={24} height={24} />}
-          label="정보 미비"
+          label="중복 항목"
           value={`${result.insufficientCount}건`}
           className={styles.summaryCard}
         />
@@ -63,7 +63,7 @@ export const DiagnosisReport = () => {
           <div className={styles.summaryBadges}>
             <span className={`${styles.summaryBadge} ${styles.badgeDanger}`}>누락 {result.missingCount}</span>
             <span className={`${styles.summaryBadge} ${styles.badgeWarning}`}>불분명 {result.riskCount}</span>
-            <span className={`${styles.summaryBadge} ${styles.badgeInfo}`}>미비 {result.insufficientCount}</span>
+            <span className={`${styles.summaryBadge} ${styles.badgeInfo}`}>중복 {result.insufficientCount}</span>
           </div>
         </div>
       </div>
