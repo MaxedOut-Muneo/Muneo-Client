@@ -1,6 +1,6 @@
 import { COMPANY_NAME } from './app';
 
-export const SITE_URL = 'https://www.muneo.ai.kr';
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.muneo.ai.kr';
 export const SITE_NAME = COMPANY_NAME;
 export const SITE_TITLE_DEFAULT = `${COMPANY_NAME} - 문제 없는 시공을 위한 어시스턴트`;
 export const SITE_TITLE_TEMPLATE = `%s | ${COMPANY_NAME}`;
