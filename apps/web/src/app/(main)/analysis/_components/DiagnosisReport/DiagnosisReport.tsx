@@ -21,9 +21,6 @@ export const DiagnosisReport = () => {
             {result.vendorLabel} · {result.areaLabel} · 분석일 {result.analyzedAt}
           </span>
         </div>
-        <button type="button" className={styles.pdfButton} onClick={() => window.print()}>
-          PDF ↓
-        </button>
       </div>
 
       <div className={styles.summaryCards}>
