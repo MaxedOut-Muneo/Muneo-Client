@@ -4,7 +4,9 @@ import { Button, Logo } from '@muneo/design-system';
 import { clsx } from 'clsx';
 import { useEffect, useState } from 'react';
 import { TransitionLink } from '@/components/TransitionLink';
+import { CTA_EVENTS } from '@/constants/analyticsEvents';
 import { TAGLINE } from '@/constants/app';
+import { trackCtaClick } from '@/lib/analytics';
 import * as styles from './Header.css';
 
 const NAV_ITEMS = [
@@ -45,7 +47,20 @@ export const Header = () => {
           </ul>
         </nav>
 
-        <Button as={TransitionLink} href="/login" viewTransition variant="gradient" className={styles.ctaButton}>
+        <Button
+          as={TransitionLink}
+          href="/login"
+          viewTransition
+          variant="gradient"
+          className={styles.ctaButton}
+          onClick={() =>
+            trackCtaClick(CTA_EVENTS.landingHeaderSignup, {
+              linkText: '시작하기',
+              linkUrl: '/login',
+              position: 'header',
+            })
+          }
+        >
           시작하기
         </Button>
       </div>
