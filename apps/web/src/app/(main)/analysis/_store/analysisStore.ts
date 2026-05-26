@@ -1,12 +1,6 @@
 import { create } from 'zustand';
-import { analyzeRisk, saveRisk } from '@/api/analyze';
-import {
-  type AnalysisFormData,
-  type DiagnosisResult,
-  type RiskAnalyzeRequestBody,
-  type RiskReport,
-  type UploadedFile,
-} from '../_types/analysis.types';
+import { analyzeRisk, type RiskAnalyzeRequestBody, type RiskReport, saveRisk } from '@/api/analyze';
+import { type AnalysisFormData, type DiagnosisResult, type UploadedFile } from '../_types/analysis.types';
 
 const DEFAULT_FORM: AnalysisFormData = {
   spaceType: null,

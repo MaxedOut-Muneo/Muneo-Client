@@ -1,6 +1,7 @@
 'use client';
 
 import { create } from 'zustand';
+import { type EstimateGenerateResponse } from '@/api/estimate';
 import {
   BASIC_PROCESSES,
   type EstimateStep,
@@ -10,7 +11,6 @@ import {
   type Step3Data,
   type Step4Data,
 } from '../_types';
-import { type EstimateGenerateResponse } from '../_types/api';
 
 const initialStep1: Step1Data = {
   region: null,

@@ -1,4 +1,4 @@
-import { type EstimateGenerateRequest } from '../_types/api';
+import { type EstimateGenerateRequest } from '@/api/estimate';
 import { type Step1Data } from '../_types/step1';
 import { type Step2Data } from '../_types/step2';
 import { type Step3Data } from '../_types/step3';
