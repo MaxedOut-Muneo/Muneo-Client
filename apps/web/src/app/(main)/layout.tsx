@@ -3,6 +3,7 @@ import { type ReactNode } from 'react';
 import { isApiError } from '@/api/errors';
 import { getServerMe } from '@/api/user/server';
 import { type AuthUser } from '@/types/auth';
+import { AuthStoreInitializer } from './_components/AuthStoreInitializer/AuthStoreInitializer';
 import { SidebarShell } from './_components/SidebarShell';
 import * as styles from './layout.css';
 
@@ -19,6 +20,7 @@ const MainLayout = async ({ children }: { children: ReactNode }) => {
 
   return (
     <div className={styles.wrapper}>
+      <AuthStoreInitializer user={user} />
       <SidebarShell className={styles.sidebar} user={user} />
       <main className={styles.main}>{children}</main>
     </div>
