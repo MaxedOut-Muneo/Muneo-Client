@@ -3,7 +3,7 @@ import * as styles from './HistoryTable.css';
 
 interface HistoryTableProps {
   rows: HistoryRow[];
-  onRowClick?: (id: number) => void;
+  onRowClick?: (id: string) => void;
 }
 
 const COLUMNS = ['번호', '날짜', '분석 유형', '공사 유형', '업체', '리스크', '상태'] as const;
@@ -58,7 +58,7 @@ export const HistoryTable = ({ rows, onRowClick }: HistoryTableProps) => {
               </td>
             </tr>
           ) : (
-            rows.map((row) => (
+            rows.map((row, idx) => (
               <tr
                 key={row.id}
                 className={styles.tr}
@@ -71,7 +71,7 @@ export const HistoryTable = ({ rows, onRowClick }: HistoryTableProps) => {
                   }
                 }}
               >
-                <td className={styles.td}>{row.id}</td>
+                <td className={styles.td}>{idx + 1}</td>
                 <td className={styles.td}>{row.date}</td>
                 <td className={styles.tdAnalysisType}>{row.analysisType}</td>
                 <td className={styles.td}>{row.constructionType}</td>

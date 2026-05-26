@@ -2,7 +2,7 @@ export type RiskStatus = { type: 'danger'; label: string } | { type: 'safe'; lab
 export type AnalysisStatus = '완료' | '진행중' | '대기';
 
 export interface HistoryRow {
-  id: number;
+  id: string;
   date: string;
   analysisType: string;
   constructionType: string;

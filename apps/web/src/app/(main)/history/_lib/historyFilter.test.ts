@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { applyFilters, formatDateParam, parseDateParam } from './historyFilter';
 import { type HistoryRow } from '../_types/history.types';
 
-const makeRow = (id: number, analysisType: HistoryRow['analysisType'], date: string): HistoryRow => ({
+const makeRow = (id: string, analysisType: HistoryRow['analysisType'], date: string): HistoryRow => ({
   id,
   date,
   analysisType,
@@ -66,9 +66,9 @@ describe('formatDateParam', () => {
 
 describe('applyFilters', () => {
   const rows: HistoryRow[] = [
-    makeRow(1, '리스크 진단', '2025-01-10'),
-    makeRow(2, '가견적서 생성', '2025-01-15'),
-    makeRow(3, '리스크 진단', '2025-02-01'),
+    makeRow('1', '리스크 진단', '2025-01-10'),
+    makeRow('2', '가견적서 생성', '2025-01-15'),
+    makeRow('3', '리스크 진단', '2025-02-01'),
   ];
 
   it('analysisType이 all이면 모든 행을 반환한다', () => {
@@ -78,7 +78,7 @@ describe('applyFilters', () => {
 
   it('analysisType이 risk이면 리스크 진단 행만 반환한다', () => {
     const result = applyFilters(rows, { analysisType: 'risk', startDate: undefined, endDate: undefined });
-    expect(result.map((r) => r.id)).toEqual([1, 3]);
+    expect(result.map((r) => r.id)).toEqual(['1', '3']);
   });
 
   it('startDate 이전 행은 제외한다', () => {
@@ -87,7 +87,7 @@ describe('applyFilters', () => {
       startDate: new Date('2025-01-14'),
       endDate: undefined,
     });
-    expect(result.map((r) => r.id)).toEqual([2, 3]);
+    expect(result.map((r) => r.id)).toEqual(['2', '3']);
   });
 
   it('endDate 이후 행은 제외한다', () => {
@@ -96,7 +96,7 @@ describe('applyFilters', () => {
       startDate: undefined,
       endDate: new Date('2025-01-15'),
     });
-    expect(result.map((r) => r.id)).toEqual([1, 2]);
+    expect(result.map((r) => r.id)).toEqual(['1', '2']);
   });
 
   it('startDate와 endDate를 동시에 적용한다', () => {
@@ -105,6 +105,6 @@ describe('applyFilters', () => {
       startDate: new Date('2025-01-12'),
       endDate: new Date('2025-01-20'),
     });
-    expect(result.map((r) => r.id)).toEqual([2]);
+    expect(result.map((r) => r.id)).toEqual(['2']);
   });
 });
