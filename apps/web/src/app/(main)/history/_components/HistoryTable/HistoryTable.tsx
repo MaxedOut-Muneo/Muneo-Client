@@ -6,7 +6,7 @@ interface HistoryTableProps {
   onRowClick?: (id: string) => void;
 }
 
-const COLUMNS = ['번호', '날짜', '분석 유형', '공사 유형', '업체', '리스크', '상태'] as const;
+const COLUMNS = ['번호', '날짜', '분석 유형', '공사 유형', '리스크', '상태'] as const;
 
 const getStatusClass = (status: AnalysisStatus) => {
   if (status === '완료') {
@@ -19,13 +19,15 @@ const getStatusClass = (status: AnalysisStatus) => {
 };
 
 const RiskCell = ({ risk }: { risk: RiskStatus }) => {
-  if (risk.type === 'danger') {
-    return <span className={styles.riskDanger}>{risk.label}</span>;
+  if (risk.missing === 0 && risk.unclear === 0) {
+    return <span className={styles.riskNone}>—</span>;
   }
-  if (risk.type === 'safe') {
-    return <span className={styles.riskSafe}>{risk.label}</span>;
-  }
-  return <span className={styles.riskNone}>—</span>;
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+      {risk.missing > 0 && <span className={styles.riskDanger}>누락 {risk.missing}건</span>}
+      {risk.unclear > 0 && <span className={styles.riskWarning}>불분명 {risk.unclear}건</span>}
+    </div>
+  );
 };
 
 export const HistoryTable = ({ rows, onRowClick }: HistoryTableProps) => {
@@ -37,7 +39,6 @@ export const HistoryTable = ({ rows, onRowClick }: HistoryTableProps) => {
           <col className={styles.colDate} />
           <col className={styles.colAnalysisType} />
           <col className={styles.colConstructionType} />
-          <col className={styles.colVendor} />
           <col className={styles.colRisk} />
           <col className={styles.colStatus} />
         </colgroup>
@@ -75,7 +76,6 @@ export const HistoryTable = ({ rows, onRowClick }: HistoryTableProps) => {
                 <td className={styles.td}>{row.date}</td>
                 <td className={styles.tdAnalysisType}>{row.analysisType}</td>
                 <td className={styles.td}>{row.constructionType}</td>
-                <td className={styles.td}>{row.vendor}</td>
                 <td className={styles.td}>
                   <RiskCell risk={row.risk} />
                 </td>

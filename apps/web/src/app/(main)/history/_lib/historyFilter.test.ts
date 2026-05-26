@@ -7,8 +7,7 @@ const makeRow = (id: string, analysisType: HistoryRow['analysisType'], date: str
   date,
   analysisType,
   constructionType: '아파트',
-  vendor: '문어건설',
-  risk: { type: 'none' },
+  risk: { missing: 0, unclear: 0 },
   status: '완료',
 });
 
