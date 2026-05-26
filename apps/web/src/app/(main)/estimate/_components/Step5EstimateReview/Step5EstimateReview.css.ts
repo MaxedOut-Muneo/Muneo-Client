@@ -418,15 +418,25 @@ export const accordionContent = style({
   padding: '0 4px',
 });
 
-export const accordionTableHeader = style({
-  display: 'grid',
-  gridTemplateColumns: '1fr 220px 60px',
+const accordionTableHeaderBase = {
   alignItems: 'center',
   fontSize: vars.typography.fontSize.xs,
   fontFamily: vars.typography.fontFamily,
   fontWeight: vars.typography.fontWeight.regular,
   color: vars.color.neutral.n500,
   lineHeight: 'normal',
+} as const;
+
+export const accordionTableHeader = style({
+  display: 'grid',
+  gridTemplateColumns: '1fr 220px 60px',
+  ...accordionTableHeaderBase,
+});
+
+export const accordionTableHeaderNoRef = style({
+  display: 'grid',
+  gridTemplateColumns: '1fr 220px',
+  ...accordionTableHeaderBase,
 });
 
 globalStyle(`${accordionTableHeader} > *:last-child`, {
@@ -445,15 +455,25 @@ export const accordionRow = style({
   gap: '4px',
 });
 
-export const accordionRowContent = style({
-  display: 'grid',
-  gridTemplateColumns: '1fr 220px 60px',
+const accordionRowContentBase = {
   alignItems: 'center',
   fontSize: vars.typography.fontSize.xs,
   fontWeight: vars.typography.fontWeight.bold,
   fontFamily: vars.typography.fontFamily,
   color: vars.color.neutral.n900,
   lineHeight: 'normal',
+} as const;
+
+export const accordionRowContent = style({
+  display: 'grid',
+  gridTemplateColumns: '1fr 220px 60px',
+  ...accordionRowContentBase,
+});
+
+export const accordionRowContentNoRef = style({
+  display: 'grid',
+  gridTemplateColumns: '1fr 220px',
+  ...accordionRowContentBase,
 });
 
 export const refCountGreen = style({

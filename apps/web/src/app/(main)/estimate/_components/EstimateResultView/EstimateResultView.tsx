@@ -37,6 +37,7 @@ const buildDisplayItems = (lineItems: EstimateLineItem[]): DisplayItem[] =>
 
 const AccordionItem = ({ estimate }: { estimate: ProcessEstimateDisplay }) => {
   const [isOpen, setIsOpen] = useState(estimate.items.length > 0);
+  const hasRefData = estimate.items.some((item) => item.refCount > 0);
 
   return (
     <div className={styles.accordionItemWrapper}>
@@ -53,21 +54,23 @@ const AccordionItem = ({ estimate }: { estimate: ProcessEstimateDisplay }) => {
       <div className={`${styles.accordionBody}${isOpen ? ` ${styles.accordionBodyOpen}` : ''}`}>
         {estimate.items.length > 0 ? (
           <div className={styles.accordionContent}>
-            <div className={styles.accordionTableHeader}>
+            <div className={hasRefData ? styles.accordionTableHeader : styles.accordionTableHeaderNoRef}>
               <span>항목</span>
               <span>예상 범위</span>
-              <span>참조</span>
+              {hasRefData && <span>참조</span>}
             </div>
             <div className={styles.accordionDivider} />
 
             {estimate.items.map((item) => (
               <div key={item.name} className={styles.accordionRow}>
-                <div className={styles.accordionRowContent}>
+                <div className={hasRefData ? styles.accordionRowContent : styles.accordionRowContentNoRef}>
                   <span>{item.name}</span>
                   <span>{item.range}</span>
-                  <span className={item.refCount >= 5 ? styles.refCountGreen : styles.refCountOrange}>
-                    {item.refCount}건{item.refCount < 5 ? ' ⚠' : ''}
-                  </span>
+                  {hasRefData && (
+                    <span className={item.refCount >= 5 ? styles.refCountGreen : styles.refCountOrange}>
+                      {item.refCount}건{item.refCount < 5 ? ' ⚠' : ''}
+                    </span>
+                  )}
                 </div>
                 <div className={styles.accordionItemDivider} />
               </div>
@@ -91,7 +94,7 @@ const TotalBanner = ({ result }: { result: EstimateGenerateResponse }) => {
         <span className={styles.bannerSubtitle}>총 예상 견적 범위 (부가세 별도)</span>
         <span className={styles.bannerAmount}>{formatRange(최소, 최대)}</span>
       </div>
-      <span className={styles.bannerRef}>{result.참고_사례_수}건 참고</span>
+      {result.참고_사례_수 > 0 && <span className={styles.bannerRef}>{result.참고_사례_수}건 참고</span>}
     </div>
   );
 };

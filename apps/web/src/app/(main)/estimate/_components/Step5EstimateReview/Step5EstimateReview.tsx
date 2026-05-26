@@ -39,9 +39,6 @@ const DisclaimerSection = ({ isSaving, saveError, onEdit, onSave }: DisclaimerSe
           <ArrowLeftMdIcon width={20} height={20} />
           수정하기
         </Button>
-        <Button variant="outline" size="md" style={{ color: '#6B7280', borderRadius: '12px' }}>
-          PDF 다운로드
-        </Button>
         <Button variant="primary" size="md" onClick={onSave} disabled={isSaving}>
           {isSaving ? '저장 중...' : '저장하기'}
         </Button>
@@ -67,6 +64,7 @@ export const EstimateResult = () => {
 
   const handleSave = async () => {
     if (!user) {
+      setSaveError('로그인 후 저장할 수 있습니다.');
       return;
     }
     setIsSaving(true);
@@ -88,7 +86,7 @@ export const EstimateResult = () => {
       result={estimateResult}
       onEdit={() => goToStep(1)}
       actions={
-        <DisclaimerSection isSaving={isSaving} saveError={saveError} onEdit={() => goToStep(4)} onSave={handleSave} />
+        <DisclaimerSection isSaving={isSaving} saveError={saveError} onEdit={() => goToStep(3)} onSave={handleSave} />
       }
     />
   );
