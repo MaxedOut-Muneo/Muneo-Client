@@ -3,7 +3,7 @@ import { type FormEvent } from 'react';
 import { type UpdateUserRequest } from '@/api';
 import { Card } from '@/components/Card';
 import { type FormErrors } from '../hooks/useUserDetail';
-import * as styles from '../UserDetailPage.css';
+import * as styles from '../UserDetail.css';
 
 interface UserEditFormProps {
   form: UpdateUserRequest;
