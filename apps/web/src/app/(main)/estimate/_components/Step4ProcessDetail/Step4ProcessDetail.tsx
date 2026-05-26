@@ -289,9 +289,9 @@ export const Step4ProcessDetail = () => {
   const { step1, step2, step4, setStep4, nextStep, prevStep } = useEstimateStore();
 
   const selectedProcesses = ALL_PROCESSES.filter((p) => step2.selectedProcesses.includes(p.id));
-  const renderableProcesses = selectedProcesses.filter((p) => SECTION_MAP[p.id]);
+  const firstDetailProcess = selectedProcesses.find((p) => SECTION_MAP[p.id]);
 
-  const [openId, setOpenId] = useState<string | null>(renderableProcesses[0]?.id ?? null);
+  const [openId, setOpenId] = useState<string | null>(firstDetailProcess?.id ?? null);
 
   const contextLabel = step1.area && step1.roomCount ? `${step1.area}평 / 방 ${step1.roomCount} 기준` : null;
 
@@ -311,52 +311,52 @@ export const Step4ProcessDetail = () => {
           </div>
         )}
 
-        {renderableProcesses.length === 0 ? (
-          <div className={styles.sectionBody}>
-            <p className={styles.infoNote}>입력할 세부 항목이 없습니다. 다음 단계로 이동해주세요.</p>
-          </div>
-        ) : (
-          <div className={styles.accordionList}>
-            {renderableProcesses.map((process) => {
-              const isOpen = openId === process.id;
-              const SectionComponent = SECTION_MAP[process.id]!;
+        <div className={styles.accordionList}>
+          {selectedProcesses.map((process) => {
+            const isOpen = openId === process.id;
+            const SectionComponent = SECTION_MAP[process.id];
 
-              return (
-                <div key={process.id} className={styles.accordionItem}>
-                  <button
-                    type="button"
-                    className={styles.accordionHeader}
-                    onClick={() => setOpenId(isOpen ? null : process.id)}
+            return (
+              <div key={process.id} className={styles.accordionItem}>
+                <button
+                  type="button"
+                  className={styles.accordionHeader}
+                  onClick={() => setOpenId(isOpen ? null : process.id)}
+                >
+                  <span
+                    className={`${styles.accordionHeaderText}${isOpen ? ` ${styles.accordionHeaderTextOpen}` : ''}`}
                   >
-                    <span
-                      className={`${styles.accordionHeaderText}${isOpen ? ` ${styles.accordionHeaderTextOpen}` : ''}`}
-                    >
-                      {process.name}
-                    </span>
-                    <span className={`${styles.accordionChevron}${isOpen ? ` ${styles.accordionChevronOpen}` : ''}`}>
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path
-                          d="M4 6L8 10L12 6"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </span>
-                  </button>
+                    {process.name}
+                  </span>
+                  <span className={`${styles.accordionChevron}${isOpen ? ` ${styles.accordionChevronOpen}` : ''}`}>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path
+                        d="M4 6L8 10L12 6"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </button>
 
-                  <div className={`${styles.accordionBody}${isOpen ? ` ${styles.accordionBodyOpen}` : ''}`}>
+                <div className={`${styles.accordionBody}${isOpen ? ` ${styles.accordionBodyOpen}` : ''}`}>
+                  {SectionComponent ? (
                     <SectionComponent
                       data={step4[process.id as keyof typeof step4] ?? {}}
                       onChange={(patch) => setStep4(process.id as keyof typeof step4, patch)}
                     />
-                  </div>
+                  ) : (
+                    <div className={styles.sectionBody}>
+                      <p className={styles.readyNotice}>선택 완료 — 이 공종은 추가 입력 없이 가견적에 반영됩니다.</p>
+                    </div>
+                  )}
                 </div>
-              );
-            })}
-          </div>
-        )}
+              </div>
+            );
+          })}
+        </div>
 
         <StepActions onNext={nextStep} onSecondary={prevStep} />
       </div>

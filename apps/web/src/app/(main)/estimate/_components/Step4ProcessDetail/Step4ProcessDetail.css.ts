@@ -206,6 +206,20 @@ export const numberInputUnit = style({
   flexShrink: 0,
 });
 
+export const readyNotice = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '10px',
+  padding: '14px 16px',
+  backgroundColor: vars.color.brand.primaryBg,
+  borderRadius: vars.radius.base,
+  fontSize: vars.typography.fontSize.sm,
+  fontWeight: vars.typography.fontWeight.medium,
+  fontFamily: vars.typography.fontFamily,
+  color: vars.color.brand.secondary,
+  lineHeight: '1.5',
+});
+
 export const infoNote = style({
   fontSize: vars.typography.fontSize.xs,
   fontWeight: vars.typography.fontWeight.regular,
