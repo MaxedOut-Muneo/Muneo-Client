@@ -109,7 +109,15 @@ export const FloatingChatLauncher = () => {
         position: 'floating',
       });
       close();
-      window.setTimeout(() => router.push('/login'), EXIT_DURATION);
+      const reduceMotion =
+        typeof window !== 'undefined' &&
+        typeof window.matchMedia === 'function' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduceMotion) {
+        router.push('/login');
+      } else {
+        window.setTimeout(() => router.push('/login'), EXIT_DURATION);
+      }
     },
     [close, router]
   );
