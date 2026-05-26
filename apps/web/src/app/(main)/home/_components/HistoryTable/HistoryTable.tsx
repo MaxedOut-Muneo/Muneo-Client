@@ -48,10 +48,7 @@ export const HistoryTable = ({ rows, onDelete }: HistoryTableProps) => {
           <tr>
             {COLUMNS.map((col) => (
               <th key={col} className={styles.th}>
-                <span className={styles.thInner}>
-                  {col}
-                  <CaretDownSmIcon width={24} height={24} />
-                </span>
+                {col}
               </th>
             ))}
             <th className={styles.th} />
