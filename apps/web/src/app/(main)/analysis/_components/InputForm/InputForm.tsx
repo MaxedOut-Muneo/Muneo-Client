@@ -18,8 +18,7 @@ const REGION_OPTIONS: Array<{ value: Region; label: string }> = [
   { value: '지방', label: '지방' },
 ];
 const BUILDING_AGE_OPTIONS: Array<{ value: BuildingAge; label: string }> = [
-  { value: '5년 이하', label: '5년 이하' },
-  { value: '5~10년', label: '5~10년' },
+  { value: '10년 이하', label: '10년 이하' },
   { value: '10~20년', label: '10~20년' },
   { value: '20년 이상', label: '20년 이상' },
 ];
@@ -31,7 +30,7 @@ const ELEVATOR_OPTIONS: Array<{ value: ElevatorOption; label: string }> = [
 export const InputForm = () => {
   const { form, setForm } = useAnalysisStore();
 
-  const handleNumberInput = (field: 'area' | 'roomCount' | 'floor', value: string) => {
+  const handleNumberInput = (field: 'pyeong' | 'roomCount' | 'floor', value: string) => {
     setForm({ [field]: parsePositiveNumber(value) });
   };
 
@@ -54,13 +53,13 @@ export const InputForm = () => {
           </div>
           <div className={styles.fieldGroupFixed}>
             <TextField
-              id="area"
+              id="pyeong"
               label="면적 (평)"
               type="number"
               min={1}
               placeholder="평수를 입력하세요"
-              value={form.area ?? ''}
-              onChange={(e) => handleNumberInput('area', e.target.value)}
+              value={form.pyeong ?? ''}
+              onChange={(e) => handleNumberInput('pyeong', e.target.value)}
             />
           </div>
         </div>
@@ -128,6 +127,16 @@ export const InputForm = () => {
               placeholder="선택하세요"
             />
           </div>
+        </div>
+
+        <div className={styles.fieldGroupFixed}>
+          <TextField
+            id="companyName"
+            label="업체명"
+            placeholder="업체명을 입력하세요"
+            value={form.companyName ?? ''}
+            onChange={(e) => setForm({ companyName: e.target.value || null })}
+          />
         </div>
       </div>
     </div>

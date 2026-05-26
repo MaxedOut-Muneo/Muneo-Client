@@ -34,7 +34,7 @@ export const MOCK_DIAGNOSIS_RESULT: DiagnosisResult = {
         },
         {
           id: 'wallpaper-2',
-          status: '미비',
+          status: '중복',
           title: '자재 브랜드·모델명 누락',
           description: '→ "실크벽지"만 기재, 구체적 제품 정보 없음. 자재 등급에 따라 평당 4천~1.5만원 차이',
           actionNote: '사용 벽지 브랜드와 모델명을 요청하세요 (예: LX z:in 베스띠)',

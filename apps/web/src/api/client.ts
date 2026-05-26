@@ -1,5 +1,16 @@
 import ky, { type KyInstance } from 'ky';
-import { getClientApiBaseUrl } from './baseUrl';
+
+const getApiBaseUrl = () => {
+  // 브라우저에서는 Next.js 프록시 경유 — 쿠키를 현재 origin에 설정하기 위해
+  if (typeof window !== 'undefined') {
+    return window.location.origin;
+  }
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  if (!apiBaseUrl) {
+    throw new Error('NEXT_PUBLIC_API_BASE_URL is not set');
+  }
+  return apiBaseUrl;
+};
 
 const REFRESH_PATH = 'api/v1/users/refresh';
 const PRE_AUTH_PATHS = ['api/v1/users/login', 'api/v1/users/signup', 'api/v1/auth/oauth', 'api/v1/auth/social/signup'];
@@ -11,7 +22,7 @@ let refreshPromise: Promise<Response> | null = null;
 
 const triggerRefresh = () => {
   if (!refreshPromise) {
-    refreshPromise = fetch(`${getClientApiBaseUrl()}/${REFRESH_PATH}`, {
+    refreshPromise = fetch(`${getApiBaseUrl()}/${REFRESH_PATH}`, {
       method: 'POST',
       credentials: 'include',
     }).finally(() => {
@@ -23,7 +34,7 @@ const triggerRefresh = () => {
 
 const createClient = () =>
   ky.create({
-    prefixUrl: getClientApiBaseUrl(),
+    prefixUrl: getApiBaseUrl(),
     timeout: 10000,
     credentials: 'include',
     headers: {

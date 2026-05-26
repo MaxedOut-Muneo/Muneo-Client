@@ -56,7 +56,7 @@ export const MOCK_DIAGNOSIS_DETAILS: Record<number, DiagnosisResult> = {
           },
           {
             id: 'e-2',
-            status: '미비',
+            status: '중복',
             title: '전기 용량 정보 부족',
             description: '전기 용량 증설 여부에 대한 정보가 미비합니다.',
             actionNote: '전기 용량 증설 필요 여부와 비용을 확인하세요.',

@@ -2,20 +2,15 @@
 
 import { Button } from '@muneo/design-system';
 import { useRef, useState } from 'react';
+import { useAuthStore } from '@/store/authStore';
 import { useAnalysisStore } from '../../_store/analysisStore';
 import * as styles from './UploadPanel.css';
 
 const ACCEPT = '.pdf,.jpg,.jpeg,.png,.csv,.xls,.xlsx';
 
-const formatSize = (bytes: number): string => {
-  if (bytes < 1024 * 1024) {
-    return `${(bytes / 1024).toFixed(1)}KB`;
-  }
-  return `${(bytes / (1024 * 1024)).toFixed(1)}MB`;
-};
-
 export const UploadPanel = () => {
   const { files, loading, addFile, removeFile, submitAnalysis, reset } = useAnalysisStore();
+  const { user } = useAuthStore();
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
 
@@ -25,7 +20,7 @@ export const UploadPanel = () => {
     }
     Array.from(fileList).forEach((f) => {
       if (!files.find((e) => e.name === f.name)) {
-        addFile({ name: f.name, size: formatSize(f.size) });
+        addFile(f);
       }
     });
   };
@@ -114,12 +109,12 @@ export const UploadPanel = () => {
             variant="gradient"
             size="md"
             className={styles.actionButton}
-            disabled={loading}
+            disabled={loading || !user}
             onClick={() => {
-              if (loading) {
+              if (loading || !user) {
                 return;
               }
-              void submitAnalysis();
+              void submitAnalysis(user.id);
             }}
           >
             분석 시작

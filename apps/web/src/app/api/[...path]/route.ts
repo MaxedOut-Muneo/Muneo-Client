@@ -1,6 +1,8 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import { getApiBaseUrl } from '@/api/baseUrl';
 
+export const maxDuration = 300;
+
 const getForwardUrl = (path: string[], search: string) => {
   const encodedPath = path.map((segment) => encodeURIComponent(segment)).join('/');
   return `${getApiBaseUrl()}/api/${encodedPath}${search}`;
@@ -16,7 +18,6 @@ const getForwardHeaders = (request: NextRequest) => {
   headers.delete('origin');
   headers.delete('referer');
   headers.delete('forwarded');
-  headers.delete('x-user-id');
 
   for (const key of [...headers.keys()]) {
     if (key.startsWith('sec-') || key.startsWith('x-forwarded-') || key.startsWith('x-real-')) {
