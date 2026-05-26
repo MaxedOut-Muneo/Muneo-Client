@@ -26,7 +26,11 @@ const normalize = (value: unknown): DataLayerPrimitive => {
   if (value instanceof Date) {
     return value.toISOString();
   }
-  return JSON.stringify(value);
+  try {
+    return JSON.stringify(value);
+  } catch {
+    return undefined;
+  }
 };
 
 export const trackEvent = <E extends string>(event: E, params?: Record<string, unknown>): void => {
@@ -37,6 +41,9 @@ export const trackEvent = <E extends string>(event: E, params?: Record<string, u
   const entry: DataLayerEntry = { event };
   if (params) {
     for (const [key, value] of Object.entries(params)) {
+      if (key === 'event') {
+        continue;
+      }
       const normalized = normalize(value);
       if (normalized !== undefined) {
         entry[key] = normalized;
