@@ -17,7 +17,14 @@ const SKIP_AUTO_REDIRECT_PATHS = ['api/v1/chatbot/chat'];
 
 const isPreAuth = (url: string) => PRE_AUTH_PATHS.some((p) => url.includes(p));
 const isRefresh = (url: string) => url.includes(REFRESH_PATH);
-const skipsAutoRedirect = (url: string) => SKIP_AUTO_REDIRECT_PATHS.some((p) => url.includes(p));
+const skipsAutoRedirect = (url: string) => {
+  try {
+    const normalized = new URL(url).pathname.replace(/^\//, '');
+    return SKIP_AUTO_REDIRECT_PATHS.includes(normalized);
+  } catch {
+    return false;
+  }
+};
 
 let refreshPromise: Promise<Response> | null = null;
 
