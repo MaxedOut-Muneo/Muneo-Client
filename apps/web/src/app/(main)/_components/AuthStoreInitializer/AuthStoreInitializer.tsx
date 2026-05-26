@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { type AuthUser } from '@/types/auth';
 
@@ -11,7 +11,7 @@ interface AuthStoreInitializerProps {
 export const AuthStoreInitializer = ({ user }: AuthStoreInitializerProps) => {
   const setUser = useAuthStore((s) => s.setUser);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setUser(user);
   }, [user, setUser]);
 
