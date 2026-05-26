@@ -23,11 +23,10 @@ export const StepIndicator = ({ currentStep }: StepIndicatorProps) => {
     <div className={styles.container}>
       {ESTIMATE_STEPS.map((step) => {
         const state = getStepState(step, currentStep);
-        const isWide = step === 4;
 
         return (
           <div key={step} style={{ display: 'contents' }}>
-            <div className={isWide ? styles.stepItemWide : styles.stepItem}>
+            <div className={styles.stepItem}>
               <div
                 className={
                   state === 'completed'

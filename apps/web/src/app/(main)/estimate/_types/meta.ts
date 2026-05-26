@@ -1,12 +1,11 @@
-export const ESTIMATE_STEPS = [1, 2, 3, 4, 5] as const;
+export const ESTIMATE_STEPS = [1, 2, 3, 4] as const;
 export type EstimateStep = (typeof ESTIMATE_STEPS)[number];
 
 export const STEP_LABELS = {
   1: '기본 정보',
   2: '공정 선택',
   3: '공사 조건',
-  4: '공정별 세부',
-  5: '견적 확인',
+  4: '견적 확인',
 } satisfies Record<EstimateStep, string>;
 
 export interface ProcessInfo<TId extends string = string> {

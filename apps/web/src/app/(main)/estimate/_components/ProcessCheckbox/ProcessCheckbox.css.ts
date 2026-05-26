@@ -9,7 +9,7 @@ const cardBase = style({
   overflow: 'hidden',
   cursor: 'pointer',
   backgroundColor: vars.color.white,
-  transition: 'border-color 0.15s ease',
+  transition: 'border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease',
   flexShrink: 0,
   padding: '11.5px 13.5px',
   display: 'flex',
@@ -18,6 +18,14 @@ const cardBase = style({
   alignItems: 'flex-start',
   justifyContent: 'flex-start',
   textAlign: 'left',
+  ':hover': {
+    transform: 'translateY(-2px)',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+  },
+  ':active': {
+    transform: 'translateY(0)',
+    boxShadow: 'none',
+  },
 });
 
 export const cardSelected = style([cardBase, { border: `1.5px solid ${vars.color.brand.secondary}` }]);
@@ -33,6 +41,19 @@ export const processName = style({
 
 export const processNameSelected = style([processName, { color: vars.color.neutral.n900 }]);
 export const processNameUnselected = style([processName, { color: vars.color.neutral.n500 }]);
+
+const detailDotBase = style({
+  position: 'absolute',
+  top: '8px',
+  right: '8px',
+  width: '6px',
+  height: '6px',
+  borderRadius: '50%',
+  flexShrink: 0,
+});
+
+export const detailDot = style([detailDotBase, { backgroundColor: vars.color.neutral.n300 }]);
+export const detailDotActive = style([detailDotBase, { backgroundColor: vars.color.brand.secondary }]);
 
 export const processDesc = style({
   fontSize: vars.typography.fontSize.xxs,

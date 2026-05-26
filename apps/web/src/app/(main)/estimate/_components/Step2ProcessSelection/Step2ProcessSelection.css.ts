@@ -1,5 +1,10 @@
 import { vars } from '@muneo/design-system';
-import { style } from '@vanilla-extract/css';
+import { keyframes, style } from '@vanilla-extract/css';
+
+const fadeSlideDown = keyframes({
+  from: { opacity: 0, transform: 'translateY(-10px)' },
+  to: { opacity: 1, transform: 'translateY(0)' },
+});
 
 export const container = style({
   display: 'flex',
@@ -40,8 +45,7 @@ export const titleHint = style({
 export const card = style({
   backgroundColor: vars.color.white,
   borderRadius: '12px',
-  overflow: 'hidden',
-  height: '630px',
+  minHeight: '630px',
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
@@ -83,9 +87,8 @@ export const cardBody = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  justifyContent: 'center',
   gap: '45px',
-  padding: '0 40px',
+  padding: '40px 40px',
   overflowY: 'auto',
 });
 
@@ -123,4 +126,157 @@ export const actions = style({
   justifyContent: 'center',
   height: '45px',
   flexShrink: 0,
+});
+
+export const detailSection = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '16px',
+  width: '100%',
+  animation: `${fadeSlideDown} 0.4s cubic-bezier(0.4, 0, 0.2, 1) both`,
+});
+
+export const detailDivider = style({
+  width: '100%',
+  height: '1px',
+  backgroundColor: vars.color.neutral.n200,
+});
+
+export const detailHint = style({
+  fontSize: vars.typography.fontSize.xs,
+  fontWeight: vars.typography.fontWeight.regular,
+  fontFamily: vars.typography.fontFamily,
+  color: vars.color.neutral.n400,
+  lineHeight: '1.6',
+  margin: 0,
+});
+
+export const detailTitle = style({
+  fontSize: vars.typography.fontSize.md,
+  fontWeight: vars.typography.fontWeight.bold,
+  fontFamily: vars.typography.fontFamily,
+  color: vars.color.neutral.n600,
+  lineHeight: 'normal',
+});
+
+export const accordionList = style({
+  display: 'flex',
+  flexDirection: 'column',
+});
+
+export const accordionItem = style({
+  borderBottom: `1px solid ${vars.color.neutral.n200}`,
+  selectors: {
+    '&:first-child': {
+      borderTop: `1px solid ${vars.color.neutral.n200}`,
+    },
+  },
+});
+
+export const accordionHeader = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  width: '100%',
+  padding: '14px 0',
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  ':hover': { opacity: 0.75 },
+});
+
+export const accordionHeaderText = style({
+  fontSize: vars.typography.fontSize.md,
+  fontWeight: vars.typography.fontWeight.bold,
+  fontFamily: vars.typography.fontFamily,
+  color: vars.color.neutral.n900,
+  lineHeight: 'normal',
+  transition: 'color 0.25s ease',
+});
+
+export const accordionHeaderTextOpen = style({
+  color: vars.color.brand.secondary,
+});
+
+export const accordionChevron = style({
+  width: '20px',
+  height: '20px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), color 0.25s ease',
+  color: vars.color.neutral.n500,
+  flexShrink: 0,
+});
+
+export const accordionChevronOpen = style({
+  transform: 'rotate(180deg)',
+  color: vars.color.brand.secondary,
+});
+
+export const accordionBody = style({
+  display: 'grid',
+  gridTemplateRows: '0fr',
+  transition: 'grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+});
+
+export const accordionBodyOpen = style({
+  gridTemplateRows: '1fr',
+});
+
+export const accordionBodyInner = style({
+  overflow: 'hidden',
+  paddingBottom: '0px',
+  transition: 'padding-bottom 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+});
+
+export const accordionBodyInnerOpen = style({
+  paddingBottom: '20px',
+});
+
+export const sectionBody = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '24px',
+});
+
+export const field = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '10px',
+});
+
+export const fieldLabel = style({
+  fontSize: vars.typography.fontSize.sm,
+  fontWeight: vars.typography.fontWeight.bold,
+  fontFamily: vars.typography.fontFamily,
+  color: vars.color.neutral.n900,
+  lineHeight: 'normal',
+});
+
+export const buttonRow = style({
+  display: 'flex',
+  gap: '10px',
+  alignItems: 'center',
+  flexWrap: 'wrap',
+});
+
+export const conditionalField = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '10px',
+  paddingLeft: '14px',
+  borderLeft: `2px solid ${vars.color.brand.secondary}`,
+});
+
+export const infoNote = style({
+  fontSize: vars.typography.fontSize.xs,
+  fontWeight: vars.typography.fontWeight.regular,
+  fontFamily: vars.typography.fontFamily,
+  color: vars.color.neutral.n500,
+  lineHeight: '1.5',
+  padding: '8px 12px',
+  backgroundColor: vars.color.neutral.n100,
+  borderRadius: vars.radius.base,
+  margin: 0,
 });
