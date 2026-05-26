@@ -28,12 +28,6 @@ export const label = style({
   whiteSpace: 'nowrap',
 });
 
-export const right = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '15px',
-});
-
 export const count = style({
   fontSize: '24px',
   fontWeight: vars.typography.fontWeight.extraBold,
@@ -54,10 +48,4 @@ export const countDanger = style({
   letterSpacing: '-0.24px',
   whiteSpace: 'nowrap',
   color: vars.color.semantic.danger,
-});
-
-export const arrow = style({
-  display: 'flex',
-  alignItems: 'center',
-  color: vars.color.neutral.n400,
 });
