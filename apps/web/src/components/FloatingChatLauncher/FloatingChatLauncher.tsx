@@ -1,48 +1,126 @@
 'use client';
 
 import { ChatBubble, ChatInput, CloseIconMdIcon, FloatingChat, FloatingMuneo, Logo2 } from '@muneo/design-system';
-import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { type MouseEvent as ReactMouseEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { CTA_EVENTS } from '@/constants/analyticsEvents';
 import { useDelayedUnmount } from '@/hooks/useDelayedUnmount';
+import { useTypingEffect } from '@/hooks/useTypingEffect';
+import { trackCtaClick } from '@/lib/analytics';
 import { useChatStore } from '@/store/chatStore';
+import { type ChatMessage, useChatMessages } from './useChatMessages';
 import {
   buttonContent,
   chatWrapper,
   chatWrapperExit,
   closeLabel,
   floatingButton,
+  loadingDot,
+  loadingDots,
+  loginLink,
+  loginPromptText,
   logoBadge,
   triggerIcon,
 } from './FloatingChatLauncher.css';
 
-interface Message {
-  id: string;
-  role: 'ai' | 'user';
-  content: string;
-}
-
-const INITIAL_MESSAGES: Message[] = [
-  {
-    id: 'welcome',
-    role: 'ai',
-    content: '안녕하세요! 인테리어 AI 상담 문어입니다. 무엇을 도와드릴까요?',
-  },
-];
-
 const EXIT_DURATION = 220;
 const CHAT_PANEL_ID = 'floating-chat-panel';
 
-const createMessageId = (): string =>
-  typeof crypto !== 'undefined' && 'randomUUID' in crypto
-    ? `u-${crypto.randomUUID()}`
-    : `u-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+const shouldAnimateTyping = (): boolean => {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+    return true;
+  }
+  return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+};
+
+const LoadingDots = () => (
+  <span className={loadingDots} aria-label="답변 작성 중">
+    <span className={loadingDot} />
+    <span className={loadingDot} />
+    <span className={loadingDot} />
+  </span>
+);
+
+interface LoginRequiredBubbleProps {
+  message: string;
+  onLoginClick: (e: ReactMouseEvent<HTMLAnchorElement>) => void;
+}
+
+const LoginRequiredBubble = ({ message, onLoginClick }: LoginRequiredBubbleProps) => (
+  <>
+    <span className={loginPromptText}>{message}</span>
+    <Link href="/login" className={loginLink} onClick={onLoginClick}>
+      로그인하러 가기
+    </Link>
+  </>
+);
+
+interface TypingTextProps {
+  content: string;
+  onComplete: () => void;
+  onProgress: () => void;
+}
+
+const TypingText = ({ content, onComplete, onProgress }: TypingTextProps) => {
+  const { displayText, isTyping } = useTypingEffect(content, shouldAnimateTyping());
+
+  useEffect(() => {
+    onProgress();
+  }, [displayText, onProgress]);
+
+  useEffect(() => {
+    if (!isTyping && displayText === content) {
+      onComplete();
+    }
+  }, [isTyping, displayText, content, onComplete]);
+
+  return <>{displayText}</>;
+};
 
 export const FloatingChatLauncher = () => {
+  const router = useRouter();
   const { isOpen, pendingMessage, open, close } = useChatStore();
   const chatMounted = useDelayedUnmount(isOpen, EXIT_DURATION);
-  const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
+  const { messages, send, completeTyping, isPending } = useChatMessages();
   const [input, setInput] = useState('');
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const wasPendingRef = useRef(false);
 
-  const toggle = () => (isOpen ? close() : open());
+  const toggle = () => {
+    if (isOpen) {
+      close();
+      return;
+    }
+    trackCtaClick(CTA_EVENTS.chatOpen, { linkText: 'AI 상담 챗 열기', position: 'floating' });
+    open();
+  };
+
+  const handleLoginClick = useCallback(
+    (e: ReactMouseEvent<HTMLAnchorElement>) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) {
+        return;
+      }
+      e.preventDefault();
+      trackCtaClick(CTA_EVENTS.chatLoginRedirect, {
+        linkText: '로그인하러 가기',
+        linkUrl: '/login',
+        position: 'floating',
+      });
+      close();
+      const reduceMotion =
+        typeof window !== 'undefined' &&
+        typeof window.matchMedia === 'function' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduceMotion) {
+        router.push('/login');
+      } else {
+        window.setTimeout(() => router.push('/login'), EXIT_DURATION);
+      }
+    },
+    [close, router]
+  );
 
   useEffect(() => {
     if (isOpen && pendingMessage) {
@@ -51,16 +129,53 @@ export const FloatingChatLauncher = () => {
     }
   }, [isOpen, pendingMessage]);
 
-  const handleSubmit = () => {
-    const trimmed = input.trim();
-    if (!trimmed) {
+  const scrollToBottom = useCallback(() => {
+    const body = bodyRef.current;
+    if (body) {
+      body.scrollTop = body.scrollHeight;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!chatMounted) {
       return;
     }
-    setMessages((prev) => [...prev, { id: createMessageId(), role: 'user', content: trimmed }]);
-    setInput('');
+    scrollToBottom();
+  }, [messages, chatMounted, scrollToBottom]);
+
+  useEffect(() => {
+    if (wasPendingRef.current && !isPending) {
+      inputRef.current?.focus();
+    }
+    wasPendingRef.current = isPending;
+  }, [isPending]);
+
+  const handleSubmit = () => {
+    if (send(input)) {
+      setInput('');
+    }
   };
 
   const isExiting = chatMounted && !isOpen;
+
+  const renderAIBubbleContent = (message: ChatMessage) => {
+    if (message.status === 'loading') {
+      return <LoadingDots />;
+    }
+    if (message.kind === 'login-required') {
+      return <LoginRequiredBubble message={message.content} onLoginClick={handleLoginClick} />;
+    }
+    if (message.status === 'typing') {
+      return (
+        <TypingText
+          content={message.content}
+          onProgress={scrollToBottom}
+          onComplete={() => completeTyping(message.id)}
+        />
+      );
+    }
+    return message.content;
+  };
 
   return (
     <>
@@ -74,11 +189,11 @@ export const FloatingChatLauncher = () => {
               onMinimize={close}
               onClose={close}
             />
-            <FloatingChat.Body>
+            <FloatingChat.Body ref={bodyRef}>
               {messages.map((message) =>
                 message.role === 'ai' ? (
                   <FloatingChat.AIMessage key={message.id} avatar={<Logo2 className={logoBadge} />}>
-                    <ChatBubble variant="ai">{message.content}</ChatBubble>
+                    <ChatBubble variant="ai">{renderAIBubbleContent(message)}</ChatBubble>
                   </FloatingChat.AIMessage>
                 ) : (
                   <FloatingChat.UserMessage key={message.id}>
@@ -88,7 +203,14 @@ export const FloatingChatLauncher = () => {
               )}
             </FloatingChat.Body>
             <FloatingChat.Footer>
-              <ChatInput value={input} onChange={setInput} onSubmit={handleSubmit} />
+              <ChatInput
+                ref={inputRef}
+                value={input}
+                onChange={setInput}
+                onSubmit={handleSubmit}
+                disabled={isPending}
+                autoFocus
+              />
             </FloatingChat.Footer>
           </FloatingChat>
         </div>

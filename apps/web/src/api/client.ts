@@ -1,7 +1,6 @@
 import ky, { type KyInstance } from 'ky';
 
 const getApiBaseUrl = () => {
-  // 브라우저에서는 Next.js 프록시 경유 — 쿠키를 현재 origin에 설정하기 위해
   if (typeof window !== 'undefined') {
     return window.location.origin;
   }
@@ -14,9 +13,18 @@ const getApiBaseUrl = () => {
 
 const REFRESH_PATH = 'api/v1/users/refresh';
 const PRE_AUTH_PATHS = ['api/v1/users/login', 'api/v1/users/signup', 'api/v1/auth/oauth', 'api/v1/auth/social/signup'];
+const SKIP_AUTO_REDIRECT_PATHS = ['api/v1/chatbot/chat'];
 
 const isPreAuth = (url: string) => PRE_AUTH_PATHS.some((p) => url.includes(p));
 const isRefresh = (url: string) => url.includes(REFRESH_PATH);
+const skipsAutoRedirect = (url: string) => {
+  try {
+    const normalized = new URL(url).pathname.replace(/^\//, '');
+    return SKIP_AUTO_REDIRECT_PATHS.includes(normalized);
+  } catch {
+    return false;
+  }
+};
 
 let refreshPromise: Promise<Response> | null = null;
 
@@ -57,7 +65,7 @@ const createClient = () =>
           }
           const refreshRes = await triggerRefresh();
           if (!refreshRes.ok) {
-            if (typeof window !== 'undefined') {
+            if (!skipsAutoRedirect(request.url) && typeof window !== 'undefined') {
               window.location.href = '/login';
             }
             throw error;

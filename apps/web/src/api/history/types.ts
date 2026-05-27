@@ -1,5 +1,5 @@
-import { type RiskReport } from '@/app/(main)/analysis/_types/analysis.types';
-import { type EstimateGenerateRequest, type EstimateGenerateResponse } from '@/app/(main)/estimate/_types/api';
+import { type RiskReport } from '@/api/analyze';
+import { type EstimateGenerateRequest, type EstimateGenerateResponse } from '@/api/estimate';
 
 export interface EstimateItem {
   id: string;

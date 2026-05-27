@@ -1,5 +1,6 @@
-import { Button, FileUploadIcon, OctagonCheckIcon, StatusCard, TriangleWarningIcon } from '@muneo/design-system';
-import { TransitionLink } from '@/components/TransitionLink';
+import { FileUploadIcon, OctagonCheckIcon, StatusCard, TriangleWarningIcon } from '@muneo/design-system';
+import { HeroCtaButton } from './HeroCtaButton';
+import { ScrollIndicator } from './ScrollIndicator';
 import * as styles from './HeroSection.css';
 
 const RECENT_ANALYSES = [
@@ -27,15 +28,7 @@ export const HeroSection = () => {
                 <p className={styles.descriptionText}>계약 전에 문어가 찾아드릴게요</p>
               </div>
               <div className={styles.ctaWrapper}>
-                <Button
-                  as={TransitionLink}
-                  href="/login"
-                  viewTransition
-                  variant="gradient"
-                  className={styles.ctaButton}
-                >
-                  무료로 시작하기
-                </Button>
+                <HeroCtaButton />
               </div>
             </div>
           </div>
@@ -72,17 +65,7 @@ export const HeroSection = () => {
         </div>
         <p className={styles.subHeadline}>가견적서 생성부터 리스크 진단, AI 상담까지 한 곳에서</p>
       </div>
-      <div className={styles.scrollIndicator} aria-hidden="true">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M6 9L12 15L18 9"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
+      <ScrollIndicator />
     </section>
   );
 };

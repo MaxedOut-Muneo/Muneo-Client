@@ -237,4 +237,19 @@ export const scrollIndicator = style({
   animation: `${fadeUpCenter} 0.6s ease forwards, ${bounce} 1.8s ease-in-out infinite`,
   animationDelay: '0.8s, 1.4s',
   color: 'rgba(109, 64, 197, 0.4)',
+  background: 'transparent',
+  border: 'none',
+  padding: '4px',
+  cursor: 'pointer',
+  borderRadius: '8px',
+  transition: 'color 200ms ease',
+  selectors: {
+    '&:hover': {
+      color: 'rgba(109, 64, 197, 0.8)',
+    },
+    '&:focus-visible': {
+      outline: '2px solid rgba(109, 64, 197, 0.6)',
+      outlineOffset: '4px',
+    },
+  },
 });

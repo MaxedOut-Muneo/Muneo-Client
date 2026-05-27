@@ -134,6 +134,9 @@ importers:
       '@muneo/design-system':
         specifier: workspace:*
         version: link:../../packages/design-system
+      '@next/third-parties':
+        specifier: ^16.2.6
+        version: 16.2.6(next@16.2.4(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(terser@5.46.1)(tsx@4.21.0)(webpack@5.106.2(esbuild@0.28.0))(yaml@2.8.3))(react@19.2.5)
       '@tanstack/react-query':
         specifier: ^5.95.0
         version: 5.99.1(react@19.2.5)
@@ -203,7 +206,7 @@ importers:
         version: 19.2.3(@types/react@19.2.14)
       '@vanilla-extract/next-plugin':
         specifier: ^2.4.13
-        version: 2.5.2(@types/node@25.6.0)(esbuild@0.28.0)(next@16.2.4(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(terser@5.46.1)(tsx@4.21.0)(webpack@5.106.2(esbuild@0.28.0))(yaml@2.8.3))(terser@5.46.1)(tsx@4.21.0)(webpack@5.106.2(esbuild@0.28.0))(yaml@2.8.3)
+        version: 2.5.2(@swc/helpers@0.5.15)(@types/node@25.6.0)(esbuild@0.28.0)(next@16.2.4(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(terser@5.46.1)(tsx@4.21.0)(webpack@5.106.2(esbuild@0.28.0))(yaml@2.8.3))(terser@5.46.1)(tsx@4.21.0)(webpack@5.106.2(esbuild@0.28.0))(yaml@2.8.3)
       '@vanilla-extract/vite-plugin':
         specifier: ^4.0.20
         version: 4.0.20(@types/node@25.6.0)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(vite@8.0.8(@types/node@25.6.0)(esbuild@0.28.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))(yaml@2.8.3)
@@ -309,7 +312,7 @@ importers:
         version: 19.2.3(@types/react@19.2.14)
       '@vanilla-extract/vite-plugin':
         specifier: ^4.0.20
-        version: 4.0.20(@types/node@25.6.0)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(vite@8.0.8(@types/node@25.6.0)(esbuild@0.28.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))(yaml@2.8.3)
+        version: 4.0.20(@types/node@25.6.0)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(vite@6.4.2(@types/node@25.6.0)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))(yaml@2.8.3)
       '@vitejs/plugin-react':
         specifier: ^5.0.3
         version: 5.2.0(vite@8.0.8(@types/node@25.6.0)(esbuild@0.28.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
@@ -339,7 +342,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^4.1.0
-        version: 4.1.4(@edge-runtime/vm@3.2.0)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.4)(jsdom@29.0.2)(msw@2.13.4(@types/node@25.6.0)(typescript@5.9.3))(vite@8.0.8(@types/node@25.6.0)(esbuild@0.28.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
+        version: 4.1.4(@edge-runtime/vm@3.2.0)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.4)(jsdom@29.0.2)(msw@2.13.4(@types/node@25.6.0)(typescript@5.9.3))(vite@6.4.2(@types/node@25.6.0)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/eslint-config:
     devDependencies:
@@ -357,7 +360,7 @@ importers:
         version: 10.2.1
       eslint-config-next:
         specifier: ^16.2.1
-        version: 16.2.4(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(@typescript-eslint/parser@8.58.2(eslint@10.2.1)(typescript@5.9.3))(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.0)(eslint@10.2.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(webpack@5.106.2(esbuild@0.28.0))(yaml@2.8.3)
+        version: 16.2.4(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(@typescript-eslint/parser@8.58.2(eslint@10.2.1)(typescript@5.9.3))(babel-plugin-react-compiler@1.0.0)(eslint@10.2.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.9.3)
       eslint-config-prettier:
         specifier: ^10.1.5
         version: 10.1.8(eslint@10.2.1)
@@ -1517,6 +1520,12 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
+
+  '@next/third-parties@16.2.6':
+    resolution: {integrity: sha512-PDPIPVj1NX6Taxsl8OJteAUJ7iwR+QrokwWig68eh0cOmuNjC6MBL+ZzBjO8Bv0n/HOSqjGArZpM5KMSUxm+MQ==}
+    peerDependencies:
+      next: ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0-beta.0
+      react: ^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -4653,6 +4662,9 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  third-party-capital@1.0.20:
+    resolution: {integrity: sha512-oB7yIimd8SuGptespDAZnNkzIz+NWaJCu2RMsbs4Wmp9zSDUM8Nhi3s2OOcqYuv3mN4hitXc8DVx+LyUmbUDiA==}
+
   tiny-invariant@1.3.3:
     resolution: {integrity: sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg==}
 
@@ -5939,6 +5951,12 @@ snapshots:
   '@next/swc-win32-x64-msvc@16.2.4':
     optional: true
 
+  '@next/third-parties@16.2.6(next@16.2.4(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(terser@5.46.1)(tsx@4.21.0)(webpack@5.106.2(esbuild@0.28.0))(yaml@2.8.3))(react@19.2.5)':
+    dependencies:
+      next: 16.2.4(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(terser@5.46.1)(tsx@4.21.0)(webpack@5.106.2(esbuild@0.28.0))(yaml@2.8.3)
+      react: 19.2.5
+      third-party-capital: 1.0.20
+
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -6826,11 +6844,11 @@ snapshots:
       - webpack
       - yaml
 
-  '@vanilla-extract/next-plugin@2.5.2(@types/node@25.6.0)(esbuild@0.28.0)(next@16.2.4(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(terser@5.46.1)(tsx@4.21.0)(webpack@5.106.2(esbuild@0.28.0))(yaml@2.8.3))(terser@5.46.1)(tsx@4.21.0)(webpack@5.106.2(esbuild@0.28.0))(yaml@2.8.3)':
+  '@vanilla-extract/next-plugin@2.5.2(@swc/helpers@0.5.15)(@types/node@25.6.0)(next@15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))':
     dependencies:
-      '@vanilla-extract/turbopack-plugin': 0.1.3(@types/node@25.6.0)(esbuild@0.28.0)(next@16.2.4(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(terser@5.46.1)(tsx@4.21.0)(webpack@5.106.2(esbuild@0.28.0))(yaml@2.8.3))(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3)
+      '@vanilla-extract/turbopack-plugin': 0.1.3(@swc/helpers@0.5.15)(@types/node@25.6.0)(next@15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))
       '@vanilla-extract/webpack-plugin': 2.3.27(webpack@5.106.2(esbuild@0.28.0))
-      next: 16.2.4(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(terser@5.46.1)(tsx@4.21.0)(webpack@5.106.2(esbuild@0.28.0))(yaml@2.8.3)
+      next: 15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       semver: 7.7.4
     transitivePeerDependencies:
       - '@swc/helpers'
@@ -6906,12 +6924,12 @@ snapshots:
       - tsx
       - yaml
 
-  '@vanilla-extract/turbopack-plugin@0.1.3(@types/node@25.6.0)(esbuild@0.28.0)(next@16.2.4(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(terser@5.46.1)(tsx@4.21.0)(webpack@5.106.2(esbuild@0.28.0))(yaml@2.8.3))(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3)':
+  '@vanilla-extract/turbopack-plugin@0.1.3(@swc/helpers@0.5.15)(@types/node@25.6.0)(next@15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))':
     dependencies:
       '@swc/core': 1.15.26(@swc/helpers@0.5.15)
       '@vanilla-extract/compiler': 0.7.0(@types/node@25.6.0)(esbuild@0.28.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3)
       '@vanilla-extract/integration': 8.0.10
-      next: 16.2.4(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(terser@5.46.1)(tsx@4.21.0)(webpack@5.106.2(esbuild@0.28.0))(yaml@2.8.3)
+      next: 15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
     transitivePeerDependencies:
       - '@swc/helpers'
       - '@types/node'
@@ -7016,7 +7034,7 @@ snapshots:
       obug: 2.1.1
       std-env: 4.1.0
       tinyrainbow: 3.1.0
-      vitest: 4.1.4(@edge-runtime/vm@3.2.0)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.4)(jsdom@29.0.2)(msw@2.13.4(@types/node@25.6.0)(typescript@5.9.3))(vite@6.4.2(@types/node@25.6.0)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
+      vitest: 4.1.4(@edge-runtime/vm@3.2.0)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.4)(jsdom@29.0.2)(msw@2.13.4(@types/node@25.6.0)(typescript@5.9.3))(vite@8.0.8(@types/node@25.6.0)(esbuild@0.28.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
 
   '@vitest/expect@3.2.4':
     dependencies:
@@ -7861,7 +7879,7 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-config-next@16.2.4(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(@typescript-eslint/parser@8.58.2(eslint@10.2.1)(typescript@5.9.3))(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.0)(eslint@10.2.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(terser@5.46.1)(tsx@4.21.0)(typescript@5.9.3)(webpack@5.106.2(esbuild@0.28.0))(yaml@2.8.3):
+  eslint-config-next@16.2.4(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(@typescript-eslint/parser@8.58.2(eslint@10.2.1)(typescript@5.9.3))(babel-plugin-react-compiler@1.0.0)(eslint@10.2.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.9.3):
     dependencies:
       '@next/eslint-plugin-next': 16.2.4
       eslint: 10.2.1
@@ -7872,7 +7890,7 @@ snapshots:
       eslint-plugin-react: 7.37.5(eslint@10.2.1)
       eslint-plugin-react-hooks: 7.1.1(eslint@10.2.1)
       globals: 16.4.0
-      next: 15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(terser@5.46.1)(tsx@4.21.0)(webpack@5.106.2(esbuild@0.28.0))(yaml@2.8.3)
+      next: 15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       typescript-eslint: 8.58.2(eslint@10.2.1)(typescript@5.9.3)
     optionalDependencies:
       typescript: 5.9.3
@@ -7907,7 +7925,7 @@ snapshots:
       '@next/eslint-plugin-next': 16.2.4
       eslint: 9.39.4
       eslint-import-resolver-node: 0.3.10
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.4)
+      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.4))(eslint@9.39.4)
       eslint-plugin-import: 2.32.0(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@9.39.4)
       eslint-plugin-react: 7.37.5(eslint@9.39.4)
@@ -7955,22 +7973,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@10.2.1):
-    dependencies:
-      '@nolyfill/is-core-module': 1.0.39
-      debug: 4.4.3
-      eslint: 10.2.1
-      get-tsconfig: 4.14.0
-      is-bun-module: 2.0.0
-      stable-hash: 0.0.5
-      tinyglobby: 0.2.16
-      unrs-resolver: 1.11.1
-    optionalDependencies:
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.58.2(eslint@10.2.1)(typescript@5.9.3))(eslint@10.2.1)
-    transitivePeerDependencies:
-      - supports-color
-
-  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.4):
+  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.4))(eslint@9.39.4):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
       debug: 4.4.3
@@ -7985,6 +7988,21 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@10.2.1):
+    dependencies:
+      '@nolyfill/is-core-module': 1.0.39
+      debug: 4.4.3
+      eslint: 10.2.1
+      get-tsconfig: 4.14.0
+      is-bun-module: 2.0.0
+      stable-hash: 0.0.5
+      tinyglobby: 0.2.16
+      unrs-resolver: 1.11.1
+    optionalDependencies:
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.58.2(eslint@10.2.1)(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@10.2.1)
+    transitivePeerDependencies:
+      - supports-color
+
   eslint-module-utils@2.12.1(@typescript-eslint/parser@8.58.2(eslint@10.2.1)(typescript@5.9.3))(eslint-import-resolver-node@0.3.10)(eslint-import-resolver-typescript@3.10.1)(eslint@10.2.1):
     dependencies:
       debug: 3.2.7
@@ -7996,13 +8014,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.1(eslint-import-resolver-node@0.3.10)(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4):
+  eslint-module-utils@2.12.1(eslint-import-resolver-node@0.3.10)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.4))(eslint@9.39.4))(eslint@9.39.4):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       eslint: 9.39.4
       eslint-import-resolver-node: 0.3.10
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.4)
+      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.4))(eslint@9.39.4)
     transitivePeerDependencies:
       - supports-color
 
@@ -8035,36 +8053,6 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.58.2(eslint@10.2.1)(typescript@5.9.3))(eslint@10.2.1):
-    dependencies:
-      '@rtsao/scc': 1.1.0
-      array-includes: 3.1.9
-      array.prototype.findlastindex: 1.2.6
-      array.prototype.flat: 1.3.3
-      array.prototype.flatmap: 1.3.3
-      debug: 3.2.7
-      doctrine: 2.1.0
-      eslint: 10.2.1
-      eslint-import-resolver-node: 0.3.10
-      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.58.2(eslint@10.2.1)(typescript@5.9.3))(eslint-import-resolver-node@0.3.10)(eslint-import-resolver-typescript@3.10.1)(eslint@10.2.1)
-      hasown: 2.0.3
-      is-core-module: 2.16.1
-      is-glob: 4.0.3
-      minimatch: 3.1.5
-      object.fromentries: 2.0.8
-      object.groupby: 1.0.3
-      object.values: 1.2.1
-      semver: 6.3.1
-      string.prototype.trimend: 1.0.9
-      tsconfig-paths: 3.15.0
-    optionalDependencies:
-      '@typescript-eslint/parser': 8.58.2(eslint@10.2.1)(typescript@5.9.3)
-    transitivePeerDependencies:
-      - eslint-import-resolver-typescript
-      - eslint-import-resolver-webpack
-      - supports-color
-    optional: true
-
   eslint-plugin-import@2.32.0(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4):
     dependencies:
       '@rtsao/scc': 1.1.0
@@ -8076,7 +8064,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.39.4
       eslint-import-resolver-node: 0.3.10
-      eslint-module-utils: 2.12.1(eslint-import-resolver-node@0.3.10)(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4)
+      eslint-module-utils: 2.12.1(eslint-import-resolver-node@0.3.10)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.4))(eslint@9.39.4))(eslint@9.39.4)
       hasown: 2.0.3
       is-core-module: 2.16.1
       is-glob: 4.0.3
@@ -9085,6 +9073,45 @@ snapshots:
       - webpack
       - yaml
 
+  next@15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5):
+    dependencies:
+      '@next/env': 15.5.15
+      '@swc/helpers': 0.5.15
+      '@vanilla-extract/next-plugin': 2.5.2(@swc/helpers@0.5.15)(@types/node@25.6.0)(next@15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))
+      caniuse-lite: 1.0.30001788
+      postcss: 8.4.31
+      react: 19.2.5
+      react-dom: 19.2.5(react@19.2.5)
+      styled-jsx: 5.1.6(@babel/core@7.29.0)(react@19.2.5)
+    optionalDependencies:
+      '@next/swc-darwin-arm64': 15.5.15
+      '@next/swc-darwin-x64': 15.5.15
+      '@next/swc-linux-arm64-gnu': 15.5.15
+      '@next/swc-linux-arm64-musl': 15.5.15
+      '@next/swc-linux-x64-gnu': 15.5.15
+      '@next/swc-linux-x64-musl': 15.5.15
+      '@next/swc-win32-arm64-msvc': 15.5.15
+      '@next/swc-win32-x64-msvc': 15.5.15
+      '@playwright/test': 1.59.1
+      babel-plugin-react-compiler: 1.0.0
+      sharp: 0.34.5
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@types/node'
+      - '@vitejs/devtools'
+      - babel-plugin-macros
+      - esbuild
+      - jiti
+      - less
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - tsx
+      - webpack
+      - yaml
+
   next@16.2.4(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(terser@5.46.1)(tsx@4.21.0)(webpack@5.106.2(esbuild@0.28.0))(yaml@2.8.3):
     dependencies:
       '@next/env': 16.2.4
@@ -9834,6 +9861,8 @@ snapshots:
       acorn: 8.16.0
       commander: 2.20.3
       source-map-support: 0.5.21
+
+  third-party-capital@1.0.20: {}
 
   tiny-invariant@1.3.3: {}
 

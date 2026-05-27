@@ -131,3 +131,63 @@ export const logoBadge = style({
   alignItems: 'center',
   justifyContent: 'center',
 });
+
+const dotBounce = keyframes({
+  '0%, 80%, 100%': { opacity: 0.3, transform: 'translateY(0)' },
+  '40%': { opacity: 1, transform: 'translateY(-4px)' },
+});
+
+export const loadingDots = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '4px',
+  height: '16px',
+});
+
+export const loadingDot = style({
+  width: '6px',
+  height: '6px',
+  borderRadius: '50%',
+  backgroundColor: vars.color.neutral.n500,
+  animation: `${dotBounce} 1.2s infinite ease-in-out both`,
+  selectors: {
+    '&:nth-child(1)': { animationDelay: '-0.32s' },
+    '&:nth-child(2)': { animationDelay: '-0.16s' },
+  },
+  '@media': {
+    '(prefers-reduced-motion: reduce)': {
+      animation: 'none',
+      opacity: 0.6,
+    },
+  },
+});
+
+export const loginPromptText = style({
+  display: 'block',
+  marginBottom: '8px',
+});
+
+export const loginLink = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '4px',
+  padding: '6px 12px',
+  borderRadius: '999px',
+  fontSize: '13px',
+  fontWeight: vars.typography.fontWeight.bold,
+  color: vars.color.white,
+  backgroundColor: vars.color.brand.primary,
+  textDecoration: 'none',
+  cursor: 'pointer',
+  transition: 'transform 120ms ease, box-shadow 200ms ease',
+  selectors: {
+    '&:hover': {
+      transform: 'translateY(-1px)',
+      boxShadow: '0px 4px 12px 0px rgba(109, 63, 197, 0.3)',
+    },
+    '&:focus-visible': {
+      outline: `2px solid ${vars.color.brand.primary}`,
+      outlineOffset: '2px',
+    },
+  },
+});

@@ -1,5 +1,5 @@
-import { type RiskDetectAnalyzeResponse, type RiskSaveBody } from '@/app/(main)/analysis/_types/analysis.types';
-import { client } from './client';
+import { client } from '../client';
+import { type RiskDetectAnalyzeResponse, type RiskSaveBody } from './types';
 
 const isDev = process.env.NODE_ENV === 'development';
 

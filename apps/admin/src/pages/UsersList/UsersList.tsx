@@ -3,9 +3,9 @@ import { ROUTES } from '@/constants/routes';
 import { UserFilters } from './components/UserFilters';
 import { UsersTable } from './components/UsersTable';
 import { useUsersFilters } from './hooks/useUsersFilters';
-import * as styles from './UsersListPage.css';
+import * as styles from './UsersList.css';
 
-export const UsersListPage = () => {
+export const UsersList = () => {
   const navigate = useNavigate();
   const { draft, setDraft, query, apply, reset, prevPage, nextPage } = useUsersFilters();
 

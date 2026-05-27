@@ -2,7 +2,7 @@
 
 import { CaretDownSmIcon } from '@muneo/design-system';
 import { type ReactNode, useState } from 'react';
-import { type EstimateGenerateRequest, type EstimateGenerateResponse, type EstimateLineItem } from '../../_types/api';
+import { type EstimateGenerateRequest, type EstimateGenerateResponse, type EstimateLineItem } from '@/api/estimate';
 import * as styles from '../Step5EstimateReview/Step5EstimateReview.css';
 
 const formatWon = (amount: number): string => {

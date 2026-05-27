@@ -1,6 +1,6 @@
 import { Button } from '@muneo/design-system';
 import { Card } from '@/components/Card';
-import * as styles from '../UserDetailPage.css';
+import * as styles from '../UserDetail.css';
 
 interface UserDangerZoneProps {
   isDeleted: boolean;
