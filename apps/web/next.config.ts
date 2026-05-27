@@ -8,6 +8,14 @@ const withVanillaExtract = createVanillaExtractPlugin({
 const nextConfig: NextConfig = {
   transpilePackages: ['@muneo/design-system'],
   reactCompiler: true,
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/:path*`,
+      },
+    ];
+  },
   experimental: {
     viewTransition: true,
     staleTimes: {
