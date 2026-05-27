@@ -3,7 +3,8 @@
 import { Button, CloseRoundFill, KakaoIcon, TextField } from '@muneo/design-system';
 import Link from 'next/link';
 import { useId } from 'react';
-import { type FieldErrors, type UseFormRegister } from 'react-hook-form';
+import { type FieldErrors, type UseFormRegister, type UseFormSetValue } from 'react-hook-form';
+import { formatBirthDate, formatPhoneNumber } from '@/lib/formatters/inputFormat';
 import { type SocialSignupFormValues } from '@/lib/validations/auth';
 import { AuthModalHeader } from '../AuthModalHeader';
 import * as styles from './SocialSignupModal.css';
@@ -11,6 +12,7 @@ import * as styles from './SocialSignupModal.css';
 export interface SocialSignupModalProps {
   className?: string;
   register: UseFormRegister<SocialSignupFormValues>;
+  setValue: UseFormSetValue<SocialSignupFormValues>;
   errors: FieldErrors<SocialSignupFormValues>;
   isLoading?: boolean;
   onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
@@ -39,9 +41,15 @@ const FIELDS = [
   maxLength?: number;
 }>;
 
+const FIELD_FORMATTERS: Partial<Record<keyof SocialSignupFormValues, (value: string) => string>> = {
+  phone: formatPhoneNumber,
+  birthDate: formatBirthDate,
+};
+
 export const SocialSignupModal = ({
   className,
   register,
+  setValue,
   errors,
   isLoading,
   onSubmit,
@@ -71,16 +79,29 @@ export const SocialSignupModal = ({
               </div>
             </div>
 
-            {FIELDS.map(({ name, label, ...fieldProps }) => (
-              <TextField
-                key={name}
-                id={`${formId}-${name}`}
-                label={label}
-                error={errors[name]?.message}
-                {...fieldProps}
-                {...register(name)}
-              />
-            ))}
+            {FIELDS.map(({ name, label, ...fieldProps }) => {
+              const baseRegister = register(name);
+              const formatter = FIELD_FORMATTERS[name];
+              return (
+                <TextField
+                  key={name}
+                  id={`${formId}-${name}`}
+                  label={label}
+                  error={errors[name]?.message}
+                  {...fieldProps}
+                  {...baseRegister}
+                  onBlur={(e) => {
+                    void baseRegister.onBlur(e);
+                    if (formatter) {
+                      const formatted = formatter(e.target.value);
+                      if (formatted !== e.target.value) {
+                        setValue(name, formatted, { shouldValidate: true, shouldDirty: true });
+                      }
+                    }
+                  }}
+                />
+              );
+            })}
           </div>
         </div>
 
