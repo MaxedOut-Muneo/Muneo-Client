@@ -30,7 +30,8 @@ export default defineConfig({
       command: 'pnpm e2e:mock',
       url: MOCK_API_URL,
       reuseExistingServer: false,
-      stdout: 'pipe',
+      // CI에선 디버그 위해 pipe, 로컬에선 노이즈 줄이려 ignore
+      stdout: process.env.CI ? 'pipe' : 'ignore',
       stderr: 'pipe',
     },
     {
@@ -40,7 +41,7 @@ export default defineConfig({
       env: {
         NEXT_PUBLIC_API_BASE_URL: MOCK_API_URL,
       },
-      stdout: 'pipe',
+      stdout: process.env.CI ? 'pipe' : 'ignore',
       stderr: 'pipe',
       timeout: 240 * 1000,
     },
