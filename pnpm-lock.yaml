@@ -31,6 +31,9 @@ importers:
       prettier:
         specifier: ^3.8.1
         version: 3.8.3
+      tsx:
+        specifier: ^4.21.0
+        version: 4.21.0
       turbo:
         specifier: ^2.8.20
         version: 2.9.6
@@ -312,7 +315,7 @@ importers:
         version: 19.2.3(@types/react@19.2.14)
       '@vanilla-extract/vite-plugin':
         specifier: ^4.0.20
-        version: 4.0.20(@types/node@25.6.0)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(vite@6.4.2(@types/node@25.6.0)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))(yaml@2.8.3)
+        version: 4.0.20(@types/node@25.6.0)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(vite@8.0.8(@types/node@25.6.0)(esbuild@0.28.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))(yaml@2.8.3)
       '@vitejs/plugin-react':
         specifier: ^5.0.3
         version: 5.2.0(vite@8.0.8(@types/node@25.6.0)(esbuild@0.28.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
@@ -342,7 +345,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^4.1.0
-        version: 4.1.4(@edge-runtime/vm@3.2.0)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.4)(jsdom@29.0.2)(msw@2.13.4(@types/node@25.6.0)(typescript@5.9.3))(vite@6.4.2(@types/node@25.6.0)(lightningcss@1.32.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
+        version: 4.1.4(@edge-runtime/vm@3.2.0)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.4)(jsdom@29.0.2)(msw@2.13.4(@types/node@25.6.0)(typescript@5.9.3))(vite@8.0.8(@types/node@25.6.0)(esbuild@0.28.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/eslint-config:
     devDependencies:
@@ -360,7 +363,7 @@ importers:
         version: 10.2.1
       eslint-config-next:
         specifier: ^16.2.1
-        version: 16.2.4(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(@typescript-eslint/parser@8.58.2(eslint@10.2.1)(typescript@5.9.3))(babel-plugin-react-compiler@1.0.0)(eslint@10.2.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.9.3)
+        version: 16.2.4(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(@typescript-eslint/parser@8.58.2(eslint@10.2.1)(typescript@5.9.3))(babel-plugin-react-compiler@1.0.0)(eslint@10.2.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(tsx@4.21.0)(typescript@5.9.3)
       eslint-config-prettier:
         specifier: ^10.1.5
         version: 10.1.8(eslint@10.2.1)
@@ -6844,11 +6847,11 @@ snapshots:
       - webpack
       - yaml
 
-  '@vanilla-extract/next-plugin@2.5.2(@swc/helpers@0.5.15)(@types/node@25.6.0)(next@15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))':
+  '@vanilla-extract/next-plugin@2.5.2(@swc/helpers@0.5.15)(@types/node@25.6.0)(next@15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(tsx@4.21.0))(tsx@4.21.0)':
     dependencies:
-      '@vanilla-extract/turbopack-plugin': 0.1.3(@swc/helpers@0.5.15)(@types/node@25.6.0)(next@15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))
+      '@vanilla-extract/turbopack-plugin': 0.1.3(@swc/helpers@0.5.15)(@types/node@25.6.0)(next@15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(tsx@4.21.0))(tsx@4.21.0)
       '@vanilla-extract/webpack-plugin': 2.3.27(webpack@5.106.2(esbuild@0.28.0))
-      next: 15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      next: 15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(tsx@4.21.0)
       semver: 7.7.4
     transitivePeerDependencies:
       - '@swc/helpers'
@@ -6924,12 +6927,12 @@ snapshots:
       - tsx
       - yaml
 
-  '@vanilla-extract/turbopack-plugin@0.1.3(@swc/helpers@0.5.15)(@types/node@25.6.0)(next@15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))':
+  '@vanilla-extract/turbopack-plugin@0.1.3(@swc/helpers@0.5.15)(@types/node@25.6.0)(next@15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(tsx@4.21.0))(tsx@4.21.0)':
     dependencies:
       '@swc/core': 1.15.26(@swc/helpers@0.5.15)
       '@vanilla-extract/compiler': 0.7.0(@types/node@25.6.0)(esbuild@0.28.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3)
       '@vanilla-extract/integration': 8.0.10
-      next: 15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      next: 15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(tsx@4.21.0)
     transitivePeerDependencies:
       - '@swc/helpers'
       - '@types/node'
@@ -7879,7 +7882,7 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-config-next@16.2.4(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(@typescript-eslint/parser@8.58.2(eslint@10.2.1)(typescript@5.9.3))(babel-plugin-react-compiler@1.0.0)(eslint@10.2.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.9.3):
+  eslint-config-next@16.2.4(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(@typescript-eslint/parser@8.58.2(eslint@10.2.1)(typescript@5.9.3))(babel-plugin-react-compiler@1.0.0)(eslint@10.2.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(tsx@4.21.0)(typescript@5.9.3):
     dependencies:
       '@next/eslint-plugin-next': 16.2.4
       eslint: 10.2.1
@@ -7890,7 +7893,7 @@ snapshots:
       eslint-plugin-react: 7.37.5(eslint@10.2.1)
       eslint-plugin-react-hooks: 7.1.1(eslint@10.2.1)
       globals: 16.4.0
-      next: 15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      next: 15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(tsx@4.21.0)
       typescript-eslint: 8.58.2(eslint@10.2.1)(typescript@5.9.3)
     optionalDependencies:
       typescript: 5.9.3
@@ -7925,7 +7928,7 @@ snapshots:
       '@next/eslint-plugin-next': 16.2.4
       eslint: 9.39.4
       eslint-import-resolver-node: 0.3.10
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.4))(eslint@9.39.4)
+      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.4)
       eslint-plugin-import: 2.32.0(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@9.39.4)
       eslint-plugin-react: 7.37.5(eslint@9.39.4)
@@ -7973,21 +7976,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.4))(eslint@9.39.4):
-    dependencies:
-      '@nolyfill/is-core-module': 1.0.39
-      debug: 4.4.3
-      eslint: 9.39.4
-      get-tsconfig: 4.14.0
-      is-bun-module: 2.0.0
-      stable-hash: 0.0.5
-      tinyglobby: 0.2.16
-      unrs-resolver: 1.11.1
-    optionalDependencies:
-      eslint-plugin-import: 2.32.0(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4)
-    transitivePeerDependencies:
-      - supports-color
-
   eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@10.2.1):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
@@ -8003,6 +7991,21 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.4):
+    dependencies:
+      '@nolyfill/is-core-module': 1.0.39
+      debug: 4.4.3
+      eslint: 9.39.4
+      get-tsconfig: 4.14.0
+      is-bun-module: 2.0.0
+      stable-hash: 0.0.5
+      tinyglobby: 0.2.16
+      unrs-resolver: 1.11.1
+    optionalDependencies:
+      eslint-plugin-import: 2.32.0(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4)
+    transitivePeerDependencies:
+      - supports-color
+
   eslint-module-utils@2.12.1(@typescript-eslint/parser@8.58.2(eslint@10.2.1)(typescript@5.9.3))(eslint-import-resolver-node@0.3.10)(eslint-import-resolver-typescript@3.10.1)(eslint@10.2.1):
     dependencies:
       debug: 3.2.7
@@ -8014,13 +8017,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.1(eslint-import-resolver-node@0.3.10)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.4))(eslint@9.39.4))(eslint@9.39.4):
+  eslint-module-utils@2.12.1(eslint-import-resolver-node@0.3.10)(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       eslint: 9.39.4
       eslint-import-resolver-node: 0.3.10
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.4))(eslint@9.39.4)
+      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.4)
     transitivePeerDependencies:
       - supports-color
 
@@ -8064,7 +8067,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.39.4
       eslint-import-resolver-node: 0.3.10
-      eslint-module-utils: 2.12.1(eslint-import-resolver-node@0.3.10)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.4))(eslint@9.39.4))(eslint@9.39.4)
+      eslint-module-utils: 2.12.1(eslint-import-resolver-node@0.3.10)(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4)
       hasown: 2.0.3
       is-core-module: 2.16.1
       is-glob: 4.0.3
@@ -9073,11 +9076,11 @@ snapshots:
       - webpack
       - yaml
 
-  next@15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5):
+  next@15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(tsx@4.21.0):
     dependencies:
       '@next/env': 15.5.15
       '@swc/helpers': 0.5.15
-      '@vanilla-extract/next-plugin': 2.5.2(@swc/helpers@0.5.15)(@types/node@25.6.0)(next@15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))
+      '@vanilla-extract/next-plugin': 2.5.2(@swc/helpers@0.5.15)(@types/node@25.6.0)(next@15.5.15(@babel/core@7.29.0)(@playwright/test@1.59.1)(@types/node@25.6.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(tsx@4.21.0))(tsx@4.21.0)
       caniuse-lite: 1.0.30001788
       postcss: 8.4.31
       react: 19.2.5
