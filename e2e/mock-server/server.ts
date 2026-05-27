@@ -199,12 +199,15 @@ const server = createServer(async (req, res) => {
   const key = `${req.method} ${url.pathname}`;
 
   // CORS preflight (브라우저 직접 호출 시 대비)
+  // credentials:'include'를 쓰려면 wildcard origin이 아닌 실제 origin을 echo해야 함
   if (req.method === 'OPTIONS') {
+    const origin = req.headers.origin ?? '*';
     res.writeHead(204, {
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': origin,
       'Access-Control-Allow-Methods': 'GET,POST,PUT,PATCH,DELETE,OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type, Cookie, x-user-id, x-test-scenario',
       'Access-Control-Allow-Credentials': 'true',
+      Vary: 'Origin',
     });
     res.end();
     return;
@@ -379,6 +382,11 @@ const server = createServer(async (req, res) => {
 
 const reply: RawReply = { status: 200, body: { ok: true } };
 void reply; // type-check helper
+
+server.on('error', (err) => {
+  console.error('[mock-server] failed to start:', err);
+  process.exit(1);
+});
 
 server.listen(PORT, () => {
   console.log(`[mock-server] listening on http://localhost:${PORT}`);
