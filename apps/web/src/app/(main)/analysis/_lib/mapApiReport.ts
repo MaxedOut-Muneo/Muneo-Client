@@ -1,9 +1,5 @@
-import {
-  type ApiProcessItem,
-  type DiagnosisResult,
-  type DiagnosisStatus,
-  type RiskReport,
-} from '../_types/analysis.types';
+import { type ApiProcessItem, type DiagnosisStatus, type RiskReport } from '@/api/analyze';
+import { type DiagnosisResult } from '../_types/analysis.types';
 
 const inferItemStatus = (item: ApiProcessItem): DiagnosisStatus =>
   item.status === '불분명' && item.title.includes('누락') ? '누락' : item.status;
