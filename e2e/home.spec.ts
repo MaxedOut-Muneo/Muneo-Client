@@ -12,7 +12,7 @@ test.describe('Home — authenticated', () => {
 
   test('최근 이력 행 클릭 시 상세 페이지로 이동한다', async ({ page }) => {
     await page.goto('/home');
-    const rows = page.getByRole('link').filter({ hasText: /월|아파트|가견적|리스크/ });
+    const rows = page.locator('tr[role="link"]');
     await expect(rows.first()).toBeVisible({ timeout: 10_000 });
     await Promise.all([page.waitForURL(/\/history\//, { timeout: 10_000 }), rows.first().click()]);
   });

@@ -23,7 +23,7 @@ test.describe('Auth — 에러 시나리오', () => {
     await expect(
       page
         .getByRole('alert')
-        .filter({ hasText: /오류가 발생|일시적|네트워크/ })
+        .filter({ hasText: /오류가 발생/ })
         .first()
     ).toBeVisible({ timeout: 10_000 });
   });

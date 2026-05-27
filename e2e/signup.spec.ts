@@ -41,7 +41,6 @@ test.describe('Signup', () => {
     const response = await responsePromise;
     expect(response.status()).toBe(409);
     // 서버 에러 후 페이지가 /signup에 머무는 것까지만 검증 (메시지 텍스트는 useSignupForm 폴백 정책에 따라 변동 가능)
-    await page.waitForTimeout(500);
     await expect(page).toHaveURL(/\/signup/);
     await expect(page.getByRole('alert').first()).toBeVisible();
   });

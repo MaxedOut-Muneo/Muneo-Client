@@ -12,7 +12,7 @@ test.describe('History — authenticated', () => {
   test('검색 버튼이 노출되고 필터 드롭다운이 동작한다', async ({ page }) => {
     await page.goto('/history');
     await expect(page.getByRole('button', { name: '검색' })).toBeVisible();
-    await page.getByText('전체').first().click();
+    await page.getByRole('combobox').filter({ hasText: '전체' }).first().click();
     await expect(page.getByRole('option', { name: '리스크 진단', exact: true })).toBeVisible();
   });
 });
