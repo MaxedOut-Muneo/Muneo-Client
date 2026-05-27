@@ -71,16 +71,10 @@ describe('useTypingEffect', () => {
     expect(result.current.displayText).toBe('xy');
   });
 
-  it('언마운트 시 타이머가 정리된다', () => {
-    const { result, unmount } = renderHook(() => useTypingEffect('abcdefg', true));
-    act(() => {
-      vi.advanceTimersByTime(16);
-    });
-    const snapshot = result.current.displayText;
+  it('언마운트 시 인터벌이 정리되어 활성 타이머가 0이 된다', () => {
+    const { unmount } = renderHook(() => useTypingEffect('abcdefg', true));
+    expect(vi.getTimerCount()).toBeGreaterThan(0);
     unmount();
-    act(() => {
-      vi.advanceTimersByTime(1000);
-    });
-    expect(result.current.displayText).toBe(snapshot);
+    expect(vi.getTimerCount()).toBe(0);
   });
 });
