@@ -12,6 +12,9 @@ import type { AuthUser } from '../../apps/web/src/types/auth';
 
 const PORT = Number(process.env.MOCK_PORT ?? 4000);
 
+// e2e mock은 Next dev origin에서만 호출됨 — wildcard 금지, 고정 allowlist
+const CORS_ALLOWED_ORIGINS = new Set(['http://localhost:3000', 'http://127.0.0.1:3000']);
+
 // ─────────────────────────────────────────────────────────────
 // Mock fixtures (서버에서 받는 진짜 응답 shape과 일치)
 // ─────────────────────────────────────────────────────────────
@@ -198,17 +201,21 @@ const server = createServer(async (req, res) => {
   const url = new URL(req.url ?? '/', `http://localhost:${PORT}`);
   const key = `${req.method} ${url.pathname}`;
 
-  // CORS preflight (브라우저 직접 호출 시 대비)
-  // credentials:'include'를 쓰려면 wildcard origin이 아닌 실제 origin을 echo해야 함
+  // CORS preflight — 로컬 e2e 전용 mock이므로 Next dev origin만 허용
+  // (요청 origin을 그대로 echo하면 CodeQL이 cors-misconfig로 잡음 — allowlist 고정)
   if (req.method === 'OPTIONS') {
-    const origin = req.headers.origin ?? '*';
-    res.writeHead(204, {
-      'Access-Control-Allow-Origin': origin,
-      'Access-Control-Allow-Methods': 'GET,POST,PUT,PATCH,DELETE,OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Cookie, x-user-id, x-test-scenario',
-      'Access-Control-Allow-Credentials': 'true',
-      Vary: 'Origin',
-    });
+    const requestOrigin = req.headers.origin;
+    if (typeof requestOrigin === 'string' && CORS_ALLOWED_ORIGINS.has(requestOrigin)) {
+      res.writeHead(204, {
+        'Access-Control-Allow-Origin': requestOrigin,
+        'Access-Control-Allow-Methods': 'GET,POST,PUT,PATCH,DELETE,OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Cookie, x-user-id, x-test-scenario',
+        'Access-Control-Allow-Credentials': 'true',
+        Vary: 'Origin',
+      });
+    } else {
+      res.writeHead(403);
+    }
     res.end();
     return;
   }
