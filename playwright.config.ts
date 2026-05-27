@@ -1,5 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const MOCK_API_PORT = 4000;
+const MOCK_API_URL = `http://localhost:${MOCK_API_PORT}`;
+
 export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,
@@ -13,13 +16,33 @@ export default defineConfig({
   },
   projects: [
     {
+      name: 'setup',
+      testMatch: /.*\.setup\.ts/,
+    },
+    {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      dependencies: ['setup'],
     },
   ],
-  webServer: {
-    command: 'yarn dev:web',
-    url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
-  },
+  webServer: [
+    {
+      command: 'pnpm e2e:mock',
+      url: MOCK_API_URL,
+      reuseExistingServer: !process.env.CI,
+      stdout: 'ignore',
+      stderr: 'pipe',
+    },
+    {
+      command: 'pnpm dev:web',
+      url: 'http://localhost:3000',
+      reuseExistingServer: !process.env.CI,
+      env: {
+        NEXT_PUBLIC_API_BASE_URL: MOCK_API_URL,
+      },
+      stdout: 'pipe',
+      stderr: 'pipe',
+      timeout: 240 * 1000,
+    },
+  ],
 });
