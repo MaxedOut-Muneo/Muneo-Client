@@ -2,7 +2,7 @@
 
 import { SelectButton } from '@muneo/design-system';
 import { useId } from 'react';
-import { parsePositiveNumber } from '@/lib/parseNumber';
+import { parsePositiveNumber } from '@/lib/parsers/parseNumber';
 import { useEstimateStore } from '../../_store/estimateStore';
 import { REGIONS, ROOM_COUNTS, SPACE_TYPES } from '../../_types';
 import { StepActions } from '../StepActions/StepActions';
