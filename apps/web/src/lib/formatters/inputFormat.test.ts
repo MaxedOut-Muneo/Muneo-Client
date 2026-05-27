@@ -30,6 +30,12 @@ describe('formatPhoneNumber', () => {
     expect(formatPhoneNumber('010-1234.5678')).toBe('010-1234-5678');
     expect(formatPhoneNumber('phone:01012345678')).toBe('010-1234-5678');
   });
+
+  it('02 지역번호는 국번 2자리로 처리한다', () => {
+    expect(formatPhoneNumber('0212345678')).toBe('02-1234-5678');
+    expect(formatPhoneNumber('021234567')).toBe('02-123-4567');
+    expect(formatPhoneNumber('02-1234-5678')).toBe('02-1234-5678');
+  });
 });
 
 describe('formatBirthDate', () => {
