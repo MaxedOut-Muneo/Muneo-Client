@@ -7,8 +7,8 @@ export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  retries: process.env.CI ? 2 : 1,
+  workers: 1,
   reporter: 'html',
   use: {
     baseURL: 'http://localhost:3000',
@@ -29,8 +29,8 @@ export default defineConfig({
     {
       command: 'pnpm e2e:mock',
       url: MOCK_API_URL,
-      reuseExistingServer: !process.env.CI,
-      stdout: 'ignore',
+      reuseExistingServer: false,
+      stdout: 'pipe',
       stderr: 'pipe',
     },
     {
