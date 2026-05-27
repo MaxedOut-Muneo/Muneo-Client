@@ -10,12 +10,15 @@ import { expect, test } from '@playwright/test';
  */
 
 test.describe('Visual regression', () => {
+  // 디자인 기준 1440 데스크탑 viewport로 통일
+  test.use({ viewport: { width: 1440, height: 900 } });
+
   test('랜딩 페이지 Hero 영역', async ({ page }) => {
     await page.goto('/');
     // 폰트 로드 + 애니메이션 진정 대기
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(800);
-    const hero = page.locator('section').first();
+    const hero = page.getByTestId('hero-section');
     await expect(hero).toHaveScreenshot('landing-hero.png', {
       maxDiffPixelRatio: 0.02,
       animations: 'disabled',

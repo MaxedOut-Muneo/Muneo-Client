@@ -13,7 +13,7 @@ const HEADLINE_ID = 'hero-headline';
 
 export const HeroSection = () => {
   return (
-    <section className={styles.section} aria-labelledby={HEADLINE_ID}>
+    <section className={styles.section} aria-labelledby={HEADLINE_ID} data-testid="hero-section">
       <div className={styles.container}>
         <div className={styles.row}>
           <div className={styles.left}>
