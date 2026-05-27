@@ -102,7 +102,7 @@ export const useAnalysisStore = create<AnalysisStore>((set, get) => ({
       // 3. 분석 요청 — 이전 요청이 진행 중이면 먼저 중단
       _abortController?.abort();
       _abortController = new AbortController();
-      const { report } = await analyzeRisk(formData, _abortController.signal);
+      const { report } = await analyzeRisk(formData, userId, _abortController.signal);
 
       // 4. 결과 저장
       await saveRisk({ input: requestBody, result: { report } }, userId);
@@ -117,7 +117,9 @@ export const useAnalysisStore = create<AnalysisStore>((set, get) => ({
       if (process.env.NODE_ENV === 'development') {
         console.error('[견적서 진단] 오류:', err);
       }
-      set({ error: '분석 중 오류가 발생했습니다.', loading: false });
+      const apiDetail = (err as { body?: { detail?: string } }).body?.detail;
+      const errorMessage = apiDetail ?? '분석 중 오류가 발생했습니다.';
+      set({ error: errorMessage, loading: false });
     } finally {
       _abortController = null;
     }

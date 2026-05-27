@@ -29,6 +29,7 @@ const AnalysisPage = () => {
   const form = useAnalysisStore((s) => s.form);
   const files = useAnalysisStore((s) => s.files);
   const cancelAnalysis = useAnalysisStore((s) => s.cancelAnalysis);
+  const reset = useAnalysisStore((s) => s.reset);
 
   if (loading) {
     return (
@@ -43,6 +44,9 @@ const AnalysisPage = () => {
       <div className={styles.page}>
         <div className={styles.loadingState}>
           <p className={styles.errorText}>{error}</p>
+          <button type="button" onClick={reset} className={styles.retryButton}>
+            다시 시도
+          </button>
         </div>
       </div>
     );
