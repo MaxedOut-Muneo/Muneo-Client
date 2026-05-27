@@ -10,12 +10,14 @@ test.describe('Estimate — authenticated', () => {
     await expect(page.getByRole('button', { name: '다음 단계' })).toBeVisible();
   });
 
-  test('전용 면적에 음수 입력 시 브라우저 유효성 검사가 차단한다', async ({ page }) => {
+  test('전용 면적에 음수 입력은 React 컨트롤드 input이 차단한다', async ({ page }) => {
     await page.goto('/estimate');
     const area = page.getByLabel('전용 면적');
+    await expect(area).toHaveAttribute('type', 'number');
+    await expect(area).toHaveAttribute('min', '1');
     await area.fill('-5');
-    const validity = await area.evaluate((el) => (el as HTMLInputElement).validity.rangeUnderflow);
-    expect(validity).toBe(true);
+    // parsePositiveNumber가 음수를 null로 만들어 input value가 비워짐
+    await expect(area).toHaveValue('');
   });
 
   test('Step1 입력 후 다음 단계로 진행하면 Step2가 표시된다', async ({ page }) => {
