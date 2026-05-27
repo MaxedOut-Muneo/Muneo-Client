@@ -1,5 +1,6 @@
 import { CircleWarningIcon } from '@muneo/design-system';
-import { type DiagnosisItemData, type DiagnosisStatus } from '../../_types/analysis.types';
+import { type DiagnosisStatus } from '@/api/analyze';
+import { type DiagnosisItemData } from '../../_types/analysis.types';
 import * as styles from './DiagnosisItem.css';
 
 const STATUS_STYLES = {

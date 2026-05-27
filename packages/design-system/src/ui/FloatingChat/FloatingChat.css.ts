@@ -114,6 +114,23 @@ export const body = style({
   paddingBottom: vars.space.lg,
   gap: vars.space.lg,
   overflowY: 'auto',
+  scrollbarWidth: 'thin',
+  scrollbarColor: 'rgba(109, 64, 197, 0.25) transparent',
+  selectors: {
+    '&::-webkit-scrollbar': {
+      width: '6px',
+    },
+    '&::-webkit-scrollbar-track': {
+      background: 'transparent',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      background: 'rgba(109, 64, 197, 0.25)',
+      borderRadius: '999px',
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+      background: 'rgba(109, 64, 197, 0.45)',
+    },
+  },
 });
 
 export const messageRow = style({

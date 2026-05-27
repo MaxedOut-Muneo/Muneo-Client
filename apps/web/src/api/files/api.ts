@@ -1,5 +1,5 @@
-import { type PresignedUrlResponse } from '@/app/(main)/analysis/_types/analysis.types';
-import { client } from './client';
+import { type PresignedUrlResponse } from './types';
+import { client } from '../client';
 
 const isDev = process.env.NODE_ENV === 'development';
 

@@ -1,10 +1,10 @@
+import { client } from '../client';
 import {
   type EstimateGenerateRequest,
   type EstimateGenerateResponse,
   type EstimateSaveRequest,
   type EstimateSaveResponse,
-} from '@/app/(main)/estimate/_types/api';
-import { client } from './client';
+} from './types';
 
 export const generateEstimate = (payload: EstimateGenerateRequest): Promise<EstimateGenerateResponse> =>
   client.post('api/v1/estimates/generate', { json: payload }).json<EstimateGenerateResponse>();
