@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface Options {
   /** 항목 개수 */
@@ -25,17 +25,29 @@ interface RotatingIndex {
 export const useRotatingIndex = ({ count, interval, exitDuration }: Options): RotatingIndex => {
   const [index, setIndex] = useState(0);
   const [exiting, setExiting] = useState(false);
+  const tidRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const id = setInterval(() => {
+      if (tidRef.current !== null) {
+        clearTimeout(tidRef.current);
+      }
       setExiting(true);
       const tid = setTimeout(() => {
         setIndex((i) => (i + 1) % count);
         setExiting(false);
+        tidRef.current = null;
       }, exitDuration);
-      return () => clearTimeout(tid);
+      tidRef.current = tid;
     }, interval);
-    return () => clearInterval(id);
+
+    return () => {
+      clearInterval(id);
+      if (tidRef.current !== null) {
+        clearTimeout(tidRef.current);
+        tidRef.current = null;
+      }
+    };
   }, [count, interval, exitDuration]);
 
   return { index, exiting };
