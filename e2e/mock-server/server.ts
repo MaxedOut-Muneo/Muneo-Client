@@ -90,7 +90,16 @@ const MOCK_RISKS: RiskItem[] = [
     id: 'risk-1',
     user_id: '1',
     created_at: '2026-05-18T14:00:00Z',
-    input: { spaceType: '아파트', pyeong: 25, companyName: 'A업체' },
+    input: {
+      space_type: '아파트',
+      pyeong: 25,
+      room_count: 2,
+      floor: 3,
+      elevator: true,
+      region: '서울',
+      building_age: '10~20년',
+      company_name: 'A업체',
+    },
     result: { report: MOCK_REPORT },
   },
 ];
