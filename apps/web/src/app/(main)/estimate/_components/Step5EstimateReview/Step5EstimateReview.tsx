@@ -4,7 +4,7 @@ import { ArrowLeftMdIcon, Button } from '@muneo/design-system';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { saveEstimate } from '@/api/estimate';
-import { useAuthStore } from '@/store/authStore';
+import { useUser } from '@/app/(main)/_components/UserProvider/UserProvider';
 import { useEstimateStore } from '../../_store/estimateStore';
 import { mapToApiPayload } from '../../_utils/mapToApiPayload';
 import { EstimateResultView } from '../EstimateResultView/EstimateResultView';
@@ -51,7 +51,7 @@ const DisclaimerSection = ({ isSaving, saveError, onEdit, onSave }: DisclaimerSe
 
 export const EstimateResult = () => {
   const { step1, step2, step3, step4, estimateResult, goToStep, reset } = useEstimateStore();
-  const { user } = useAuthStore();
+  const user = useUser();
   const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
@@ -63,10 +63,6 @@ export const EstimateResult = () => {
   const input = mapToApiPayload(step1, step2, step3, step4);
 
   const handleSave = async () => {
-    if (!user) {
-      setSaveError('로그인 후 저장할 수 있습니다.');
-      return;
-    }
     setIsSaving(true);
     setSaveError(null);
     try {
