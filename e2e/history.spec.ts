@@ -6,7 +6,8 @@ test.describe('History — authenticated', () => {
   test('이력 페이지에서 mock 데이터 행이 렌더된다', async ({ page }) => {
     await page.goto('/history');
     await expect(page).toHaveURL(/\/history/);
-    await expect(page.getByText('A업체').first()).toBeVisible({ timeout: 10_000 });
+    // 업체 컬럼이 빠질 수 있으므로 행 자체의 존재를 검증
+    await expect(page.locator('tr[role="link"]').first()).toBeVisible({ timeout: 10_000 });
   });
 
   test('검색 버튼이 노출되고 필터 드롭다운이 동작한다', async ({ page }) => {
