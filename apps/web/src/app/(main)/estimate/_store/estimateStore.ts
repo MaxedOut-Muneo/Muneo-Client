@@ -36,7 +36,7 @@ const initialStep3: Step3Data = {
 const initialStep4: Step4Data = {};
 
 const MIN_STEP: EstimateStep = 1;
-const MAX_STEP: EstimateStep = 5;
+const MAX_STEP: EstimateStep = 4;
 
 interface EstimateStore {
   currentStep: EstimateStep;

@@ -3,7 +3,11 @@ import { type RiskDetectAnalyzeResponse, type RiskSaveBody } from './types';
 
 const isDev = process.env.NODE_ENV === 'development';
 
-export const analyzeRisk = async (formData: FormData, signal?: AbortSignal): Promise<RiskDetectAnalyzeResponse> => {
+export const analyzeRisk = async (
+  formData: FormData,
+  userId: number,
+  signal?: AbortSignal
+): Promise<RiskDetectAnalyzeResponse> => {
   if (isDev) {
     console.group('[진단] analyzeRisk — POST /api/v1/risk-detector/analyze');
     for (const [key, value] of formData.entries()) {
@@ -18,7 +22,7 @@ export const analyzeRisk = async (formData: FormData, signal?: AbortSignal): Pro
   const res = await client
     .post('api/v1/risk-detector/analyze', {
       body: formData,
-      headers: { 'content-type': undefined },
+      headers: { 'content-type': undefined, 'x-user-id': String(userId) },
       timeout: 180000,
       signal,
     })

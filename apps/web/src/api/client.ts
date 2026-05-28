@@ -56,6 +56,10 @@ const createClient = () =>
     hooks: {
       beforeRetry: [
         async ({ request, error }) => {
+          const status = (error as { status?: number }).status;
+          if (status !== 401) {
+            throw error;
+          }
           if (isPreAuth(request.url) || isRefresh(request.url)) {
             throw error;
           }

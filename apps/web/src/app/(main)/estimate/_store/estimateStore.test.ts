@@ -22,25 +22,25 @@ describe('estimateStore', () => {
   });
 
   describe('단계 이동', () => {
-    it('nextStep으로 1 → 5까지 증가한다', () => {
+    it('nextStep으로 1 → 4까지 증가한다', () => {
       const { nextStep } = useEstimateStore.getState();
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 3; i++) {
         nextStep();
       }
-      expect(useEstimateStore.getState().currentStep).toBe(5);
+      expect(useEstimateStore.getState().currentStep).toBe(4);
     });
 
-    it('nextStep은 5를 넘지 않는다', () => {
+    it('nextStep은 4를 넘지 않는다', () => {
       const store = useEstimateStore.getState();
-      store.goToStep(5);
+      store.goToStep(4);
       store.nextStep();
-      expect(useEstimateStore.getState().currentStep).toBe(5);
+      expect(useEstimateStore.getState().currentStep).toBe(4);
     });
 
-    it('prevStep으로 5 → 1까지 감소한다', () => {
+    it('prevStep으로 4 → 1까지 감소한다', () => {
       const store = useEstimateStore.getState();
-      store.goToStep(5);
-      for (let i = 0; i < 4; i++) {
+      store.goToStep(4);
+      for (let i = 0; i < 3; i++) {
         store.prevStep();
       }
       expect(useEstimateStore.getState().currentStep).toBe(1);

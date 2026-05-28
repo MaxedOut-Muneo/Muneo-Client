@@ -5,6 +5,7 @@ import { isApiError } from '@/api/errors';
 import { getServerMe } from '@/api/user/server';
 import { type AuthUser } from '@/types/auth';
 import { SidebarShell } from './_components/SidebarShell';
+import { UserProvider } from './_components/UserProvider/UserProvider';
 import * as styles from './layout.css';
 
 export const metadata: Metadata = {
@@ -28,10 +29,12 @@ const MainLayout = async ({ children }: { children: ReactNode }) => {
   }
 
   return (
-    <div className={styles.wrapper}>
-      <SidebarShell className={styles.sidebar} user={user} />
-      <main className={styles.main}>{children}</main>
-    </div>
+    <UserProvider user={user}>
+      <div className={styles.wrapper}>
+        <SidebarShell className={styles.sidebar} user={user} />
+        <main className={styles.main}>{children}</main>
+      </div>
+    </UserProvider>
   );
 };
 

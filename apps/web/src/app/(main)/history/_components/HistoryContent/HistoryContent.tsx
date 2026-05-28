@@ -8,11 +8,15 @@ import {
   parseDateParam,
   type AppliedFilters,
 } from '../../_lib/historyFilter';
-import { MOCK_HISTORY_ROWS } from '../../_mocks/history.mock';
+import { type HistoryRow } from '../../_types/history.types';
 import { HistoryFilterBar } from '../HistoryFilterBar/HistoryFilterBar';
 import { HistoryTable } from '../HistoryTable/HistoryTable';
 
-export const HistoryContent = () => {
+interface HistoryContentProps {
+  rows: HistoryRow[];
+}
+
+export const HistoryContent = ({ rows }: HistoryContentProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -23,7 +27,7 @@ export const HistoryContent = () => {
     endDate: parseDateParam(searchParams.get('to')),
   };
 
-  const filteredRows = applyFilters(MOCK_HISTORY_ROWS, appliedFilters);
+  const filteredRows = applyFilters(rows, appliedFilters);
 
   return (
     <>

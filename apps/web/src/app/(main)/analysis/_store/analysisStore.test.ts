@@ -32,7 +32,12 @@ const MOCK_REPORT = {
     {
       process: '철거',
       display_name: '철거 공사',
-      items: [{ title: '일반 철거', description: '180만원', guide: '', status: '정상' as const }],
+      items: [
+        { title: '일반 철거', description: '180만원', guide: '', status: '정상' as const },
+        { title: '철거 폐기물 처리비', description: '누락된 항목', guide: '', status: '누락' as const },
+        { title: '기타 비용', description: '불분명 항목', guide: '', status: '불분명' as const },
+        { title: '인건비', description: '중복 항목', guide: '', status: '중복' as const },
+      ],
     },
   ],
   summary: { total_risk_items: 3, chips: { 누락: 1, 중복: 1, 불분명: 1 } },

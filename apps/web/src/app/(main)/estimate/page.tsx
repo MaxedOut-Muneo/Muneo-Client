@@ -6,7 +6,6 @@ import { EstimateLoadingScreen } from './_components/EstimateLoadingScreen/Estim
 import { Step1BasicInfo } from './_components/Step1BasicInfo/Step1BasicInfo';
 import { Step2ProcessSelection } from './_components/Step2ProcessSelection/Step2ProcessSelection';
 import { Step3ConstructionConditions } from './_components/Step3ConstructionConditions/Step3ConstructionConditions';
-import { Step4ProcessDetail } from './_components/Step4ProcessDetail/Step4ProcessDetail';
 import { EstimateResult } from './_components/Step5EstimateReview/Step5EstimateReview';
 import { StepIndicator } from './_components/StepIndicator/StepIndicator';
 import { useEstimateStore } from './_store/estimateStore';
@@ -17,8 +16,7 @@ const STEP_COMPONENTS = {
   1: Step1BasicInfo,
   2: Step2ProcessSelection,
   3: Step3ConstructionConditions,
-  4: Step4ProcessDetail,
-  5: EstimateResult,
+  4: EstimateResult,
 } as const;
 
 const EstimatePage = () => {
@@ -35,7 +33,7 @@ const EstimatePage = () => {
   const goToStep = useEstimateStore((s) => s.goToStep);
 
   useEffect(() => {
-    if (currentStep !== 5 || estimateResult !== null || isGenerating || generateError !== null) {
+    if (currentStep !== 4 || estimateResult !== null || isGenerating || generateError !== null) {
       return;
     }
 
@@ -70,7 +68,7 @@ const EstimatePage = () => {
     setEstimateResult,
   ]);
 
-  if (currentStep === 5 && isGenerating) {
+  if (currentStep === 4 && isGenerating) {
     return (
       <div className={styles.page}>
         <div className={styles.content}>
@@ -80,7 +78,7 @@ const EstimatePage = () => {
             processCount={step2.selectedProcesses.length}
             onCancel={() => {
               setGeneratingState(false, null);
-              goToStep(4);
+              goToStep(3);
             }}
           />
         </div>
@@ -88,7 +86,7 @@ const EstimatePage = () => {
     );
   }
 
-  if (currentStep === 5 && generateError) {
+  if (currentStep === 4 && generateError) {
     return (
       <div className={styles.page}>
         <div className={styles.content}>
@@ -101,7 +99,7 @@ const EstimatePage = () => {
               type="button"
               onClick={() => {
                 setGeneratingState(false, null);
-                goToStep(4);
+                goToStep(3);
               }}
               style={{ padding: '10px 20px', borderRadius: '8px', border: '1px solid #E5E7EB', cursor: 'pointer' }}
             >

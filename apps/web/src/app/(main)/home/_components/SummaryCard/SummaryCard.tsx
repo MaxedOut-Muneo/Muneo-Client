@@ -1,4 +1,3 @@
-import { ArrowIcon } from '@muneo/design-system';
 import { type ReactNode } from 'react';
 import * as styles from './SummaryCard.css';
 
@@ -16,14 +15,9 @@ export const SummaryCard = ({ icon, label, count, danger = false }: SummaryCardP
         {icon}
         <span className={styles.label}>{label}</span>
       </div>
-      <div className={styles.right}>
-        <span className={danger ? styles.countDanger : styles.count}>
-          {typeof count === 'number' ? `${count}건` : count}
-        </span>
-        <span className={styles.arrow}>
-          <ArrowIcon width={24} height={24} />
-        </span>
-      </div>
+      <span className={danger ? styles.countDanger : styles.count}>
+        {typeof count === 'number' ? `${count}건` : count}
+      </span>
     </div>
   );
 };
