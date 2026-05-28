@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { getServerEstimates, getServerRiskDetections, type EstimateItem, type RiskItem } from '@/api/history';
 import { getServerMe } from '@/api/user/server';
+import { mapApiReportToDiagnosisResult } from '../analysis/_lib/mapApiReport';
 import { HistoryContent } from './_components/HistoryContent/HistoryContent';
 import { type AnalysisStatus, type HistoryRow } from './_types/history.types';
 import * as styles from './page.css';
@@ -25,20 +26,23 @@ const buildHistoryRows = (estimates: EstimateItem[], risks: RiskItem[]): History
     },
   }));
 
-  const riskEntries: Entry[] = risks.map((item) => ({
-    createdAt: item.created_at,
-    row: {
-      id: item.id,
-      date: toDate(item.created_at),
-      analysisType: '리스크 진단',
-      constructionType: `${item.input.spaceType} ${item.input.pyeong}평`,
-      risk: {
-        missing: item.result.report.summary.chips.누락,
-        unclear: item.result.report.summary.chips.불분명,
+  const riskEntries: Entry[] = risks.map((item) => {
+    const diagnosis = mapApiReportToDiagnosisResult(item.result.report);
+    return {
+      createdAt: item.created_at,
+      row: {
+        id: item.id,
+        date: toDate(item.created_at),
+        analysisType: '리스크 진단',
+        constructionType: `${item.input.spaceType} ${item.input.pyeong}평`,
+        risk: {
+          missing: diagnosis.missingCount,
+          unclear: diagnosis.riskCount,
+        },
+        status: '완료' as AnalysisStatus,
       },
-      status: '완료' as AnalysisStatus,
-    },
-  }));
+    };
+  });
 
   return [...estimateEntries, ...riskEntries]
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
