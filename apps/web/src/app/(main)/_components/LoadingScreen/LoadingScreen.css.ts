@@ -52,7 +52,6 @@ export const container = style({
   padding: '40px 24px',
 });
 
-/* ── 마스코트 ── */
 export const mascotWrap = style({
   display: 'flex',
   flexDirection: 'column',
@@ -82,7 +81,6 @@ export const mascotShadow = style({
   '@media': { [MOTION]: { animation: 'none' } },
 });
 
-/* ── Working dots ── */
 export const workingDots = style({
   display: 'flex',
   gap: '6px',
@@ -101,7 +99,6 @@ export const workingDot = style({
   '@media': { [MOTION]: { animation: 'none', opacity: 1 } },
 });
 
-/* ── 상태 메시지 ── */
 export const msgWrap = style({
   height: '22px',
   display: 'flex',
@@ -123,7 +120,6 @@ export const msgExiting = style({
   '@media': { [MOTION]: { animation: 'none' } },
 });
 
-/* ── 프로그레스 바 ── */
 export const progressWrap = style({
   width: '100%',
   maxWidth: '320px',
@@ -164,7 +160,6 @@ export const progressFill = style({
   },
 });
 
-/* ── 팁 카드 ── */
 export const tipCard = style({
   width: '100%',
   maxWidth: '480px',
@@ -233,7 +228,6 @@ export const tipProgressFill = style({
   transition: 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
 });
 
-/* ── 푸터 ── */
 export const footer = style({
   display: 'flex',
   flexDirection: 'column',
