@@ -19,7 +19,7 @@ const STEPS = [
   {
     number: '03',
     title: '결과 확인 및 상담',
-    description: '분석 결과를 확인하고 AI 챗봇으로 추가 질문하세요',
+    description: '분석 결과를 확인하고 해당 인사이트를 기반으로 업체와 소통하세요',
   },
 ];
 
