@@ -81,7 +81,7 @@ export const LoadingScreen = ({
   return (
     <div className={styles.container}>
       {/* 마스코트 + 그림자 */}
-      <div className={styles.mascotWrap}>
+      <div className={styles.mascotWrap} aria-hidden="true">
         <div className={styles.mascotFloating}>
           <svg className={styles.mascotImg} viewBox="0 0 318 225" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -122,14 +122,14 @@ export const LoadingScreen = ({
       </div>
 
       {/* Working dots */}
-      <div className={styles.workingDots}>
+      <div className={styles.workingDots} aria-hidden="true">
         {DOT_DELAYS.map((delay, i) => (
           <span key={i} className={styles.workingDot} style={{ animationDelay: delay }} />
         ))}
       </div>
 
       {/* 현재 작업 메시지 */}
-      <div className={styles.msgWrap}>
+      <div className={styles.msgWrap} aria-live="polite" aria-atomic="true">
         {showWarning ? (
           <span key="warning" className={styles.msg}>
             {warningMessage}
@@ -142,7 +142,14 @@ export const LoadingScreen = ({
       </div>
 
       {/* 프로그레스 바 */}
-      <div className={styles.progressWrap}>
+      <div
+        className={styles.progressWrap}
+        role="progressbar"
+        aria-valuenow={progress.value}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label="분석 진행률"
+      >
         <div
           className={styles.progressFill}
           style={{ width: `${progress.value}%`, transition: `width ${progress.duration}ms ${progress.easing}` }}
