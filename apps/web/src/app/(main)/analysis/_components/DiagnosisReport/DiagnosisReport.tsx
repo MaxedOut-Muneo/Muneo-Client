@@ -1,6 +1,7 @@
 'use client';
 
 import { CircleWarningIcon, StatusCard, TriangleWarningIcon } from '@muneo/design-system';
+import { buildInsights } from '../../_lib/buildInsights';
 import { useAnalysisStore } from '../../_store/analysisStore';
 import { ProcessSection } from '../ProcessSection/ProcessSection';
 import * as styles from './DiagnosisReport.css';
@@ -53,16 +54,19 @@ export const DiagnosisReport = () => {
         ))}
       </div>
 
-      <div className={styles.summaryBox}>
-        <span className={styles.summaryTitle}>진단 요약</span>
-        <div className={styles.summaryBody}>
-          <span className={styles.summarySubtitle}>전체 리스크 의심 항목</span>
-          <div className={styles.summaryBadges}>
-            <span className={`${styles.summaryBadge} ${styles.badgeDanger}`}>누락 {result.missingCount}</span>
-            <span className={`${styles.summaryBadge} ${styles.badgeWarning}`}>불분명 {result.riskCount}</span>
-            <span className={`${styles.summaryBadge} ${styles.badgeInfo}`}>중복 {result.insufficientCount}</span>
-          </div>
+      <div className={styles.insightBox}>
+        <div className={styles.insightHeader}>
+          <span className={styles.insightIcon}>💡</span>
+          <span className={styles.insightTitle}>종합 인사이트</span>
         </div>
+        <ul className={styles.insightList}>
+          {buildInsights(result).map((sentence, i) => (
+            <li key={i} className={styles.insightItem}>
+              <span className={styles.insightBullet} aria-hidden="true" />
+              <p className={styles.insightText}>{sentence}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
