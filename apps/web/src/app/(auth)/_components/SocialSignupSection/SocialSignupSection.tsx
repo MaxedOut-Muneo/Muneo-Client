@@ -10,7 +10,7 @@ interface SocialSignupSectionProps {
 
 export const SocialSignupSection = ({ ticket }: SocialSignupSectionProps) => {
   const router = useRouter();
-  const { register, errors, isLoading, onSubmit } = useSocialSignupForm(ticket);
+  const { register, setValue, errors, isLoading, onSubmit } = useSocialSignupForm(ticket);
 
   const handleClose = () => router.push('/');
   const handleLogin = () => router.replace('/login');
@@ -18,6 +18,7 @@ export const SocialSignupSection = ({ ticket }: SocialSignupSectionProps) => {
   return (
     <SocialSignupModal
       register={register}
+      setValue={setValue}
       errors={errors}
       isLoading={isLoading}
       onSubmit={onSubmit}

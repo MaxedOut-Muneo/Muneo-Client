@@ -25,6 +25,7 @@ export const useSocialSignupForm = (ticket: string) => {
     register,
     handleSubmit,
     setError,
+    setValue,
     formState: { errors },
   } = useForm<SocialSignupFormValues>({
     resolver: zodResolver(socialSignupSchema),
@@ -57,6 +58,7 @@ export const useSocialSignupForm = (ticket: string) => {
 
   return {
     register,
+    setValue,
     errors,
     isLoading,
     onSubmit,

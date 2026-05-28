@@ -1,7 +1,7 @@
 'use client';
 
 import { Dropdown, TextField } from '@muneo/design-system';
-import { parsePositiveNumber } from '@/lib/parseNumber';
+import { parsePositiveNumber } from '@/lib/parsers/parseNumber';
 import { useAnalysisStore } from '../../_store/analysisStore';
 import { type BuildingAge, type ElevatorOption, type Region, type SpaceType } from '../../_types/analysis.types';
 import * as styles from './InputForm.css';

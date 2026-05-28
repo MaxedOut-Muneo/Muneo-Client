@@ -10,11 +10,12 @@ interface SignupSectionProps {
 }
 
 export const SignupSection = ({ onLogoClick, onClose, onLogin }: SignupSectionProps) => {
-  const { register, errors, isLoading, onSubmit } = useSignupForm();
+  const { register, setValue, errors, isLoading, onSubmit } = useSignupForm();
 
   return (
     <SignupModal
       register={register}
+      setValue={setValue}
       errors={errors}
       isLoading={isLoading}
       onSubmit={onSubmit}
