@@ -69,60 +69,63 @@ export const sections = style({
   gap: '20px',
 });
 
-export const summaryBox = style({
-  backgroundColor: vars.color.white,
-  border: `1px solid ${vars.color.neutral.n200}`,
-  borderRadius: '12px',
-  padding: '20px',
+/* ── 인사이트 카드 ── */
+export const insightBox = style({
+  background: 'linear-gradient(135deg, #F5F0FF 0%, #EEF2FF 100%)',
+  border: '1px solid #E3D8FF',
+  borderRadius: '16px',
+  padding: '24px 28px',
   display: 'flex',
   flexDirection: 'column',
-  gap: '20px',
+  gap: '16px',
 });
 
-export const summaryTitle = style({
+export const insightHeader = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '8px',
+});
+
+export const insightIcon = style({
+  fontSize: '18px',
+  lineHeight: 1,
+});
+
+export const insightTitle = style({
   fontFamily: vars.typography.fontFamily,
-  fontSize: '20px',
-  fontWeight: vars.typography.fontWeight.bold,
-  color: vars.color.neutral.n900,
+  fontSize: vars.typography.fontSize.md,
+  fontWeight: vars.typography.fontWeight.semiBold,
+  color: '#6D3FD4',
   lineHeight: 'normal',
 });
 
-export const summaryBody = style({
+export const insightList = style({
   display: 'flex',
   flexDirection: 'column',
+  gap: '12px',
+  paddingLeft: '2px',
+});
+
+export const insightItem = style({
+  display: 'flex',
+  alignItems: 'flex-start',
   gap: '10px',
 });
 
-export const summarySubtitle = style({
+export const insightBullet = style({
+  flexShrink: 0,
+  width: '6px',
+  height: '6px',
+  borderRadius: '50%',
+  backgroundColor: '#8455DF',
+  marginTop: '8px',
+});
+
+export const insightText = style({
   fontFamily: vars.typography.fontFamily,
-  fontSize: vars.typography.fontSize.md,
-  fontWeight: vars.typography.fontWeight.bold,
-  color: vars.color.neutral.n500,
-  lineHeight: 'normal',
+  fontSize: vars.typography.fontSize.base,
+  fontWeight: vars.typography.fontWeight.regular,
+  color: vars.color.neutral.n700,
+  lineHeight: '1.7',
+  wordBreak: 'keep-all',
 });
-
-export const summaryBadges = style({
-  display: 'flex',
-  gap: '59px',
-  alignItems: 'center',
-});
-
-export const summaryBadge = style({
-  borderRadius: '8px',
-  padding: '8px 16px',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '4px',
-  fontFamily: vars.typography.fontFamily,
-  fontSize: vars.typography.fontSize.md,
-  fontWeight: vars.typography.fontWeight.bold,
-  lineHeight: 'normal',
-  whiteSpace: 'nowrap',
-});
-
-export const badgeDanger = style({ backgroundColor: vars.color.semantic.dangerBg, color: vars.color.semantic.danger });
-export const badgeWarning = style({
-  backgroundColor: vars.color.semantic.warningBg,
-  color: vars.color.semantic.warning,
-});
-export const badgeInfo = style({ backgroundColor: vars.color.semantic.infoBg, color: vars.color.semantic.info });

@@ -3,7 +3,9 @@ import { notFound } from 'next/navigation';
 import { getServerEstimates, getServerRiskDetections } from '@/api/history';
 import { getServerMe } from '@/api/user/server';
 import { TransitionLink } from '@/components/TransitionLink';
+import { mapApiReportToDiagnosisResult } from '../../analysis/_lib/mapApiReport';
 import { EstimateResultView } from '../../estimate/_components/EstimateResultView/EstimateResultView';
+import { DiagnosisDetailView } from '../_components/DiagnosisDetailView/DiagnosisDetailView';
 import * as styles from './page.css';
 
 export default async function HistoryDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -39,41 +41,7 @@ export default async function HistoryDetailPage({ params }: { params: Promise<{ 
             분석 이력
           </TransitionLink>
           <div className={styles.content}>
-            <div>
-              <h1 style={{ fontSize: '30px', fontWeight: 700, marginBottom: '8px' }}>리스크 진단 결과</h1>
-              <p style={{ color: '#6B7280', marginBottom: '24px' }}>
-                {risk.input.companyName} · {risk.input.spaceType} {risk.input.pyeong}평
-              </p>
-              <div
-                style={{
-                  background: '#fff',
-                  border: '1px solid #E5E7EB',
-                  borderRadius: '12px',
-                  padding: '24px',
-                  display: 'flex',
-                  gap: '32px',
-                }}
-              >
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '28px', fontWeight: 700, color: '#EF4444' }}>
-                    {risk.result.report.summary.chips.누락}
-                  </div>
-                  <div style={{ fontSize: '13px', color: '#6B7280', marginTop: '4px' }}>누락</div>
-                </div>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '28px', fontWeight: 700, color: '#F59E0B' }}>
-                    {risk.result.report.summary.chips.중복}
-                  </div>
-                  <div style={{ fontSize: '13px', color: '#6B7280', marginTop: '4px' }}>중복</div>
-                </div>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '28px', fontWeight: 700, color: '#3B82F6' }}>
-                    {risk.result.report.summary.chips.불분명}
-                  </div>
-                  <div style={{ fontSize: '13px', color: '#6B7280', marginTop: '4px' }}>불분명</div>
-                </div>
-              </div>
-            </div>
+            <DiagnosisDetailView result={mapApiReportToDiagnosisResult(risk.result.report, risk.created_at)} />
           </div>
         </div>
       </div>

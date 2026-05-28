@@ -80,18 +80,6 @@ export const th = style({
   whiteSpace: 'nowrap',
 });
 
-export const thInner = style({
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: '2px',
-  cursor: 'pointer',
-  selectors: {
-    '&:hover': {
-      color: vars.color.neutral.n600,
-    },
-  },
-});
-
 export const tr = style({
   borderBottom: `1px solid ${vars.color.neutral.n200}`,
   cursor: 'pointer',

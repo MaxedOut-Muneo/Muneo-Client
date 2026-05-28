@@ -17,11 +17,10 @@ export const table = style({
 
 export const colId = style({ width: '6%' });
 export const colDate = style({ width: '12%' });
-export const colAnalysisType = style({ width: '13%' });
-export const colConstructionType = style({ width: '26%' });
-export const colVendor = style({ width: '12%' });
-export const colRisk = style({ width: '13%' });
-export const colStatus = style({ width: '10%' });
+export const colAnalysisType = style({ width: '14%' });
+export const colConstructionType = style({ width: '38%' });
+export const colRisk = style({ width: '17%' });
+export const colStatus = style({ width: '13%' });
 
 export const thead = style({
   borderBottom: `1px solid ${vars.color.neutral.n200}`,
@@ -74,9 +73,9 @@ export const tdAnalysisType = style([
   },
 ]);
 
-export const riskDanger = style({ color: '#ef4444' });
-export const riskSafe = style({ color: '#10b981' });
-export const riskNone = style({ color: '#374151' });
+export const riskDanger = style({ color: '#ef4444', fontSize: '12px' });
+export const riskWarning = style({ color: '#f59e0b', fontSize: '12px' });
+export const riskNone = style({ color: '#9ca3af' });
 export const statusComplete = style({ color: '#10b981' });
 export const statusInProgress = style({ color: '#f59e0b' });
 export const statusPending = style({ color: '#9ca3af' });

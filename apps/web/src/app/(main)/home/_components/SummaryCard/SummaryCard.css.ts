@@ -6,7 +6,7 @@ export const card = style({
   backgroundColor: vars.color.white,
   borderRadius: '20px',
   boxShadow: '0px 2px 1px 0px rgba(0, 0, 0, 0.12)',
-  padding: '28px 14px',
+  padding: '28px 28px 28px 14px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
@@ -26,12 +26,6 @@ export const label = style({
   color: '#59606e',
   letterSpacing: '-0.07px',
   whiteSpace: 'nowrap',
-});
-
-export const right = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '15px',
 });
 
 export const count = style({
@@ -54,10 +48,4 @@ export const countDanger = style({
   letterSpacing: '-0.24px',
   whiteSpace: 'nowrap',
   color: vars.color.semantic.danger,
-});
-
-export const arrow = style({
-  display: 'flex',
-  alignItems: 'center',
-  color: vars.color.neutral.n400,
 });

@@ -2,7 +2,7 @@
 
 import { Button } from '@muneo/design-system';
 import { useRef, useState } from 'react';
-import { useAuthStore } from '@/store/authStore';
+import { useUser } from '@/app/(main)/_components/UserProvider/UserProvider';
 import { useAnalysisStore } from '../../_store/analysisStore';
 import * as styles from './UploadPanel.css';
 
@@ -10,7 +10,7 @@ const ACCEPT = '.pdf,.jpg,.jpeg,.png,.csv,.xls,.xlsx';
 
 export const UploadPanel = () => {
   const { files, loading, addFile, removeFile, submitAnalysis, reset } = useAnalysisStore();
-  const { user } = useAuthStore();
+  const user = useUser();
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
 

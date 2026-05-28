@@ -38,6 +38,7 @@ const buildView = (estimates: EstimateItem[], risks: RiskItem[]) => {
 
   const rows = [...estimateEntries, ...riskEntries]
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+    .slice(0, 10)
     .map((entry) => entry.row);
 
   const stats: SummaryStats = {

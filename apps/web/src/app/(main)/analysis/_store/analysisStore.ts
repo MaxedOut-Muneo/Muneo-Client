@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { analyzeRisk, type RiskAnalyzeRequestBody, type RiskReport, saveRisk } from '@/api/analyze';
+import { analyzeRisk, type RiskAnalyzeRequestBody, saveRisk } from '@/api/analyze';
+import { mapApiReportToDiagnosisResult } from '../_lib/mapApiReport';
 import { type AnalysisFormData, type DiagnosisResult, type UploadedFile } from '../_types/analysis.types';
 
 const DEFAULT_FORM: AnalysisFormData = {
@@ -19,26 +20,6 @@ const formatSize = (bytes: number): string => {
   }
   return `${(bytes / (1024 * 1024)).toFixed(1)}MB`;
 };
-
-const mapApiReportToDiagnosisResult = (report: RiskReport): DiagnosisResult => ({
-  vendorLabel: report.subtitle_fields.company_name,
-  areaLabel: `${report.subtitle_fields.pyeong}평 ${report.construction_info.space_type}`,
-  analyzedAt: (report.subtitle_fields.analyzed_date ?? new Date().toISOString()).slice(0, 10).replace(/-/g, '.'),
-  missingCount: report.summary.chips.누락,
-  riskCount: report.summary.chips.불분명,
-  insufficientCount: report.summary.chips.중복,
-  sections: report.process_sections.map((s, si) => ({
-    id: String(si),
-    name: s.display_name,
-    items: s.items.map((item, ii) => ({
-      id: `${si}_${ii}`,
-      status: item.status,
-      title: item.title,
-      description: item.description,
-      actionNote: item.guide,
-    })),
-  })),
-});
 
 interface AnalysisStore {
   view: 'input' | 'report';
@@ -116,7 +97,7 @@ export const useAnalysisStore = create<AnalysisStore>((set, get) => ({
       // 3. 분석 요청 — 이전 요청이 진행 중이면 먼저 중단
       _abortController?.abort();
       _abortController = new AbortController();
-      const { report } = await analyzeRisk(formData, _abortController.signal);
+      const { report } = await analyzeRisk(formData, userId, _abortController.signal);
 
       // 4. 결과 저장
       await saveRisk({ input: requestBody, result: { report } }, userId);
@@ -131,7 +112,9 @@ export const useAnalysisStore = create<AnalysisStore>((set, get) => ({
       if (process.env.NODE_ENV === 'development') {
         console.error('[견적서 진단] 오류:', err);
       }
-      set({ error: '분석 중 오류가 발생했습니다.', loading: false });
+      const apiDetail = (err as { body?: { detail?: string } }).body?.detail;
+      const errorMessage = apiDetail ?? '분석 중 오류가 발생했습니다.';
+      set({ error: errorMessage, loading: false });
     } finally {
       _abortController = null;
     }
