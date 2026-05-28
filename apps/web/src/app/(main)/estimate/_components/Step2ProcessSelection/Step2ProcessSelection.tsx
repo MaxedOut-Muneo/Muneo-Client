@@ -253,15 +253,24 @@ const SECTION_MAP: Partial<Record<string, React.ComponentType<SectionProps<any>>
 
 export const Step2ProcessSelection = () => {
   const { step2, step4, setStep2, setStep4, toggleProcess, nextStep, prevStep } = useEstimateStore();
-  const [validationError, setValidationError] = useState(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
   const [openId, setOpenId] = useState<string | null>(null);
 
   const handleNext = () => {
     if (step2.selectedProcesses.length === 0) {
-      setValidationError(true);
+      setValidationError('공정을 1개 이상 선택해주세요.');
       return;
     }
-    setValidationError(false);
+    const wallpaperSelected = step2.selectedProcesses.includes('wallpaper');
+    if (
+      wallpaperSelected &&
+      step4.wallpaper?.wallpaperScope === '부분 도배' &&
+      !step4.wallpaper?.partialRooms?.length
+    ) {
+      setValidationError('부분 도배 시공할 공간을 1개 이상 선택해주세요.');
+      return;
+    }
+    setValidationError(null);
     nextStep();
   };
 
@@ -389,9 +398,7 @@ export const Step2ProcessSelection = () => {
             </div>
           )}
 
-          {validationError && (
-            <p style={{ color: 'red', fontSize: '13px', marginBottom: '8px' }}>공정을 1개 이상 선택해주세요.</p>
-          )}
+          {validationError && <p style={{ color: 'red', fontSize: '13px', marginBottom: '8px' }}>{validationError}</p>}
           <StepActions onNext={handleNext} onSecondary={prevStep} />
         </div>
       </div>
