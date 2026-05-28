@@ -129,3 +129,18 @@ export const insightText = style({
   lineHeight: '1.7',
   wordBreak: 'keep-all',
 });
+
+/* ── 저장 액션 영역 ── */
+export const actionRow = style({
+  display: 'flex',
+  justifyContent: 'flex-end',
+  gap: '12px',
+  paddingTop: '4px',
+});
+
+export const saveError = style({
+  fontFamily: vars.typography.fontFamily,
+  fontSize: vars.typography.fontSize.sm,
+  color: vars.color.semantic.danger,
+  textAlign: 'right',
+});

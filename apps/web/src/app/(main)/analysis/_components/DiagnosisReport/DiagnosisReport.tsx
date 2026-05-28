@@ -1,6 +1,10 @@
 'use client';
 
-import { CircleWarningIcon, StatusCard, TriangleWarningIcon } from '@muneo/design-system';
+import { Button, CircleWarningIcon, StatusCard, TriangleWarningIcon } from '@muneo/design-system';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { saveRisk } from '@/api/analyze';
+import { useUser } from '@/app/(main)/_components/UserProvider/UserProvider';
 import { buildInsights } from '../../_lib/buildInsights';
 import { useAnalysisStore } from '../../_store/analysisStore';
 import { ProcessSection } from '../ProcessSection/ProcessSection';
@@ -8,10 +12,31 @@ import * as styles from './DiagnosisReport.css';
 
 export const DiagnosisReport = () => {
   const result = useAnalysisStore((s) => s.diagnosisResult);
+  const rawReport = useAnalysisStore((s) => s.rawReport);
+  const rawInput = useAnalysisStore((s) => s.rawInput);
+  const reset = useAnalysisStore((s) => s.reset);
+  const user = useUser();
+  const router = useRouter();
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveErrorMsg, setSaveErrorMsg] = useState<string | null>(null);
 
-  if (!result) {
+  if (!result || !rawReport || !rawInput) {
     return null;
   }
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    setSaveErrorMsg(null);
+    try {
+      await saveRisk({ input: rawInput, result: { report: rawReport } }, user.id);
+      reset();
+      router.push('/home');
+    } catch {
+      setSaveErrorMsg('저장에 실패했습니다. 다시 시도해 주세요.');
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -67,6 +92,13 @@ export const DiagnosisReport = () => {
             </li>
           ))}
         </ul>
+      </div>
+
+      {saveErrorMsg && <p className={styles.saveError}>{saveErrorMsg}</p>}
+      <div className={styles.actionRow}>
+        <Button variant="primary" size="md" onClick={handleSave} disabled={isSaving}>
+          {isSaving ? '저장 중...' : '저장하기'}
+        </Button>
       </div>
     </div>
   );

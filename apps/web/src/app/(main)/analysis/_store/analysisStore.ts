@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { analyzeRisk, type RiskAnalyzeRequestBody, saveRisk } from '@/api/analyze';
+import { analyzeRisk, type RiskAnalyzeRequestBody, type RiskReport } from '@/api/analyze';
 import { mapApiReportToDiagnosisResult } from '../_lib/mapApiReport';
 import { type AnalysisFormData, type DiagnosisResult, type UploadedFile } from '../_types/analysis.types';
 
@@ -28,6 +28,10 @@ interface AnalysisStore {
   form: AnalysisFormData;
   files: UploadedFile[];
   diagnosisResult: DiagnosisResult | null;
+  /** 저장 API에 전달할 원본 분석 결과 */
+  rawReport: RiskReport | null;
+  /** 저장 API에 전달할 원본 요청 데이터 */
+  rawInput: RiskAnalyzeRequestBody | null;
   setForm: (patch: Partial<AnalysisFormData>) => void;
   addFile: (file: File) => void;
   removeFile: (name: string) => void;
@@ -45,6 +49,8 @@ export const useAnalysisStore = create<AnalysisStore>((set, get) => ({
   form: { ...DEFAULT_FORM },
   files: [],
   diagnosisResult: null,
+  rawReport: null,
+  rawInput: null,
   setForm: (patch) => set((s) => ({ form: { ...s.form, ...patch } })),
   addFile: (file) =>
     set((s) => ({
@@ -99,12 +105,9 @@ export const useAnalysisStore = create<AnalysisStore>((set, get) => ({
       _abortController = new AbortController();
       const { report } = await analyzeRisk(formData, userId, _abortController.signal);
 
-      // 4. 결과 저장
-      await saveRisk({ input: requestBody, result: { report } }, userId);
-
-      // 5. UI 상태 업데이트
+      // 4. UI 상태 업데이트 — 저장은 사용자가 직접 버튼으로 트리거
       const diagnosisResult = mapApiReportToDiagnosisResult(report);
-      set({ diagnosisResult, view: 'report', loading: false });
+      set({ diagnosisResult, rawReport: report, rawInput: requestBody, view: 'report', loading: false });
     } catch (err) {
       if (err instanceof Error && err.name === 'AbortError') {
         return;
@@ -122,8 +125,26 @@ export const useAnalysisStore = create<AnalysisStore>((set, get) => ({
   cancelAnalysis: () => {
     _abortController?.abort();
     _abortController = null;
-    set({ view: 'input', form: { ...DEFAULT_FORM }, files: [], diagnosisResult: null, error: null, loading: false });
+    set({
+      view: 'input',
+      form: { ...DEFAULT_FORM },
+      files: [],
+      diagnosisResult: null,
+      rawReport: null,
+      rawInput: null,
+      error: null,
+      loading: false,
+    });
   },
   reset: () =>
-    set({ view: 'input', form: { ...DEFAULT_FORM }, files: [], diagnosisResult: null, error: null, loading: false }),
+    set({
+      view: 'input',
+      form: { ...DEFAULT_FORM },
+      files: [],
+      diagnosisResult: null,
+      rawReport: null,
+      rawInput: null,
+      error: null,
+      loading: false,
+    }),
 }));
