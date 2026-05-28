@@ -2,7 +2,7 @@ import { type ApiProcessItem, type DiagnosisStatus, type RiskReport } from '@/ap
 import { type DiagnosisResult } from '../_types/analysis.types';
 
 const inferItemStatus = (item: ApiProcessItem): DiagnosisStatus =>
-  item.status === '불분명' && item.title.includes('누락') ? '누락' : item.status;
+  item.status === '불분명' && (item.title.includes('누락') || item.title.trim() === '') ? '누락' : item.status;
 
 export const mapApiReportToDiagnosisResult = (report: RiskReport, fallbackDate?: string): DiagnosisResult => {
   const sections = report.process_sections.map((s, si) => ({
