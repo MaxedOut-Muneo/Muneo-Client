@@ -34,7 +34,7 @@ const buildHistoryRows = (estimates: EstimateItem[], risks: RiskItem[]): History
         id: item.id,
         date: toDate(item.created_at),
         analysisType: '리스크 진단',
-        constructionType: `${item.input.spaceType} ${item.input.pyeong}평`,
+        constructionType: `${item.input.space_type} ${item.input.pyeong}평`,
         risk: {
           missing: diagnosis.missingCount,
           unclear: diagnosis.riskCount,

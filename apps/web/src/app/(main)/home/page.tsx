@@ -31,8 +31,8 @@ const buildView = (estimates: EstimateItem[], risks: RiskItem[]) => {
       id: item.id,
       date: toDate(item.created_at),
       analysisType: '리스크 진단',
-      constructionType: `${item.input.spaceType} ${item.input.pyeong}평`,
-      vendor: item.input.companyName,
+      constructionType: `${item.input.space_type} ${item.input.pyeong}평`,
+      vendor: item.input.company_name,
     },
   }));
 
