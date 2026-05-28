@@ -57,7 +57,7 @@ const createClient = () =>
       beforeRetry: [
         async ({ request, error }) => {
           const status = (error as { status?: number }).status;
-          if (status !== undefined && status !== 401) {
+          if (status !== 401) {
             throw error;
           }
           if (isPreAuth(request.url) || isRefresh(request.url)) {
