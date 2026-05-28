@@ -125,7 +125,8 @@ export const msgExiting = style({
 
 /* ── 프로그레스 바 ── */
 export const progressWrap = style({
-  width: '320px',
+  width: '100%',
+  maxWidth: '320px',
   height: '5px',
   borderRadius: '10px',
   backgroundColor: vars.color.neutral.n200,
@@ -165,7 +166,9 @@ export const progressFill = style({
 
 /* ── 팁 카드 ── */
 export const tipCard = style({
-  width: '480px',
+  width: '100%',
+  maxWidth: '480px',
+  boxSizing: 'border-box',
   backgroundColor: '#F5F0FF',
   border: '1px solid #E3D8FF',
   borderRadius: '16px',
