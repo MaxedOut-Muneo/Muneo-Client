@@ -1,6 +1,7 @@
 <div align="center">
 
-<img width="75" alt="Muneo Logo" src="여기에_로고_이미지_URL" />
+<img width="99" height="32" alt="로고" src="https://github.com/user-attachments/assets/e9a5bd31-f473-4cf9-80b7-ec25c9f70511" />
+
 
 <h1>문어 (Muneo) Frontend</h1>
 
